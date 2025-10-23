@@ -96,7 +96,67 @@ ddev playwright --spec tests/src/Playwright/navigationUndoRedo.spec.ts
 
 ## Backend: `web/modules/contrib/canvas`
 
-Instructions to be added. In the meantime, do not run tests, or ask.
+### PHPUnit tests
+
+The backend codebase includes PHPUnit tests for PHP code. Look for test files in
+the `tests/` directory, organized into subdirectories like `tests/src/Unit/`,
+`tests/src/Functional/`, `tests/src/Kernel/`, etc.
+
+To run PHPUnit tests, use the following command:
+
+```
+ddev phpunit [path]
+```
+
+Pass the path to the test file or directory relative to the
+`web/modules/contrib/canvas/` folder. For example, to run the OpenAPI
+specification validation tests:
+
+```
+ddev phpunit tests/src/Unit/OpenApiSpecValidationTest.php
+```
+
+You can also run all tests in a directory:
+
+```
+ddev phpunit tests/src/Unit/
+```
+
+Or run all tests in a module subdirectory:
+
+```
+ddev phpunit modules/canvas_oauth
+```
+
+### PHPStan
+
+PHPStan is a static analysis tool that checks PHP code for potential issues
+without running the code. Run PHPStan to verify your backend changes:
+
+```
+ddev phpstan
+```
+
+This command analyzes the entire Canvas module codebase using the configuration
+in `phpstan.neon`.
+
+### PHP Code Beautifier and Fixer (phpcs)
+
+The PHP Code Beautifier and Fixer automatically fixes coding standard violations
+in PHP code. Run it to ensure your code follows the project's coding standards:
+
+```
+ddev phpcs
+```
+
+You can also run it on a specific path relative to the
+`web/modules/contrib/canvas/` folder:
+
+```
+ddev phpcs modules/canvas_oauth
+```
+
+This command uses the configuration in `phpcs.xml`.
 
 ## CLI: `web/modules/contrib/canvas/cli`
 
