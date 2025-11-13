@@ -54,7 +54,7 @@ web_extra_daemons:
   - name: x11vnc
     command: x11vnc -display :0 -forever -nopw
     directory: /var/www/html
-  # Make noVNC available at https://drupal-cms-dev.ddev.site:6081/vnc.html
+  # Make noVNC available at https://canvas.ddev.site:6081/vnc.html
   - name: novnc
     command:
       /usr/share/novnc/utils/novnc_proxy --web /usr/share/novnc --vnc
