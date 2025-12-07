@@ -72,6 +72,7 @@ web_extra_exposed_ports:
 hooks:
   post-start:
     - exec-host: ddev clone-repo
+    - exec-host: ddev clone-repo-mercury
     - exec-host: ddev composer install
     - exec-host: ddev site-install
     - exec-host: ddev launch

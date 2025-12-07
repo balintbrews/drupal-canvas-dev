@@ -29,6 +29,7 @@
     "drupal/core-project-message": "^11.2",
     "drupal/core-recipe-unpack": "^11.2",
     "drupal/core-recommended": "^11.2",
+    "drupal/cva": "^1.0@beta",
     "drupal/simple_oauth": "^6.0",
     "drush/drush": "^13.6"
   },
@@ -64,7 +65,8 @@
   },
   "scripts": {
     "pre-install-cmd": [
-      "./scripts/check-repo.sh"
+      "./scripts/check-repo.sh",
+      "./scripts/check-repo-mercury.sh"
     ]
   },
   "extra": {

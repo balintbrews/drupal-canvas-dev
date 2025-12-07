@@ -2,8 +2,8 @@
 
 ## Description: Drupal Canvas: Install Drupal site.
 ## Aliases: si
-## Usage: site-install [--no-vite]
-## Example: "ddev site-install" or "ddev site-install --no-vite"
+## Usage: site-install [--no-vite] [-m|--mercury]
+## Example: "ddev site-install" or "ddev site-install --no-vite" or "ddev site-install -m"
 ## ExecRaw: true
 
 set -e
@@ -13,9 +13,13 @@ CANVAS_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --sho
 
 # Parse command line arguments.
 NO_VITE=false
+MERCURY=false
 for arg in "$@"; do
     if [[ "$arg" == "--no-vite" ]]; then
         NO_VITE=true
+    fi
+    if [[ "$arg" == "--mercury" || "$arg" == "-m" ]]; then
+        MERCURY=true
     fi
 done
 
@@ -36,9 +40,14 @@ fi
 drush pm:enable --yes $MODULES
 
 # Apply recipes.
-drush recipe ../recipes/canvas_dev_humanify
-drush recipe ../recipes/canvas_dev_stark
 drush recipe ../recipes/canvas_dev_oauth
+
+if [[ "$MERCURY" == "false" ]]; then
+    drush recipe ../recipes/canvas_dev_stark
+    drush recipe ../recipes/canvas_dev_humanify
+else
+    drush recipe ../recipes/canvas_dev_mercury
+fi
 
 # Generate OAuth keys.
 drush simple-oauth:generate-keys /var/www/html/web/sites/default/files

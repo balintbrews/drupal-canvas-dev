@@ -1,0 +1,28 @@
+#!/bin/bash
+
+## Description: Drupal Canvas: Clone the Mercury theme repository to the correct location.
+## Usage: clone-repo-mercury
+## Example: "ddev clone-repo-mercury"
+## ExecRaw: true
+
+REPO_URL="git@git.drupal.org:project/mercury.git"
+CONTRIB_DIR="$DDEV_APPROOT/web/themes/contrib"
+TARGET_DIR="$DDEV_APPROOT/web/themes/contrib/mercury"
+
+if [ ! -d "$TARGET_DIR" ] || [ -z "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then
+    echo "Directory $TARGET_DIR doesn't exist or is empty, cloning repository…"
+    
+    # Create themes/contrib directory if it doesn't exist.
+    mkdir -p "$CONTRIB_DIR"
+    
+    git clone "$REPO_URL" "$TARGET_DIR"
+    
+    if [ $? -eq 0 ]; then
+        echo "Repository cloned successfully to $TARGET_DIR."
+    else
+        echo "Error: Failed to clone repository."
+        exit 1
+    fi
+else
+    echo "Directory $TARGET_DIR already exists, skipping clone."
+fi

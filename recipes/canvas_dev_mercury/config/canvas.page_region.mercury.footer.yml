@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - mercury
+id: mercury.footer
+region: footer
+theme: mercury
+component_tree: {}

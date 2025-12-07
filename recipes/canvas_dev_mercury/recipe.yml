@@ -1,0 +1,10 @@
+name: "Canvas Dev Mercury"
+install:
+  - canvas
+  - cva
+  - mercury
+config:
+  actions:
+    system.theme:
+      simpleConfigUpdate:
+        default: mercury
