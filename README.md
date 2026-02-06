@@ -11,7 +11,16 @@ development work, with workflows and tools I prefer.
 2. Copy `.ddev/.env.example` to `.ddev/.env`
    1. Add your [OpenAI API key](https://platform.openai.com) to be used by the
       Canvas AI module
-3. Run `ddev start`
+3. Run:
+   ```
+   ddev start \
+     && ddev clone-repo \
+     && ddev clone-repo-mercury \
+     && ddev composer install \
+     && ddev site-install \
+     && ddev launch \
+     && ddev ui --install --build
+   ```
 
 ## Commands
 
@@ -26,6 +35,7 @@ development work, with workflows and tools I prefer.
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                             |
 | `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas, Canvas AI, Canvas OAuth.<br><br>`--no-vite`: skips installing Canvas Vite                                                                                            |
 | `clone-repo`            | Clone the Canvas module's repository. (Runs on the host.)                                                                                                                                                                        |
+| `clone-repo-mercury`    | Clone the Mercury theme's repository. (Runs on the host.)                                                                                                                                                                        |
 
 See the [list of commands](https://docs.ddev.com/en/stable/users/usage/cli/)
 provided by DDEV out-of-the box.

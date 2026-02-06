@@ -69,11 +69,3 @@ web_extra_exposed_ports:
     container_port: 6080
     http_port: 6080
     https_port: 6081
-hooks:
-  post-start:
-    - exec-host: ddev clone-repo
-    - exec-host: ddev clone-repo-mercury
-    - exec-host: ddev composer install
-    - exec-host: ddev site-install
-    - exec-host: ddev launch
-    - exec-host: ddev ui --install --build
