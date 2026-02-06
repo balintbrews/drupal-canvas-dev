@@ -1,17 +1,17 @@
 #!/bin/bash
 
-## Description: Drupal Canvas: Run UI app's dev server, optionally installing dependencies and/or building the UI code first.
-## Usage: ui [--install|-i] [--build|-b]
-## Example: "ddev ui" or "ddev ui --build" or "ddev ui -b" or "ddev ui --install" or "ddev ui -i" or "ddev ui --install --build"
+## Description: Drupal Canvas: Build the UI code and run the dev server. Optionally install dependencies first, or skip the build step.
+## Usage: ui [--install|-i] [--skip-build|-s]
+## Example: "ddev ui" or "ddev ui --skip-build" or "ddev ui -s" or "ddev ui --install" or "ddev ui -i" or "ddev ui --install --skip-build"
 ## ExecRaw: true
 
 # Parse command line arguments.
-BUILD_FLAG=false
+SKIP_BUILD_FLAG=false
 INSTALL_FLAG=false
 while [[ $# -gt 0 ]]; do
     case $1 in
-        --build|-b)
-            BUILD_FLAG=true
+        --skip-build|-s)
+            SKIP_BUILD_FLAG=true
             shift
             ;;
         --install|-i)
@@ -20,7 +20,7 @@ while [[ $# -gt 0 ]]; do
             ;;
         *)
             echo "Unknown option: $1"
-            echo "Usage: ui [--install|-i] [--build|-b]"
+            echo "Usage: ui [--install|-i] [--skip-build|-s]"
             exit 1
             ;;
     esac
@@ -34,11 +34,14 @@ if [ "$INSTALL_FLAG" = true ]; then
         || exit 1
 fi
 
-if [ "$BUILD_FLAG" = true ]; then
+if [ "$SKIP_BUILD_FLAG" = false ]; then
     npm run build \
         --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" \
         || exit 1
 fi
+
+# Install canvas_vite so the dev server serves the UI assets instead.
+drush pm:install canvas_vite -y 2>/dev/null
 
 npm run drupaldev \
     --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" \

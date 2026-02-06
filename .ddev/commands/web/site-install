@@ -2,8 +2,8 @@
 
 ## Description: Drupal Canvas: Install Drupal site.
 ## Aliases: si
-## Usage: site-install [--no-vite] [-m|--mercury]
-## Example: "ddev site-install" or "ddev site-install --no-vite" or "ddev site-install -m"
+## Usage: site-install [--ui] [-m|--mercury]
+## Example: "ddev site-install" or "ddev site-install --ui" or "ddev site-install -m"
 ## ExecRaw: true
 
 set -e
@@ -12,11 +12,11 @@ cd "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
 CANVAS_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 
 # Parse command line arguments.
-NO_VITE=false
+UI=false
 MERCURY=false
 for arg in "$@"; do
-    if [[ "$arg" == "--no-vite" ]]; then
-        NO_VITE=true
+    if [[ "$arg" == "--ui" ]]; then
+        UI=true
     fi
     if [[ "$arg" == "--mercury" || "$arg" == "-m" ]]; then
         MERCURY=true
@@ -33,7 +33,7 @@ drush site-install \
 # Enable modules.
 # @todo Convert enabling modules into recipes.
 MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content jsonapi_menu_items"
-if [[ "$NO_VITE" == "false" ]]; then
+if [[ "$UI" == "true" ]]; then
     MODULES="$MODULES canvas_vite"
 fi
 
@@ -68,3 +68,9 @@ drush config:set --yes --input-format=yaml ai.settings default_providers.chat "{
 drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_complex_json "{provider_id: openai, model_id: gpt-4o}"
 drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_structured_response "{provider_id: openai, model_id: gpt-4.1}"
 drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_tools "{provider_id: openai, model_id: gpt-4.1}"
+
+# Build the UI when not using the Vite dev server.
+if [[ "$UI" == "false" ]]; then
+    npm install --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
+    npm run build --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui"
+fi

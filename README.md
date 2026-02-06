@@ -19,7 +19,7 @@ development work, with workflows and tools I prefer.
      && ddev composer install \
      && ddev site-install \
      && ddev launch \
-     && ddev ui --install --build
+     && ddev ui --install
    ```
 
 ## Commands
@@ -27,13 +27,13 @@ development work, with workflows and tools I prefer.
 | Command                 | Description                                                                                                                                                                                                                      |
 | ----------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `n`                     | Run `npm` inside the UI directory.<br><br>`--canvas-dir=<directory>`: runs `npm` inside specified directory<br>(`root`, `ui`, `astro`, `cli`, or `docs`)                                                                         |
-| `ui`                    | Start the UI app's dev server.<br><br>`--install` `-i`: runs `npm install` before<br>`--build` `-b`: runs `npm run build` before                                                                                                 |
+| `ui`                    | Build the UI code and start the dev server.<br><br>`--install` `-i`: runs `npm install` before<br>`--skip-build` `-s`: skips the build step                                                                                      |
 | `playwright`            | Run Playwright in UI mode.<br>(Accessible via VNC at `https://canvas.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode                                                                      |
 | `cy`,<br>`cypress`      | Run the Cypress UI in end-to-end testing mode<br>(Accessible via VNC at `https://canvas.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode<br>`--component` `-c`: use component testing mode |
 | `phpunit [path]`        | Run PHPUnit tests in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                |
 | `phpcs [path]`          | Run PHP Code Beautifier and Fixer in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                |
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                             |
-| `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas, Canvas AI, Canvas OAuth.<br><br>`--no-vite`: skips installing Canvas Vite                                                                                            |
+| `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas, Canvas AI, Canvas OAuth.<br><br>`--ui`: also installs Canvas Vite for UI development                                                                                 |
 | `clone-repo`            | Clone the Canvas module's repository. (Runs on the host.)                                                                                                                                                                        |
 | `clone-repo-mercury`    | Clone the Mercury theme's repository. (Runs on the host.)                                                                                                                                                                        |
 
