@@ -32,7 +32,7 @@ drush site-install \
 
 # Enable modules.
 # @todo Convert enabling modules into recipes.
-MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content"
+MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content jsonapi_menu_items"
 if [[ "$NO_VITE" == "false" ]]; then
     MODULES="$MODULES canvas_vite"
 fi

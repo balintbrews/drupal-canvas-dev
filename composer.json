@@ -30,6 +30,7 @@
     "drupal/core-recipe-unpack": "^11.2",
     "drupal/core-recommended": "^11.2",
     "drupal/cva": "^1.0@beta",
+    "drupal/jsonapi_menu_items": "^1.2",
     "drupal/simple_oauth": "^6.0",
     "drush/drush": "^13.6"
   },
