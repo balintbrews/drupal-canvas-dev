@@ -1,12 +1,8 @@
 {
   "folders": [
     {
-      "name": "UI",
-      "path": "web/modules/contrib/canvas/ui",
-    },
-    {
-      "name": "CLI",
-      "path": "web/modules/contrib/canvas/cli",
+      "name": "Packages",
+      "path": "web/modules/contrib/canvas/packages",
     },
     {
       "name": "Canvas",
