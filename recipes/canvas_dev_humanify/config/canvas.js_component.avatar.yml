@@ -3,7 +3,6 @@ status: false
 dependencies: {}
 machineName: avatar
 name: Avatar
-required: {}
 props:
   photo:
     title: Photo
@@ -14,6 +13,7 @@ props:
         width: 600
         height: 600
     $ref: "json-schema-definitions://canvas.module/image"
+required: {}
 slots: {}
 js:
   original: |-

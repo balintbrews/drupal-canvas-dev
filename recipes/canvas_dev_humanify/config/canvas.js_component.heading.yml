@@ -10,15 +10,15 @@ props:
     title: Text
     type: string
     examples:
-      - "Believe it or not, this copy was written by a human."
-      - "Our team is here to help your AI agents look good."
-      - "Our pricing is based on the value you get."
+      - "We bring human strengths to AI-first teams."
+      - "We make great AI outputs genuinely excellent."
+      - "Our pricing is built for measurable outcomes."
 slots: {}
 js:
   original: |
     const Heading = ({ text }) => {
       return (
-        <h2 className="text-text mx-auto max-w-screen-lg text-balance text-center text-2xl font-extrabold md:text-3xl">
+        <h2 className="mx-auto max-w-screen-lg text-center text-2xl font-extrabold text-balance text-text md:text-3xl">
           {text}
         </h2>
       );
@@ -29,7 +29,7 @@ js:
     import { jsx as _jsx } from "react/jsx-runtime";
     const Heading = ({ text })=>{
         return /*#__PURE__*/ _jsx("h2", {
-            className: "text-text mx-auto max-w-screen-lg text-balance text-center text-2xl font-extrabold md:text-3xl",
+            className: "mx-auto max-w-screen-lg text-center text-2xl font-extrabold text-balance text-text md:text-3xl",
             children: text
         });
     };

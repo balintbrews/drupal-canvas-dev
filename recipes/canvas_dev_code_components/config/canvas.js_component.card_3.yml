@@ -5,15 +5,15 @@ dependencies:
     config:
       - canvas.js_component.control_dots
 machineName: card_3
-name: 'Card 3'
-required: {  }
+name: "Card 3"
+required: {}
 props:
   title:
     title: Title
     type: string
     examples:
-      - 'Card 3'
-slots: {  }
+      - "Card 3"
+slots: {}
 js:
   original: |-
     import FormattedText from "@/lib/FormattedText";
@@ -48,6 +48,6 @@ js:
         });
     }
 css:
-  original: ''
-  compiled: ''
-dataDependencies: {  }
+  original: ""
+  compiled: ""
+dataDependencies: {}

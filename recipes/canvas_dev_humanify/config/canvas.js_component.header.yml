@@ -59,7 +59,7 @@ js:
             backgroundColor,
           })}
         >
-          <div className="min-w-sm mx-auto flex h-24 max-w-screen-xl items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16">
+          <div className="mx-auto flex h-24 max-w-screen-xl min-w-sm items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16">
             <div
               className={cn(
                 "h-12 flex-shrink-0 items-center justify-start md:h-16",
@@ -108,7 +108,7 @@ js:
                 backgroundColor
             }),
             children: /*#__PURE__*/ _jsxs("div", {
-                className: "min-w-sm mx-auto flex h-24 max-w-screen-xl items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16",
+                className: "mx-auto flex h-24 max-w-screen-xl min-w-sm items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16",
                 children: [
                     /*#__PURE__*/ _jsx("div", {
                         className: cn("h-12 flex-shrink-0 items-center justify-start md:h-16", (branding === null || branding === void 0 ? void 0 : (_branding_props = branding.props) === null || _branding_props === void 0 ? void 0 : (_branding_props_value = _branding_props.value) === null || _branding_props_value === void 0 ? void 0 : _branding_props_value.includes("canvas--slot-empty-placeholder")) && "min-w-32"),

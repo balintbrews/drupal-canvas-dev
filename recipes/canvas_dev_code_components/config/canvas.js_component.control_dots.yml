@@ -1,11 +1,11 @@
 langcode: en
 status: false
-dependencies: {  }
+dependencies: {}
 machineName: control_dots
-name: 'Control dots'
-required: {  }
-props: {  }
-slots: {  }
+name: "Control dots"
+required: {}
+props: {}
+slots: {}
 js:
   original: |-
     import { cn } from "@/lib/utils";
@@ -57,6 +57,6 @@ js:
         });
     export default ControlDots;
 css:
-  original: ''
-  compiled: ''
-dataDependencies: {  }
+  original: ""
+  compiled: ""
+dataDependencies: {}

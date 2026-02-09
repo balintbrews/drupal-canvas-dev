@@ -10,14 +10,14 @@ props:
     title: Text
     type: string
     examples:
-      - "Something magical happens when humans make things. Depth, nuance,
-        creativity, and original ideas appear in the work."
-      - "We pretend to hallucinate as much as necessary to ease the transition
-        to working with humans again, but we never let that slip into our final
-        deliverables."
-      - "If you're confused about what that means, just replace the word
-        <em>value</em> with <em>tokens</em>. It doesn't make it less confusing,
-        but we all came to accept it, didn't we?"
+      - "We partner with AI-native teams to add what machines still struggle to
+        replicate: taste, narrative coherence, emotional resonance, and
+        domain-informed judgment."
+      - "Your agents generate options fast. Our specialists shape those options
+        into work people trust, remember, and act on."
+      - "Choose the model that fits your stage, then scale across strategy,
+        design, and communication with a team that knows how to collaborate with
+        AI systems."
     contentMediaType: text/html
     x-formatting-context: block
 slots: {}
@@ -29,7 +29,7 @@ js:
       return (
         <FormattedText
           as="p"
-          className="text-text mx-auto max-w-2xl text-balance text-center leading-relaxed"
+          className="mx-auto max-w-2xl text-center leading-relaxed text-balance text-text"
         >
           {text}
         </FormattedText>
@@ -43,7 +43,7 @@ js:
     const Paragraph = ({ text })=>{
         return /*#__PURE__*/ _jsx(FormattedText, {
             as: "p",
-            className: "text-text mx-auto max-w-2xl text-balance text-center leading-relaxed",
+            className: "mx-auto max-w-2xl text-center leading-relaxed text-balance text-text",
             children: text
         });
     };

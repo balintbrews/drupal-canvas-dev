@@ -7,8 +7,8 @@ dependencies:
       - canvas.js_component.grid
 machineName: services
 name: Services
-required: {}
 props: {}
+required: {}
 slots: {}
 js:
   original: |-

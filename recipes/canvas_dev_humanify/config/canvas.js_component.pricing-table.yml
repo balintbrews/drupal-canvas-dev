@@ -25,62 +25,62 @@ props:
     title: "Entry tier: Name"
     type: string
     examples:
-      - Basic
+      - Starter
   entryTierDescription:
     title: "Entry tier: Description"
     type: string
     examples:
-      - "Perfect for individuals and small projects"
+      - "For pilots and focused projects"
   entryTierPriceMonthly:
     title: "Entry tier: Price, monthly"
     type: number
     examples:
-      - 600.0
+      - 2500.0
   entryTierPriceAnnual:
     title: "Entry tier: Price, annual"
     type: number
     examples:
-      - 6000.0
+      - 25000.0
   midTierName:
     title: "Mid tier: Name"
     type: string
     examples:
-      - Pro
+      - Growth
   midTierDescription:
     title: "Mid tier: Description"
     type: string
     examples:
-      - "Ideal for professionals and growing teams"
+      - "For teams scaling AI-assisted delivery"
   midTierPriceMonthly:
     title: "Mid tier: Price, monthly"
     type: number
     examples:
-      - 2500.0
+      - 4500.0
   midTierPriceAnnual:
     title: "Mid tier: Price, annual"
     type: number
     examples:
-      - 25000.0
+      - 45000.0
   advancedTierName:
     title: "Advanced tier: Name"
     type: string
     examples:
-      - Business
+      - Enterprise
   advancedTierDescription:
     title: "Advanced tier: Description"
     type: string
     examples:
-      - "For organizations with advanced needs"
+      - "For complex organizations and mission-critical work"
   advancedTierPriceMonthly:
     title: "Advanced tier: Price, monthly"
     type: number
     examples:
-      - 7500.0
+      - 9500.0
   advancedTierPriceAnnual:
     title: "Advanced tier: Price, annual"
     type: number
     examples:
-      - 75000.0
+      - 95000.0
   defaultTier:
     title: "Default tier"
     type: string
@@ -94,7 +94,7 @@ props:
       entry: Entry
       mid: Mid
       advanced: Advanced
-  defaultIsAnnual:
+  annualSelectedByDefault:
     title: "Annual selected by default"
     type: boolean
     examples:
@@ -103,12 +103,12 @@ props:
     title: "Annual badge text"
     type: string
     examples:
-      - "Save 20%"
+      - "Save 17%"
   buttonLabel:
     title: "Button label"
     type: string
     examples:
-      - "Get started today with {tier}"
+      - "Choose {tier}"
   buttonLink:
     title: "Button link"
     type: string
@@ -135,12 +135,12 @@ js:
       advancedTierPriceMonthly,
       advancedTierPriceAnnual,
       defaultTier,
-      defaultIsAnnual,
+      annualSelectedByDefault,
       annualBadgeText,
       buttonLabel,
       buttonLink,
     }) => {
-      const [isAnnual, setIsAnnual] = useState(defaultIsAnnual);
+      const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault);
       const [tier, setTier] = useState(defaultTier);
 
       const tierNames = {
@@ -180,7 +180,7 @@ js:
             <div className="w-24 text-right">
               <span
                 className={cn(
-                  "text-subtext-0/75 font-medium",
+                  "font-medium text-subtext-0/75",
                   !isAnnual && "text-mauve",
                 )}
               >
@@ -190,11 +190,11 @@ js:
 
             <button
               onClick={() => setIsAnnual(!isAnnual)}
-              className="bg-surface-1 relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 p-0.5"
+              className="relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 bg-surface-1 p-0.5"
             >
               <div
                 className={cn(
-                  "border-flamingo bg-inverted-text absolute top-0.5 h-6 w-6 rounded-full border-2 transition-all duration-200",
+                  "absolute top-0.5 h-6 w-6 rounded-full border-2 border-flamingo bg-inverted-text transition-all duration-200",
                   isAnnual ? "left-7" : "left-0.5",
                 )}
               />
@@ -202,7 +202,7 @@ js:
             <div className="flex w-36 items-center">
               <span
                 className={cn(
-                  "text-subtext-0/75 font-medium",
+                  "font-medium text-subtext-0/75",
                   isAnnual && "text-mauve",
                 )}
               >
@@ -210,7 +210,7 @@ js:
               </span>
               <span
                 className={cn(
-                  "bg-green text-inverted-text ml-2 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium leading-none transition-opacity duration-200",
+                  "ml-2 rounded-full bg-green px-2 py-1 text-xs leading-none font-medium whitespace-nowrap text-inverted-text transition-opacity duration-200",
                   isAnnual ? "opacity-100" : "opacity-0",
                 )}
               >
@@ -240,21 +240,21 @@ js:
                   className={cn(
                     "group flex-1 cursor-pointer rounded-lg p-5 transition-all duration-200",
                     "bg-surface-1",
-                    "data-[state=selected]:outline-mauve data-[state=selected]:outline-offset-3 data-[state=selected]:outline-2",
-                    "focus-visible:outline-red focus-visible:outline-2 focus-visible:outline-offset-2",
+                    "data-[state=selected]:outline-2 data-[state=selected]:outline-offset-3 data-[state=selected]:outline-mauve",
+                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red",
                   )}
                 >
-                  <h3 className="text-text mb-3 text-lg font-bold">
+                  <h3 className="mb-3 text-lg font-bold text-text">
                     {tierNames[planName]}
                   </h3>
 
                   <div className="mb-4">
-                    <div className="text-text mb-1 text-2xl font-bold">
+                    <div className="mb-1 text-2xl font-bold text-text">
                       ${price.toLocaleString()}
                     </div>
                   </div>
 
-                  <div className="text-text text-sm leading-relaxed">
+                  <div className="text-sm leading-relaxed text-text">
                     {tierDescriptions[planName]}
                   </div>
                 </div>
@@ -267,8 +267,8 @@ js:
             <a
               href={buttonLink}
               className={cn(
-                "bg-mauve text-inverted-text hover:bg-mauve/75 inline-block w-full rounded-sm px-12 py-3 text-center text-sm font-medium transition",
-                "focus-visible:outline-red focus-visible:outline-2 focus-visible:outline-offset-2",
+                "inline-block w-full rounded-sm bg-mauve px-12 py-3 text-center text-sm font-medium text-inverted-text transition hover:bg-mauve/75",
+                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red",
               )}
             >
               {buttonLabel.replace("{tier}", tierNames[tier])}
@@ -283,8 +283,8 @@ js:
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
     import { useState } from "react";
     import { cn } from "@/lib/utils";
-    const PricingTable = ({ entryTierName, entryTierDescription, entryTierPriceMonthly, entryTierPriceAnnual, midTierName, midTierDescription, midTierPriceMonthly, midTierPriceAnnual, advancedTierName, advancedTierDescription, advancedTierPriceMonthly, advancedTierPriceAnnual, defaultTier, defaultIsAnnual, annualBadgeText, buttonLabel, buttonLink })=>{
-        const [isAnnual, setIsAnnual] = useState(defaultIsAnnual);
+    const PricingTable = ({ entryTierName, entryTierDescription, entryTierPriceMonthly, entryTierPriceAnnual, midTierName, midTierDescription, midTierPriceMonthly, midTierPriceAnnual, advancedTierName, advancedTierDescription, advancedTierPriceMonthly, advancedTierPriceAnnual, defaultTier, annualSelectedByDefault, annualBadgeText, buttonLabel, buttonLink })=>{
+        const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault);
         const [tier, setTier] = useState(defaultTier);
         const tierNames = {
             entry: entryTierName,
@@ -323,26 +323,26 @@ js:
                         /*#__PURE__*/ _jsx("div", {
                             className: "w-24 text-right",
                             children: /*#__PURE__*/ _jsx("span", {
-                                className: cn("text-subtext-0/75 font-medium", !isAnnual && "text-mauve"),
+                                className: cn("font-medium text-subtext-0/75", !isAnnual && "text-mauve"),
                                 children: "Monthly"
                             })
                         }),
                         /*#__PURE__*/ _jsx("button", {
                             onClick: ()=>setIsAnnual(!isAnnual),
-                            className: "bg-surface-1 relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 p-0.5",
+                            className: "relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 bg-surface-1 p-0.5",
                             children: /*#__PURE__*/ _jsx("div", {
-                                className: cn("border-flamingo bg-inverted-text absolute top-0.5 h-6 w-6 rounded-full border-2 transition-all duration-200", isAnnual ? "left-7" : "left-0.5")
+                                className: cn("absolute top-0.5 h-6 w-6 rounded-full border-2 border-flamingo bg-inverted-text transition-all duration-200", isAnnual ? "left-7" : "left-0.5")
                             })
                         }),
                         /*#__PURE__*/ _jsxs("div", {
                             className: "flex w-36 items-center",
                             children: [
                                 /*#__PURE__*/ _jsx("span", {
-                                    className: cn("text-subtext-0/75 font-medium", isAnnual && "text-mauve"),
+                                    className: cn("font-medium text-subtext-0/75", isAnnual && "text-mauve"),
                                     children: "Annual"
                                 }),
                                 /*#__PURE__*/ _jsx("span", {
-                                    className: cn("bg-green text-inverted-text ml-2 whitespace-nowrap rounded-full px-2 py-1 text-xs font-medium leading-none transition-opacity duration-200", isAnnual ? "opacity-100" : "opacity-0"),
+                                    className: cn("ml-2 rounded-full bg-green px-2 py-1 text-xs leading-none font-medium whitespace-nowrap text-inverted-text transition-opacity duration-200", isAnnual ? "opacity-100" : "opacity-0"),
                                     children: annualBadgeText
                                 })
                             ]
@@ -368,16 +368,16 @@ js:
                             "data-state": isSelected ? "selected" : undefined,
                             role: "button",
                             tabIndex: 0,
-                            className: cn("group flex-1 cursor-pointer rounded-lg p-5 transition-all duration-200", "bg-surface-1", "data-[state=selected]:outline-mauve data-[state=selected]:outline-offset-3 data-[state=selected]:outline-2", "focus-visible:outline-red focus-visible:outline-2 focus-visible:outline-offset-2"),
+                            className: cn("group flex-1 cursor-pointer rounded-lg p-5 transition-all duration-200", "bg-surface-1", "data-[state=selected]:outline-2 data-[state=selected]:outline-offset-3 data-[state=selected]:outline-mauve", "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"),
                             children: [
                                 /*#__PURE__*/ _jsx("h3", {
-                                    className: "text-text mb-3 text-lg font-bold",
+                                    className: "mb-3 text-lg font-bold text-text",
                                     children: tierNames[planName]
                                 }),
                                 /*#__PURE__*/ _jsx("div", {
                                     className: "mb-4",
                                     children: /*#__PURE__*/ _jsxs("div", {
-                                        className: "text-text mb-1 text-2xl font-bold",
+                                        className: "mb-1 text-2xl font-bold text-text",
                                         children: [
                                             "$",
                                             price.toLocaleString()
@@ -385,7 +385,7 @@ js:
                                     })
                                 }),
                                 /*#__PURE__*/ _jsx("div", {
-                                    className: "text-text text-sm leading-relaxed",
+                                    className: "text-sm leading-relaxed text-text",
                                     children: tierDescriptions[planName]
                                 })
                             ]
@@ -395,7 +395,7 @@ js:
                 /*#__PURE__*/ _jsx("div", {
                     children: /*#__PURE__*/ _jsx("a", {
                         href: buttonLink,
-                        className: cn("bg-mauve text-inverted-text hover:bg-mauve/75 inline-block w-full rounded-sm px-12 py-3 text-center text-sm font-medium transition", "focus-visible:outline-red focus-visible:outline-2 focus-visible:outline-offset-2"),
+                        className: cn("inline-block w-full rounded-sm bg-mauve px-12 py-3 text-center text-sm font-medium text-inverted-text transition hover:bg-mauve/75", "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"),
                         children: buttonLabel.replace("{tier}", tierNames[tier])
                     })
                 })

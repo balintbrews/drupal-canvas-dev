@@ -11,7 +11,7 @@ props:
     title: "Copyright notice"
     type: string
     examples:
-      - "&copy; 2025 Humanify Inc. All rights reserved."
+      - "&copy; 2025-2026 Humanify Example Ventures Inc. All rights reserved."
     contentMediaType: text/html
     x-formatting-context: block
   darkVariant:
@@ -71,7 +71,7 @@ js:
             backgroundColor,
           })}
         >
-          <div className="min-w-sm mx-auto flex max-w-screen-md flex-col items-center gap-12 p-12 md:p-16">
+          <div className="mx-auto flex max-w-screen-md min-w-sm flex-col items-center gap-12 p-12 md:p-16">
             <div
               className={cn(
                 "h-12 flex-shrink-0 items-center justify-start",
@@ -82,7 +82,7 @@ js:
             >
               {branding}
             </div>
-            <FormattedText as="p" className="text-text text-sm">
+            <FormattedText as="p" className="text-sm text-text">
               {copyrightNotice}
             </FormattedText>
           </div>
@@ -121,7 +121,7 @@ js:
                 backgroundColor
             }),
             children: /*#__PURE__*/ _jsxs("div", {
-                className: "min-w-sm mx-auto flex max-w-screen-md flex-col items-center gap-12 p-12 md:p-16",
+                className: "mx-auto flex max-w-screen-md min-w-sm flex-col items-center gap-12 p-12 md:p-16",
                 children: [
                     /*#__PURE__*/ _jsx("div", {
                         className: cn("h-12 flex-shrink-0 items-center justify-start", (branding === null || branding === void 0 ? void 0 : (_branding_props = branding.props) === null || _branding_props === void 0 ? void 0 : (_branding_props_value = _branding_props.value) === null || _branding_props_value === void 0 ? void 0 : _branding_props_value.includes("canvas--slot-empty-placeholder")) && "min-w-32"),
@@ -129,7 +129,7 @@ js:
                     }),
                     /*#__PURE__*/ _jsx(FormattedText, {
                         as: "p",
-                        className: "text-text text-sm",
+                        className: "text-sm text-text",
                         children: copyrightNotice
                     })
                 ]

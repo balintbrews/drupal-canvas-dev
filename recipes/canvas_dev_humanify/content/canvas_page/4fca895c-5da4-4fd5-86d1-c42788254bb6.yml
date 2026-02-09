@@ -10,168 +10,208 @@ default:
   status:
     - value: true
   owner:
-    - target_id: 0
+    - target_id: 1
       target_uuid: ""
   title:
     - value: Home
   components:
-    - uuid: 12db327c-9a19-4952-9389-80ba8354a5b0
+    - parent_uuid: null
+      slot: null
+      uuid: 12db327c-9a19-4952-9389-80ba8354a5b0
       component_id: js.header
+      component_version: 9dcd8ff903ea85d2
       inputs: '{"darkVariant":true,"backgroundColor":"crust"}'
     - parent_uuid: 12db327c-9a19-4952-9389-80ba8354a5b0
       slot: branding
       uuid: aaef79ba-f04f-42bc-b888-e0229d46c9b5
       component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
       inputs: '{"linkToFrontPage":true}'
     - parent_uuid: 12db327c-9a19-4952-9389-80ba8354a5b0
       slot: navigation
       uuid: 95805f3a-b32e-4d58-b08e-f506579ab18f
       component_id: js.navigation
+      component_version: 8fe3be948e0194e1
       inputs: "[]"
-    - uuid: 2ae9bc36-0e31-433a-a81b-7a27dfff5a01
+    - parent_uuid: null
+      slot: null
+      uuid: 8219557f-cb7b-4ccd-970f-5aba5eaf776b
       component_id: js.hero
+      component_version: ab4e436ea9c0c5a0
       inputs:
-        '{"title":"White-label human intelligence for your AI
-        projects","description":{"value":"Leverage a team of smart, creative,
-        and experienced humans, who \u003Cem\u003Eactually\u003C\/em\u003E know
-        what they\u0027re doing. We deliver the work, and you can tell your
-        customers and investors that it was done with AI."},"buttonLabel":"Get
-        started
-        today","buttonLink":{"uri":"page\/1","options":[]},"image":{"sourceType":"default-relative-url","value":{"src":"https:\/\/images.unsplash.com\/photo-1484959014842-cd1d967a39cf?ixlib=rb-1.2.1\u0026ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8\u0026auto=format\u0026fit=crop\u0026w=1770\u0026q=80","alt":"Woman
+        '{"title":"Human expertise that amplifies what your AI agents can
+        do","description":{"value":"AI agents are extraordinary at speed, scale,
+        and automation. We add the human layer they need: creative direction,
+        editorial judgment, and strategic thinking that turns capable output
+        into \u003Cem\u003Estandout
+        work\u003C\/em\u003E.","format":"canvas_html_block"},"buttonLabel":"Build
+        your hybrid
+        team","buttonLink":{"uri":"page\/1","options":[]},"image":{"sourceType":"default-relative-url","value":{"src":"https:\/\/images.unsplash.com\/photo-1752650736024-d6aac18abc2d?ixlib=rb-1.2.1\u0026ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8\u0026auto=format\u0026fit=crop\u0026w=1770\u0026q=80","alt":"Woman
         playing the
         violin","width":1770,"height":1180},"jsonSchema":{"type":"object","properties":{"src":{"type":"string","contentMediaType":"image\/*","format":"uri-reference","x-allowed-schemes":["http","https"]},"alt":{"type":"string"},"width":{"type":"integer"},"height":{"type":"integer"}},"required":["src"]},"componentId":"js.hero"},"darkVariant":true,"backgroundColor":"crust"}'
-    - uuid: ecaa0198-64b4-49d8-8ca9-c7cd600a955a
+    - parent_uuid: null
+      slot: null
+      uuid: ecaa0198-64b4-49d8-8ca9-c7cd600a955a
       component_id: js.section
+      component_version: d9ac600eb88951bb
       inputs: '{"darkVariant":false,"backgroundColor":"base"}'
     - parent_uuid: ecaa0198-64b4-49d8-8ca9-c7cd600a955a
       slot: content
-      uuid: 0bd8a216-264e-4505-82eb-1654c74812ef
+      uuid: 0558829e-4676-45bf-aa34-9838c7ad3ddc
       component_id: js.heading
-      inputs: '{"text":"Our team is here to help your AI agents look good."}'
+      component_version: 9df836114750c940
+      inputs: '{"text":"We make great AI outputs genuinely excellent."}'
     - parent_uuid: ecaa0198-64b4-49d8-8ca9-c7cd600a955a
       slot: content
-      uuid: 6ce3c040-fa51-4e78-9729-0ddd72783463
+      uuid: 7ce396bc-5eca-4147-8518-424fb1f7636c
       component_id: js.paragraph
+      component_version: 5974d781637f2bb1
       inputs:
-        '{"text":{"value":"\u003Cp\u003EWe pretend to hallucinate as much as
-        necessary to ease the transition to working with humans again, but we
-        never let that slip into our final deliverables.\u003C\/p\u003E"}}'
+        '{"text":{"value":"\u003Cp\u003EYour agents generate options fast. Our
+        specialists shape those options into work people trust, remember, and
+        act on.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: ecaa0198-64b4-49d8-8ca9-c7cd600a955a
       slot: content
       uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       component_id: js.grid
+      component_version: d54b181baa9953d9
       inputs: "[]"
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 35379040-c351-4050-9c6d-8e4cd795dcf8
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"layout-panel-top","iconColor":"sapphire","title":"Website
-        design","description":{"value":"Knowing where to take inspiration from
-        and why can be useful."}}'
+        '{"iconNameFromLucide":"lightbulb","iconColor":"sapphire","title":"Creative
+        direction","description":{"value":"\u003Cp\u003EWe shape raw ideas and
+        AI-generated directions into clear creative choices your team can
+        execute confidently.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 25bfb9a8-d04d-4158-b84f-3c9381f211df
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"figma","iconColor":"rosewater","title":"Figma to
-        code","description":{"value":"\u003Cp\u003EImagine code that people are
-        not terrified to look at, let alone maintain.\u003C\/p\u003E"}}'
+        '{"iconNameFromLucide":"book-open","iconColor":"rosewater","title":"Product
+        storytelling","description":{"value":"\u003Cp\u003EWe turn feature lists
+        and technical outputs into narratives customers understand and care
+        about.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 96df2f62-c80e-4ad3-8f68-a0d35b5dfd66
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"message-square-more","iconColor":"mauve","title":"Marketing
-        copy-writing","description":{"value":"\u003Cp\u003ESometimes it\u0027s
-        advised not to sound like everyone else on the
-        internet.\u003C\/p\u003E"}}'
+        '{"iconNameFromLucide":"pen-tool","iconColor":"mauve","title":"Brand and
+        voice systems","description":{"value":"\u003Cp\u003EWe define reusable
+        messaging rules so AI outputs stay on-brand across channels, markets,
+        and teams.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 04c3e408-1caa-45c4-99a4-faaee8c40b71
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"radio-tower","iconColor":"yellow","title":"Social
-        media","description":{"value":"\u003Cp\u003EWe\u0027ll give you a
-        discount if we only have to deal with Bluesky.\u003C\/p\u003E"}}'
+        '{"iconNameFromLucide":"megaphone","iconColor":"yellow","title":"Campaign
+        concepts","description":{"value":"\u003Cp\u003EWe develop campaign
+        themes and creative briefs that connect business goals to audience
+        needs.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 62a3be9f-7210-4ccc-9282-d88fd56b4325
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"file-chart-column-increasing","iconColor":"green","title":"Analytics
-        and reporting","description":{"value":"\u003Cp\u003EOur single promise
-        is that we\u0027ll never include emojis in our
-        reports.\u003C\/p\u003E"}}'
+        '{"iconNameFromLucide":"file-chart-column-increasing","iconColor":"green","title":"Insight
+        synthesis","description":{"value":"\u003Cp\u003EWe combine model output,
+        research, and team context into prioritized insights that drive better
+        decisions.\u003C\/p\u003E","format":"canvas_html_block"}}'
     - parent_uuid: 7899ab7e-c603-4110-9b2a-25ca3a4d0fa7
       slot: content
       uuid: 96855491-06b0-4b82-804a-030f0b24d2e8
       component_id: js.card
+      component_version: 7fd8ac5d8d61adeb
       inputs:
-        '{"iconNameFromLucide":"mail-question-mark","iconColor":"pink","description":{"value":"\u003Cp\u003EWe
-        don\u0027t actually do this, but we needed six things for this grid to
-        look nice.\u003C\/p\u003E"},"title":"Summarizing emails"}'
-    - uuid: 496c3054-2795-46ed-9c96-2a2b8f9ffcbd
+        '{"iconNameFromLucide":"presentation","iconColor":"pink","description":{"value":"\u003Cp\u003EWe
+        craft high-stakes updates, memos, and presentations with the right tone,
+        structure, and strategic
+        focus.\u003C\/p\u003E","format":"canvas_html_block"},"title":"Executive
+        communication"}'
+    - parent_uuid: null
+      slot: null
+      uuid: 496c3054-2795-46ed-9c96-2a2b8f9ffcbd
       component_id: js.section
-      inputs: '{"darkVariant":false,"backgroundColor":"mantle"}'
+      component_version: d9ac600eb88951bb
+      inputs: '{"darkVariant":false,"backgroundColor":"crust"}'
     - parent_uuid: 496c3054-2795-46ed-9c96-2a2b8f9ffcbd
       slot: content
-      uuid: 99935bb4-c11d-433c-8582-52aae897f611
+      uuid: 0d4c1178-1fef-4392-8812-3bcd33bb8912
       component_id: js.heading
-      inputs: '{"text":"Believe it or not, this copy was written by a human."}'
+      component_version: 9df836114750c940
+      inputs: '{"text":"We bring human strengths to AI-first teams."}'
     - parent_uuid: 496c3054-2795-46ed-9c96-2a2b8f9ffcbd
       slot: content
-      uuid: 124bae82-4d8d-4968-8b7b-a76c38ec22d6
+      uuid: 50d3bb9e-d06e-4ae0-b30d-6f3690300a84
       component_id: js.paragraph
+      component_version: 5974d781637f2bb1
       inputs:
-        '{"text":{"value":"Something magical happens when humans make things.
-        Depth, nuance, creativity, and original ideas appear in the work."}}'
-    - uuid: 8b71a6fe-66e8-40ee-9db7-fb4c1fe369a2
+        '{"text":{"value":"We partner with AI-native teams to add what machines
+        still struggle to replicate: taste, narrative coherence, emotional
+        resonance, and domain-informed judgment.","format":"canvas_html_block"}}'
+    - parent_uuid: null
+      slot: null
+      uuid: 1d3ff9bf-917b-4658-9946-ed65622cf0c3
       component_id: js.section
+      component_version: d9ac600eb88951bb
       inputs: '{"darkVariant":true,"backgroundColor":"base"}'
-    - parent_uuid: 8b71a6fe-66e8-40ee-9db7-fb4c1fe369a2
+    - parent_uuid: 1d3ff9bf-917b-4658-9946-ed65622cf0c3
       slot: content
-      uuid: 961bec8c-95c0-4745-b0d0-e09a8d8d315b
+      uuid: 1151a3f7-577b-40b4-b272-e6055daa5ca9
       component_id: js.heading
-      inputs: '{"text":"Our pricing is based on the value you get."}'
-    - parent_uuid: 8b71a6fe-66e8-40ee-9db7-fb4c1fe369a2
+      component_version: 9df836114750c940
+      inputs: '{"text":"Our pricing is built for measurable outcomes."}'
+    - parent_uuid: 1d3ff9bf-917b-4658-9946-ed65622cf0c3
       slot: content
-      uuid: 31f76960-af02-4705-b947-ef3c0346a6d8
+      uuid: f86ed772-6a4b-44c8-a8ea-06fdcbc8c0d2
       component_id: js.paragraph
+      component_version: 5974d781637f2bb1
       inputs:
-        '{"text":{"value":"\u003Cp\u003EIf you\u0027re confused about what that
-        means, just replace the word \u003Cem\u003Evalue\u003C\/em\u003E with
-        \u003Cem\u003Etokens\u003C\/em\u003E. It doesn\u0027t make it less
-        confusing, but we all came to accept it, didn\u0027t
-        we?\u003C\/p\u003E"}}'
-    - parent_uuid: 8b71a6fe-66e8-40ee-9db7-fb4c1fe369a2
+        '{"text":{"value":"\u003Cp\u003EChoose the model that fits your stage,
+        then scale across strategy, design, and communication with a team that
+        knows how to collaborate with AI
+        systems.\u003C\/p\u003E","format":"canvas_html_block"}}'
+    - parent_uuid: 1d3ff9bf-917b-4658-9946-ed65622cf0c3
       slot: content
-      uuid: 9d72ae0b-a4ba-4d11-8938-ee3a4c6c3f40
+      uuid: 0ef21892-c9a4-4f4f-b5de-ea0c1579c4c3
       component_id: js.pricing-table
+      component_version: 4e859cdc7b3b51d2
       inputs:
-        '{"entryTierName":"Basic","entryTierDescription":"Perfect for
-        individuals and small
-        projects","entryTierPriceMonthly":600,"entryTierPriceAnnual":6000,"midTierName":"Pro","midTierDescription":"Ideal
-        for professionals and growing
-        teams","midTierPriceMonthly":2500,"midTierPriceAnnual":25000,"advancedTierName":"Business","advancedTierDescription":"For
-        organizations with advanced
-        needs","advancedTierPriceMonthly":7500,"advancedTierPriceAnnual":75000,"defaultTier":"entry","defaultIsAnnual":false,"annualBadgeText":"Save
-        20%","buttonLabel":"Get started today with
+        '{"entryTierName":"Starter","entryTierDescription":"For pilots and
+        focused
+        projects","entryTierPriceMonthly":2500,"entryTierPriceAnnual":25000,"midTierName":"Growth","midTierDescription":"For
+        teams scaling AI-assisted
+        delivery","midTierPriceMonthly":4500,"midTierPriceAnnual":45000,"advancedTierName":"Enterprise","advancedTierDescription":"For
+        complex organizations and mission-critical
+        work","advancedTierPriceMonthly":9500,"advancedTierPriceAnnual":95000,"defaultTier":"entry","annualSelectedByDefault":false,"annualBadgeText":"Save
+        17%","buttonLabel":"Choose
         {tier}","buttonLink":{"uri":"internal:\/page\/1","options":[]}}'
-    - uuid: 847618cd-fa9a-4b33-a4a2-f726ef1462af
+    - parent_uuid: null
+      slot: null
+      uuid: c3ba66be-2b6b-4030-96d0-3a99b77471fe
       component_id: js.footer
+      component_version: 4c0b987136f47677
       inputs:
-        '{"copyrightNotice":{"value":"\u0026copy; 2025 Humanify Inc. All rights
-        reserved."},"darkVariant":true,"backgroundColor":"crust"}'
-    - parent_uuid: 847618cd-fa9a-4b33-a4a2-f726ef1462af
+        '{"copyrightNotice":{"value":"\u0026copy; 2025-2026 Humanify Example
+        Ventures Inc. All rights
+        reserved.","format":"canvas_html_block"},"darkVariant":true,"backgroundColor":"crust"}'
+    - parent_uuid: c3ba66be-2b6b-4030-96d0-3a99b77471fe
       slot: branding
-      uuid: 196582b6-6fbd-4a4a-85c6-08b68a0a9b71
+      uuid: dfbead05-a679-4531-b629-995b7bed1cb0
       component_id: js.logo
-      inputs: '{"linkToFrontPage":true}'
+      component_version: 3e9baf3c7cc35f84
+      inputs: '{"linkToFrontPage":false}'
   path:
     - alias: /home
       langcode: en
   created:
     - value: 1759869629
-  revision_translation_affected:
-    - value: true
