@@ -1,4 +1,6 @@
 interface:
   display_name: "Canvas Test Selector"
   short_description: "Choose minimal safe Canvas verification commands."
-  default_prompt: "Use this skill to map changed Drupal Canvas paths to the minimum safe set of DDEV test and validation commands."
+  default_prompt:
+    "Use this skill to map changed Drupal Canvas paths to the minimum safe set
+    of DDEV test and validation commands."

@@ -3,6 +3,7 @@
 ## Core state responsibilities
 
 `codeEditorSlice.ts` tracks:
+
 - Editor status flags.
 - Current code component data.
 - Global asset library data.
@@ -19,6 +20,7 @@
 ## Prop and slot schema updates
 
 When adding or changing a prop type:
+
 1. Update shared types in `src/types/CodeComponent.ts`.
 2. Update `derivedPropTypes` mappings.
 3. Update serializer and deserializer logic.

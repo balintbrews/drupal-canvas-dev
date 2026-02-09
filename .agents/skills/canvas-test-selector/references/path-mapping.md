@@ -4,7 +4,8 @@
 
 - Prefix: `web/modules/contrib/canvas/ui/`
 - Prefer co-located Vitest files ending in `.test.ts` or `.test.tsx`.
-- Check `web/modules/contrib/canvas/ui/tests/unit/` for Cypress component coverage.
+- Check `web/modules/contrib/canvas/ui/tests/unit/` for Cypress component
+  coverage.
 
 ## Playwright paths
 
@@ -19,4 +20,5 @@
 ## CLI and packages paths
 
 - Prefix: `web/modules/contrib/canvas/packages/`
-- If no documented package-specific test command exists, avoid broad guesses and run only verified task-specific commands.
+- If no documented package-specific test command exists, avoid broad guesses and
+  run only verified task-specific commands.

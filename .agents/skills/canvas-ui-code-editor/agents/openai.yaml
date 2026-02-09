@@ -1,4 +1,6 @@
 interface:
   display_name: "Canvas UI Code Editor"
   short_description: "Maintain Canvas code editor lifecycle integrity."
-  default_prompt: "Use this skill to safely modify Drupal Canvas in-browser code editor state, lifecycle hooks, and serialization flow."
+  default_prompt:
+    "Use this skill to safely modify Drupal Canvas in-browser code editor state,
+    lifecycle hooks, and serialization flow."

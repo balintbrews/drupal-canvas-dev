@@ -1,29 +1,39 @@
 ---
 name: canvas-ui-code-editor
-description: Analyze, debug, or modify the Drupal Canvas in-browser code editor. Use when work touches codeEditorSlice state, code editor lifecycle hooks, auto-save, source compilation, props or slots serialization, or editor-specific component and integration tests.
+description:
+  Analyze, debug, or modify the Drupal Canvas in-browser code editor. Use when
+  work touches codeEditorSlice state, code editor lifecycle hooks, auto-save,
+  source compilation, props or slots serialization, or editor-specific component
+  and integration tests.
 ---
 
 # Canvas UI code editor
 
-Use this workflow for code editor changes in `web/modules/contrib/canvas/ui/src/features/code-editor/**`.
+Use this workflow for code editor changes in
+`web/modules/contrib/canvas/ui/src/features/code-editor/**`.
 
 ## Quick triage
 
 1. Classify the change as one of:
+
 - State shape or actions in `codeEditorSlice.ts`.
 - Lifecycle orchestration in `hooks/useCodeEditor.ts`.
 - Debounced save logic in `hooks/useAutoSave.tsx`.
 - Compilation behavior in `hooks/useSourceCode.ts`.
 - Serialization or derivation utilities in code editor utils files.
+
 2. Determine whether changes affect component source, global assets, or both.
-3. Enumerate side effects on compilation status, save status, and unsaved-change flags.
+3. Enumerate side effects on compilation status, save status, and unsaved-change
+   flags.
 
 ## Invariants to preserve
 
-- Keep `needsAutoSave` and `hasUnsavedChanges` transitions consistent with user edits.
+- Keep `needsAutoSave` and `hasUnsavedChanges` transitions consistent with user
+  edits.
 - Avoid save loops by preserving debounced and ref-guarded auto-save behavior.
 - Keep compilation error reporting explicit and user-visible.
-- Keep component props and slots serialization backward compatible unless migration is planned.
+- Keep component props and slots serialization backward compatible unless
+  migration is planned.
 
 Read `references/lifecycle.md` for detailed lifecycle and state guidance.
 
