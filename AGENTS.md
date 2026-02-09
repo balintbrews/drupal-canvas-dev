@@ -1,8 +1,8 @@
 ## Scope and repo boundaries
 
-- Treat `/Users/balint/Projects/canvas/web/modules/contrib/canvas` as the default work area.
-- Do not modify files under `/Users/balint/Projects/canvas/web/**` outside `/Users/balint/Projects/canvas/web/modules/contrib/canvas`, unless explicitly requested.
-- Only work in repo root (`/Users/balint/Projects/canvas`) when the task is about environment tooling, AI agent config, or infrastructure.
+- Treat `web/modules/contrib/canvas` as the default work area.
+- Do not modify files under `web/**` outside `web/modules/contrib/canvas`, unless explicitly requested.
+- Only work in repo root (`.`) when the task is about environment tooling, AI agent config, or infrastructure.
 
 ## Project context
 
@@ -64,8 +64,8 @@ When code changes are made, run targeted checks first, then broader checks where
 ## Skills
 
 Skill location policy:
-- When asked to create or update skills for this project, create them in-repo under `/Users/balint/Projects/canvas/.agents/skills`.
-- Do not place project skills in `~/.agents/skills` or `~/.codex/skills` unless explicitly requested.
+- When asked to create or update skills for this project, create them in-repo under `.agents/skills`.
+- Do not place project skills in home-directory skill folders unless explicitly requested.
 
 Use these focused skills for deeper workflows:
 - `canvas-ui-undo-redo` for multi-slice undo/redo architecture and safe change checklists.
