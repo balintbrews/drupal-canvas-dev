@@ -31,6 +31,8 @@ Drupal Canvas is a Drupal module with:
 - Follow AP Style for general writing conventions.
 - Avoid marketing adjectives and hype language.
 - Avoid emojis unless they materially improve clarity.
+- In project docs and skills, use project-relative paths (for example,
+  `recipes/...`), not absolute filesystem paths.
 
 ## Code comments
 

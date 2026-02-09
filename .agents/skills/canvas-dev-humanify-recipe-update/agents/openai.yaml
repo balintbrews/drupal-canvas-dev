@@ -1,0 +1,6 @@
+interface:
+  display_name: "Canvas Dev Humanify Recipe Update"
+  short_description: "Update and validate the canvas_dev_humanify recipe."
+  default_prompt:
+    "Use this skill to update recipes/canvas_dev_humanify config and default
+    content exports, apply known compatibility fixes, and verify install."
