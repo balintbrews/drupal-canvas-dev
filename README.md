@@ -22,6 +22,21 @@ development work, with workflows and tools I prefer.
      && ddev ui --install
    ```
 
+## Agent setup
+
+This project uses two agent configuration scopes:
+
+- Environment scope for root-level tooling and infrastructure tasks.
+- Canvas scope for module code work in `web/modules/contrib/canvas`.
+
+For details on workspace entrypoints and skill locations, see
+`agents/README.md`.
+
+Running `ddev clone-repo` also wires the Canvas agent files in the nested
+repository by creating symlinks for `AGENTS.md` and `.agents/skills`, and by
+adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
+`.git/info/exclude`.
+
 ## Commands
 
 | Command                 | Description                                                                                                                                                                                                                      |
@@ -34,7 +49,7 @@ development work, with workflows and tools I prefer.
 | `phpcs [path]`          | Run PHP Code Beautifier and Fixer in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                |
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                             |
 | `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas, Canvas AI, Canvas OAuth.<br><br>`--ui`: also installs Canvas Vite for UI development                                                                                 |
-| `clone-repo`            | Clone the Canvas module's repository. (Runs on the host.)                                                                                                                                                                        |
+| `clone-repo`            | Clone the Canvas module's repository, add local nested-repo excludes for `AGENTS.md` and `.agents/`, and set symlinks for `AGENTS.md` and `.agents/skills`. (Runs on the host.)                                                  |
 | `clone-repo-mercury`    | Clone the Mercury theme's repository. (Runs on the host.)                                                                                                                                                                        |
 
 See the [list of commands](https://docs.ddev.com/en/stable/users/usage/cli/)

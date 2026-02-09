@@ -8,6 +8,9 @@
 REPO_URL="git@git.drupal.org:project/canvas.git"
 CONTRIB_DIR="$DDEV_APPROOT/web/modules/contrib"
 TARGET_DIR="$DDEV_APPROOT/web/modules/contrib/canvas"
+EXCLUDE_FILE="$TARGET_DIR/.git/info/exclude"
+ROOT_AGENTS_MD_REL="../../../../agents/canvas/AGENTS.md"
+ROOT_SKILLS_REL="../../../../../agents/canvas/skills"
 
 if [ ! -d "$TARGET_DIR" ] || [ -z "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then
     echo "Directory $TARGET_DIR doesn't exist or is empty, cloning repository…"
@@ -26,3 +29,29 @@ if [ ! -d "$TARGET_DIR" ] || [ -z "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then
 else
     echo "Directory $TARGET_DIR already exists, skipping clone."
 fi
+
+if [ ! -d "$TARGET_DIR/.git" ]; then
+    echo "Error: $TARGET_DIR is not a Git repository."
+    exit 1
+fi
+
+if [ ! -f "$EXCLUDE_FILE" ]; then
+    touch "$EXCLUDE_FILE"
+fi
+
+if ! grep -qxF "AGENTS.md" "$EXCLUDE_FILE"; then
+    echo "AGENTS.md" >> "$EXCLUDE_FILE"
+fi
+
+if ! grep -qxF ".agents/" "$EXCLUDE_FILE"; then
+    echo ".agents/" >> "$EXCLUDE_FILE"
+fi
+
+ln -sfn "$ROOT_AGENTS_MD_REL" "$TARGET_DIR/AGENTS.md"
+mkdir -p "$TARGET_DIR/.agents"
+ln -sfn "$ROOT_SKILLS_REL" "$TARGET_DIR/.agents/skills"
+
+echo "Configured local excludes in $EXCLUDE_FILE: AGENTS.md, .agents/."
+echo "Configured symlinks:"
+echo "  $TARGET_DIR/AGENTS.md -> $ROOT_AGENTS_MD_REL"
+echo "  $TARGET_DIR/.agents/skills -> $ROOT_SKILLS_REL"
