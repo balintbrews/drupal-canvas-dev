@@ -12,6 +12,7 @@ Drupal Canvas includes:
 - Use DDEV-wrapped commands in this workspace.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
+- Never compare, diff, or validate work against the `7.x-1.x` branch.
 - Never run destructive Drush or site commands (for example, reinstall or
   DB-destructive operations) without explicit user approval.
 
