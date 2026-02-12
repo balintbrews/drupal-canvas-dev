@@ -1,7 +1,6 @@
 name: "Canvas Dev Humanify"
 install:
   - canvas
-  - jsonapi
 config:
   actions:
     canvas.js_component.card:

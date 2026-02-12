@@ -2,8 +2,8 @@
 
 ## Description: Drupal Canvas: Install Drupal site.
 ## Aliases: si
-## Usage: site-install [--ui] [-m|--mercury]
-## Example: "ddev site-install" or "ddev site-install --ui" or "ddev site-install -m"
+## Usage: site-install [--ui] [-m|--mercury] [--stark]
+## Example: "ddev site-install" or "ddev site-install --ui" or "ddev site-install -m" or "ddev site-install --stark"
 ## ExecRaw: true
 
 set -e
@@ -14,12 +14,16 @@ CANVAS_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --sho
 # Parse command line arguments.
 UI=false
 MERCURY=false
+STARK=false
 for arg in "$@"; do
     if [[ "$arg" == "--ui" ]]; then
         UI=true
     fi
     if [[ "$arg" == "--mercury" || "$arg" == "-m" ]]; then
         MERCURY=true
+    fi
+    if [[ "$arg" == "--stark" ]]; then
+        STARK=true
     fi
 done
 
@@ -32,7 +36,7 @@ drush site-install \
 
 # Enable modules.
 # @todo Convert enabling modules into recipes.
-MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content jsonapi_menu_items"
+MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content jsonapi jsonapi_menu_items"
 if [[ "$UI" == "true" ]]; then
     MODULES="$MODULES canvas_vite"
 fi
@@ -44,7 +48,11 @@ drush recipe ../recipes/canvas_dev_oauth
 
 if [[ "$MERCURY" == "false" ]]; then
     drush recipe ../recipes/canvas_dev_stark
-    drush recipe ../recipes/canvas_dev_humanify
+    if [[ "$STARK" == "false" ]]; then
+        drush recipe ../recipes/canvas_dev_humanify
+    else
+        drush php:eval "\Drupal::service('entity_type.manager')->getStorage('canvas_page')->create(['title' => 'Home', 'path' => ['alias' => '/home']])->save();"
+    fi
 else
     drush recipe ../recipes/canvas_dev_mercury
 fi
