@@ -17,7 +17,8 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
 - Primary targets:
   - `recipes/canvas_dev_humanify/config`
   - `recipes/canvas_dev_humanify/content`
-- Use DDEV-wrapped commands only.
+- Use DDEV wrappers for Drupal and site commands in this workflow.
+- Run repository npm formatting commands on the host machine.
 
 ## Workflow
 

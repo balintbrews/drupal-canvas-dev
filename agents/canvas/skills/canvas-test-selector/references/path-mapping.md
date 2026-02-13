@@ -20,5 +20,7 @@
 ## CLI and packages paths
 
 - Prefix: `web/modules/contrib/canvas/packages/`
+- Use host `npm` commands for package workflows. Do not wrap these commands in
+  DDEV.
 - If no documented package-specific test command exists, avoid broad guesses and
   run only verified task-specific commands.

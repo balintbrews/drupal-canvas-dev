@@ -2,8 +2,8 @@
 name: canvas-test-selector
 description:
   Select and run the minimum safe verification commands for Drupal Canvas
-  changes. Use when determining which DDEV test, analysis, or lint commands to
-  run based on changed files in UI, backend, Playwright tests, or related
+  changes. Use when determining which test, analysis, or lint commands to run
+  based on changed files in UI, backend, Playwright tests, or related
   package paths.
 ---
 
@@ -26,6 +26,7 @@ validation.
 
 ## Command matrix
 
+- UI package commands use DDEV wrappers.
 - UI targeted Vitest: `ddev n run test -- <relative-test-path-from-ui-dir>`
 - UI full Vitest after targeted pass: `ddev n run test`
 - UI targeted Cypress component spec:
@@ -35,11 +36,14 @@ validation.
 - Backend targeted PHPUnit: `ddev phpunit <relative-path-from-canvas-root>`
 - Backend static analysis: `ddev phpstan`
 - Backend coding standards: `ddev phpcs [optional-relative-path]`
+- Other non-UI package npm checks: run with host `npm` in the package
+  directory.
 
 ## Guardrails
 
 - Never run full Cypress component suite.
 - Never run Cypress end-to-end tests.
+- Do not wrap non-UI package npm commands in DDEV.
 - Do not invent unverified broad test commands for CLI package paths.
 
 ## Output format

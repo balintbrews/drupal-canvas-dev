@@ -9,7 +9,11 @@ Drupal Canvas includes:
 
 ## Environment and command policy
 
-- Use DDEV-wrapped commands in this workspace.
+- Use host machine commands by default for Node and npm workflows outside the
+  UI package.
+- Use DDEV-wrapped commands for Drupal environment workflows, and for UI
+  package workflows in `web/modules/contrib/canvas/ui` when browser-served
+  behavior is required.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
 - Never compare, diff, or validate work against the `7.x-1.x` branch.
@@ -61,6 +65,7 @@ appropriate.
 
 ### CLI package
 
-- No standardized test workflow is documented yet.
+- Run CLI and other non-UI package npm commands directly on the host machine.
+- No standardized broad test workflow is documented yet.
 - Do not guess broad test commands; ask or use only task-specific verified
   commands.

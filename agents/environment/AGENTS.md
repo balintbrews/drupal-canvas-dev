@@ -16,7 +16,10 @@ This file is for environment-level work in this repository root.
 
 ## Environment and command policy
 
-- Use DDEV-wrapped commands in this workspace.
+- Use host machine commands by default for Node and npm workflows.
+- Use DDEV-wrapped commands for Drupal environment workflows, and for UI package
+  workflows in `web/modules/contrib/canvas/ui` when browser-served behavior is
+  required.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
 - Never run destructive Drush or site commands (for example, reinstall or

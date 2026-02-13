@@ -1,5 +1,7 @@
 # Code editor test commands
 
+Use DDEV wrappers in this file because these commands target the UI package.
+
 ## Vitest
 
 - Targeted: `ddev n run test -- <relative-path-to-test-file>`
