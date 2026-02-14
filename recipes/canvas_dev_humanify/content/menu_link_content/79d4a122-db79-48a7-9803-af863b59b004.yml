@@ -1,0 +1,34 @@
+_meta:
+  version: '1.0'
+  entity_type: menu_link_content
+  uuid: 79d4a122-db79-48a7-9803-af863b59b004
+  bundle: menu_link_content
+  default_langcode: en
+default:
+  enabled:
+    -
+      value: true
+  title:
+    -
+      value: About
+  menu_name:
+    -
+      value: main
+  link:
+    -
+      uri: 'internal:/about'
+      title: ''
+      options: {  }
+      url: /about
+  external:
+    -
+      value: false
+  rediscover:
+    -
+      value: true
+  weight:
+    -
+      value: 3
+  expanded:
+    -
+      value: false

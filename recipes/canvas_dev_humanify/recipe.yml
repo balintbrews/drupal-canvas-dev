@@ -3,6 +3,9 @@ install:
   - canvas
 config:
   actions:
+    system.site:
+      simpleConfigUpdate:
+        page.front: /home
     canvas.js_component.card:
       enable: []
     canvas.js_component.footer:

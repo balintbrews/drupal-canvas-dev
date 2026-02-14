@@ -55,6 +55,22 @@ adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
 See the [list of commands](https://docs.ddev.com/en/stable/users/usage/cli/)
 provided by DDEV out-of-the box.
 
+## Export with Default Content
+
+Use `ddev drush dcer` to export specific entities to recipe content folders.
+
+Export a `canvas_page` entity:
+
+```bash
+ddev drush dcer canvas_page 1 --folder=../recipes/canvas_dev_humanify/content
+```
+
+Export a `menu_link_content` entity:
+
+```bash
+ddev drush dcer menu_link_content 1 --folder=../../recipes/canvas_dev_humanify/content
+```
+
 ## Credits
 
 My work on Drupal Canvas is made possible by [Acquia](https://www.acquia.com).
