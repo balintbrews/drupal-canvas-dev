@@ -7,3 +7,6 @@ config:
     system.theme:
       simpleConfigUpdate:
         default: stark
+    system.site:
+      simpleConfigUpdate:
+        page.front: /home

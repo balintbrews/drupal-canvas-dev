@@ -47,11 +47,10 @@ drush pm:enable --yes $MODULES
 drush recipe ../recipes/canvas_dev_oauth
 
 if [[ "$MERCURY" == "false" ]]; then
-    drush recipe ../recipes/canvas_dev_stark
     if [[ "$STARK" == "false" ]]; then
         drush recipe ../recipes/canvas_dev_humanify
     else
-        drush php:eval "\Drupal::service('entity_type.manager')->getStorage('canvas_page')->create(['title' => 'Home', 'path' => ['alias' => '/home']])->save();"
+        drush recipe ../recipes/canvas_dev_stark
     fi
 else
     drush recipe ../recipes/canvas_dev_mercury

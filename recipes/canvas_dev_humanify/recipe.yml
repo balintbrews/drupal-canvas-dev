@@ -1,8 +1,12 @@
 name: "Canvas Dev Humanify"
 install:
   - canvas
+  - stark
 config:
   actions:
+    system.theme:
+      simpleConfigUpdate:
+        default: stark
     system.site:
       simpleConfigUpdate:
         page.front: /home

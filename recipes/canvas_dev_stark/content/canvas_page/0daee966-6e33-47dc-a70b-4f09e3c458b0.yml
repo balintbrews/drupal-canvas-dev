@@ -1,0 +1,27 @@
+_meta:
+  version: '1.0'
+  entity_type: canvas_page
+  uuid: 0daee966-6e33-47dc-a70b-4f09e3c458b0
+  default_langcode: en
+default:
+  revision_user:
+    -
+      target_id: 1
+      target_uuid: ''
+  status:
+    -
+      value: true
+  owner:
+    -
+      target_id: 1
+      target_uuid: ''
+  title:
+    -
+      value: About
+  path:
+    -
+      alias: /about
+      langcode: en
+  created:
+    -
+      value: 1771107348

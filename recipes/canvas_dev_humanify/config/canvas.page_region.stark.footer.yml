@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - stark
+id: stark.footer
+region: footer
+theme: stark
+component_tree: {}
