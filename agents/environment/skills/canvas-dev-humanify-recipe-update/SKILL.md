@@ -122,7 +122,7 @@ If install fails:
 - `ddev si` may show non-fatal schema warnings for `ai_agents_test` views.
 - If install fails with a component version error like:
   - `The requested version <old> is not available. Available versions: <new>`
-  this means recipe content and component config are out of sync.
+    this means recipe content and component config are out of sync.
 - Recovery workflow for version mismatch:
   1. Restore snapshot first.
   2. Import updated `canvas.js_component.*.yml` config into the current site
@@ -131,8 +131,8 @@ If install fails:
   4. If needed, update `component_version` values in exported content to match
      the version listed as available in the install error.
   5. Re-run install validation (`ddev si`, `ddev drush st`).
-- If `recipe.yml` asset library values look stale after an update, re-export with
-  `cex` and replace both `css` and `js` entries in the same edit from
+- If `recipe.yml` asset library values look stale after an update, re-export
+  with `cex` and replace both `css` and `js` entries in the same edit from
   `canvas.asset_library.global.yml`.
 - If you see unexpected files under `web/recipes`, treat them as export
   artifacts from a wrong path and clean them up before finalizing.
