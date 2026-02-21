@@ -1,0 +1,39 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: d7082298-7cbb-45bd-87db-0bd930e5ca39
+  bundle: humanify_service
+  default_langcode: en
+default:
+  revision_uid:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: "Figma to code"
+  created:
+    - value: 1759929572
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  path:
+    - alias: ""
+      langcode: en
+  field_description:
+    - value:
+        "Imagine code that people are not terrified to look at, let alone
+        maintain."
+      format: canvas_html_block
+  field_icon:
+    - value: figma
+  field_icon_color:
+    - value: rosewater
+  field_position:
+    - value: 2

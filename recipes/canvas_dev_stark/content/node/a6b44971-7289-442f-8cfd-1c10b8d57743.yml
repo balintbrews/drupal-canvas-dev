@@ -1,0 +1,47 @@
+_meta:
+  version: '1.0'
+  entity_type: node
+  uuid: a6b44971-7289-442f-8cfd-1c10b8d57743
+  bundle: article
+  default_langcode: en
+default:
+  revision_uid:
+    -
+      target_id: 1
+      target_uuid: ''
+  status:
+    -
+      value: true
+  uid:
+    -
+      target_id: 1
+      target_uuid: ''
+  title:
+    -
+      value: 'Building a brand voice system your agents can follow'
+  created:
+    -
+      value: 1771431807
+  promote:
+    -
+      value: true
+  sticky:
+    -
+      value: false
+  path:
+    -
+      alias: ''
+      langcode: en
+  body:
+    -
+      value: '<p>Most teams have brand guidelines, but few have operational guidance that AI agents can execute reliably. A voice system should be specific enough for automation and flexible enough for people to adapt with context.</p><p>We encourage teams to separate values from style. Values define what must always be true. Style defines how those truths should feel in different moments, from onboarding emails to executive updates.</p><p>The easiest way to start is with a one-page voice matrix and a small set of approved examples. Then connect that matrix directly to your prompt templates and review workflows in a shared <a href="#">playbook</a>.</p><h2>Core ingredients of an AI-ready voice system</h2><p>A practical system reduces ambiguity and gives teams shared language for feedback.</p><ul><li>Voice principles written as do/don’t pairs.</li><li>Audience segments with preferred vocabulary and tone.</li><li>Reusable prompt scaffolds for common communication tasks.</li></ul><h3>How to operationalize in 30 days</h3><p>Focus on repeatable process before scaling to every channel.</p><ol><li>Audit current outputs and tag voice inconsistencies.</li><li>Create a small “golden set” of approved examples.</li><li>Integrate rules into generation and editing checkpoints.</li><li>Measure adherence, and refine rules each sprint.</li></ol><blockquote><p>“A voice guide is a document. A voice system is a behavior your whole organization can repeat.”</p></blockquote><p>The payoff is substantial: faster drafting, fewer revision loops, and stronger cross-team consistency. With the right structure, <strong>brand quality scales</strong>, and the final experience feels unmistakably human, not mechanically uniform or <em>synthetically flat</em>.</p>'
+      format: basic_html
+      summary: ''
+  comment:
+    -
+      status: 2
+      cid: 0
+      last_comment_timestamp: 1771431818
+      last_comment_name: ''
+      last_comment_uid: 1
+      comment_count: 0
