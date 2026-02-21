@@ -37,9 +37,8 @@ slots:
     title: Branding
 js:
   original: |
-    import FormattedText from "@/lib/FormattedText";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn, FormattedText } from "drupal-canvas";
 
     const Footer = ({
       branding,
@@ -93,9 +92,8 @@ js:
     export default Footer;
   compiled: |
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import FormattedText from "@/lib/FormattedText";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn, FormattedText } from "drupal-canvas";
     const Footer = ({ branding, copyrightNotice, darkVariant, backgroundColor })=>{
         var _branding_props_value, _branding_props;
         const footerVariants = cva("", {

@@ -1,47 +1,65 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: eed9ba23-bafe-43b9-851f-754f6f5e876c
   bundle: article
   default_langcode: en
 default:
   revision_uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   title:
-    -
-      value: 'Why AI-first teams still need human creative direction'
+    - value: "Why AI-first teams still need human creative direction"
   created:
-    -
-      value: 1771431421
+    - value: 1771431421
   promote:
-    -
-      value: true
+    - value: true
   sticky:
-    -
-      value: false
+    - value: false
   path:
-    -
-      alias: ''
+    - alias: ""
       langcode: en
   body:
-    -
-      value: '<p>AI systems can generate dozens of campaign concepts before your first coffee, but volume is not the same thing as clarity. Teams that grow fastest are the ones that pair automation with <strong>intentional creative leadership</strong> at each decision point.</p><p>In practice, that means treating models as collaborators, not autopilot. You can move quickly, iterate broadly, and still preserve a recognizable perspective that customers trust.</p><p>One useful starting point is to define a short “taste guide” and make it visible to everyone in the workflow. We often include language for pacing, emotional tone, and acceptable claims so every draft feels cohesive; a simple framework can prevent expensive rework <a href="#">across channels</a>.</p><h2>Where creative direction adds value</h2><p>Creative direction becomes most visible when teams are under deadline pressure and publication volume is high.</p><ul><li>It filters noisy options into a small set of usable directions.</li><li>It protects voice consistency across product, marketing, and sales.</li><li>It helps teams prioritize what is strategic versus merely novel.</li></ul><h3>A practical review rhythm</h3><p>Keep the review cadence light, and repeatable, so speed does not stall.</p><ol><li>Generate broad options with clear prompt constraints.</li><li>Evaluate drafts against voice, audience, and business goal.</li><li>Refine the selected direction with targeted human edits.</li><li>Publish and capture performance signals for the next cycle.</li></ol><blockquote><p>“AI can produce alternatives at scale, but people decide which ideas deserve to exist in the real world.”</p></blockquote><p>Teams do not need to choose between speed and quality. The highest leverage approach is a hybrid model where systems handle throughput, and humans provide <em>judgment, taste, and narrative control</em>.</p>'
+    - value:
+        '<p>AI systems can generate dozens of campaign concepts before your
+        first coffee, but volume is not the same thing as clarity. Teams that
+        grow fastest are the ones that pair automation with <strong>intentional
+        creative leadership</strong> at each decision point.</p><p>In practice,
+        that means treating models as collaborators, not autopilot. You can move
+        quickly, iterate broadly, and still preserve a recognizable perspective
+        that customers trust.</p><p>One useful starting point is to define a
+        short “taste guide” and make it visible to everyone in the workflow. We
+        often include language for pacing, emotional tone, and acceptable claims
+        so every draft feels cohesive; a simple framework can prevent expensive
+        rework <a href="#">across channels</a>.</p><h2>Where creative direction
+        adds value</h2><p>Creative direction becomes most visible when teams are
+        under deadline pressure and publication volume is high.</p><ul><li>It
+        filters noisy options into a small set of usable directions.</li><li>It
+        protects voice consistency across product, marketing, and
+        sales.</li><li>It helps teams prioritize what is strategic versus merely
+        novel.</li></ul><h3>A practical review rhythm</h3><p>Keep the review
+        cadence light, and repeatable, so speed does not
+        stall.</p><ol><li>Generate broad options with clear prompt
+        constraints.</li><li>Evaluate drafts against voice, audience, and
+        business goal.</li><li>Refine the selected direction with targeted human
+        edits.</li><li>Publish and capture performance signals for the next
+        cycle.</li></ol><blockquote><p>“AI can produce alternatives at scale,
+        but people decide which ideas deserve to exist in the real
+        world.”</p></blockquote><p>Teams do not need to choose between speed and
+        quality. The highest leverage approach is a hybrid model where systems
+        handle throughput, and humans provide <em>judgment, taste, and narrative
+        control</em>.</p>'
       format: basic_html
-      summary: ''
+      summary: ""
   comment:
-    -
-      status: 2
+    - status: 2
       cid: 0
       last_comment_timestamp: 1771431755
-      last_comment_name: ''
+      last_comment_name: ""
       last_comment_uid: 1
       comment_count: 0

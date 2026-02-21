@@ -1,34 +1,26 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: menu_link_content
   uuid: 9f32f72e-6711-4b26-8473-f4922adc9d41
   bundle: menu_link_content
   default_langcode: en
 default:
   enabled:
-    -
-      value: true
+    - value: true
   title:
-    -
-      value: Careers
+    - value: Careers
   menu_name:
-    -
-      value: main
+    - value: main
   link:
-    -
-      uri: 'internal:/careers'
-      title: ''
-      options: {  }
+    - uri: "internal:/careers"
+      title: ""
+      options: {}
       url: /careers
   external:
-    -
-      value: false
+    - value: false
   rediscover:
-    -
-      value: true
+    - value: true
   weight:
-    -
-      value: 4
+    - value: 4
   expanded:
-    -
-      value: false
+    - value: false

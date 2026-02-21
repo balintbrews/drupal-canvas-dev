@@ -23,7 +23,7 @@ props:
 slots: {}
 js:
   original: |
-    import FormattedText from "@/lib/FormattedText";
+    import { FormattedText } from "drupal-canvas";
 
     const Paragraph = ({ text }) => {
       return (
@@ -39,7 +39,7 @@ js:
     export default Paragraph;
   compiled: |
     import { jsx as _jsx } from "react/jsx-runtime";
-    import FormattedText from "@/lib/FormattedText";
+    import { FormattedText } from "drupal-canvas";
     const Paragraph = ({ text })=>{
         return /*#__PURE__*/ _jsx(FormattedText, {
             as: "p",

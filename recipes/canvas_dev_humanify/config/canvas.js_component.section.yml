@@ -3,8 +3,7 @@ status: true
 dependencies: {}
 machineName: section
 name: Section
-required:
-  - backgroundColor
+required: {}
 props:
   darkVariant:
     title: "Dark variant"
@@ -31,10 +30,10 @@ slots:
     title: Content
 js:
   original: |
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
 
-    const Section = ({ content, darkVariant, backgroundColor = "base" }) => {
+    const Section = ({ content, darkVariant, backgroundColor }) => {
       const sectionVariants = cva("", {
         variants: {
           colorScheme: {
@@ -49,7 +48,6 @@ js:
         },
         defaultVariants: {
           colorScheme: "light",
-          backgroundColor: "base",
         },
       });
 
@@ -72,9 +70,9 @@ js:
     export default Section;
   compiled: |
     import { jsx as _jsx } from "react/jsx-runtime";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
-    const Section = ({ content, darkVariant, backgroundColor = "base" })=>{
+    import { cn } from "drupal-canvas";
+    const Section = ({ content, darkVariant, backgroundColor })=>{
         const sectionVariants = cva("", {
             variants: {
                 colorScheme: {
@@ -88,8 +86,7 @@ js:
                 }
             },
             defaultVariants: {
-                colorScheme: "light",
-                backgroundColor: "base"
+                colorScheme: "light"
             }
         });
         return /*#__PURE__*/ _jsx("section", {

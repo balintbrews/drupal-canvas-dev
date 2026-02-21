@@ -1,47 +1,66 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 5ffdfdfe-9bdc-42d2-9fc9-a71219c03be5
   bundle: article
   default_langcode: en
 default:
   revision_uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   title:
-    -
-      value: 'Making executive communication clear in AI-accelerated organizations'
+    - value:
+        "Making executive communication clear in AI-accelerated organizations"
   created:
-    -
-      value: 1771431877
+    - value: 1771431877
   promote:
-    -
-      value: true
+    - value: true
   sticky:
-    -
-      value: false
+    - value: false
   path:
-    -
-      alias: ''
+    - alias: ""
       langcode: en
   body:
-    -
-      value: '<p>Leaders now receive more information than ever, generated faster than any team can manually parse. The risk is not lack of insight; it is signal dilution, where urgency and importance become hard to separate.</p><p>Executive communication should reduce complexity, not mirror it. When updates are structured, concise, and grounded in business decisions, leadership teams can act sooner with greater confidence.</p><p>One effective tactic is to standardize memo architecture across functions. A shared format helps readers scan quickly and compare across teams without losing nuance; it also improves how drafts are generated and refined in <a href="#">AI-assisted workflows</a>.</p><h2>What every strategic update should include</h2><p>Consistent structure builds trust and lowers interpretation overhead.</p><ul><li>A concise decision statement with clear ownership.</li><li>Evidence, assumptions, and downside scenarios.</li><li>Explicit asks, dependencies, and next milestones.</li></ul><h3>How to improve memo quality each quarter</h3><p>Treat communication quality as a capability that can be trained.</p><ol><li>Collect a baseline set of recent leadership updates.</li><li>Define quality criteria and a review rubric.</li><li>Coach teams using side-by-side before/after examples.</li><li>Track decision speed and follow-through as outcomes.</li></ol><blockquote><p>“When communication is clear, strategy moves from discussion to execution.”</p></blockquote><p>In AI-accelerated environments, the leaders who communicate best create decisive advantages. They use generated drafts for speed, then apply <strong>human editorial judgment</strong> to ensure the final message is credible, actionable, and <em>aligned to real organizational context</em>.</p>'
+    - value:
+        '<p>Leaders now receive more information than ever, generated faster
+        than any team can manually parse. The risk is not lack of insight; it is
+        signal dilution, where urgency and importance become hard to
+        separate.</p><p>Executive communication should reduce complexity, not
+        mirror it. When updates are structured, concise, and grounded in
+        business decisions, leadership teams can act sooner with greater
+        confidence.</p><p>One effective tactic is to standardize memo
+        architecture across functions. A shared format helps readers scan
+        quickly and compare across teams without losing nuance; it also improves
+        how drafts are generated and refined in <a href="#">AI-assisted
+        workflows</a>.</p><h2>What every strategic update should
+        include</h2><p>Consistent structure builds trust and lowers
+        interpretation overhead.</p><ul><li>A concise decision statement with
+        clear ownership.</li><li>Evidence, assumptions, and downside
+        scenarios.</li><li>Explicit asks, dependencies, and next
+        milestones.</li></ul><h3>How to improve memo quality each
+        quarter</h3><p>Treat communication quality as a capability that can be
+        trained.</p><ol><li>Collect a baseline set of recent leadership
+        updates.</li><li>Define quality criteria and a review
+        rubric.</li><li>Coach teams using side-by-side before/after
+        examples.</li><li>Track decision speed and follow-through as
+        outcomes.</li></ol><blockquote><p>“When communication is clear, strategy
+        moves from discussion to execution.”</p></blockquote><p>In
+        AI-accelerated environments, the leaders who communicate best create
+        decisive advantages. They use generated drafts for speed, then apply
+        <strong>human editorial judgment</strong> to ensure the final message is
+        credible, actionable, and <em>aligned to real organizational
+        context</em>.</p>'
       format: basic_html
-      summary: ''
+      summary: ""
   comment:
-    -
-      status: 2
+    - status: 2
       cid: 0
       last_comment_timestamp: 1771431887
-      last_comment_name: ''
+      last_comment_name: ""
       last_comment_uid: 1
       comment_count: 0

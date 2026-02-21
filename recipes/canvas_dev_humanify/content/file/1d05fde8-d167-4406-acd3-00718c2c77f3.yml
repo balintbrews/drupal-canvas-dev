@@ -1,29 +1,22 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: file
   uuid: 1d05fde8-d167-4406-acd3-00718c2c77f3
   default_langcode: en
 default:
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   filename:
-    -
-      value: thestandingdesk-Wi0eOXdoVwo-unsplash.jpg
+    - value: thestandingdesk-Wi0eOXdoVwo-unsplash.jpg
   uri:
-    -
-      value: 'public://2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg'
+    - value: "public://2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg"
       url: /sites/default/files/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg
   filemime:
-    -
-      value: image/jpeg
+    - value: image/jpeg
   filesize:
-    -
-      value: 379968
+    - value: 379968
   status:
-    -
-      value: true
+    - value: true
   created:
-    -
-      value: 1771105283
+    - value: 1771105283

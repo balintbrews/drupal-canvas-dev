@@ -15,7 +15,7 @@ js:
   original: |
     // SVG source: https://www.svgrepo.com/svg/200008/human-resources-search.
 
-    import { cn } from "@/lib/utils";
+    import { cn } from "drupal-canvas";
 
     const Logo = ({ linkToFrontPage = true, className }) => {
       const Element = linkToFrontPage ? "a" : "div";
@@ -138,7 +138,7 @@ js:
         return target;
     }
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { cn } from "@/lib/utils";
+    import { cn } from "drupal-canvas";
     const Logo = ({ linkToFrontPage = true, className })=>{
         const Element = linkToFrontPage ? "a" : "div";
         return /*#__PURE__*/ _jsxs(Element, _object_spread_props(_object_spread({

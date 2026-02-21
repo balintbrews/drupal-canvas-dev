@@ -1,47 +1,65 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 35651b44-a325-4cd6-83b3-b8569998ab31
   bundle: article
   default_langcode: en
 default:
   revision_uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   title:
-    -
-      value: 'From campaign concepts to measurable pipeline impact'
+    - value: "From campaign concepts to measurable pipeline impact"
   created:
-    -
-      value: 1771431848
+    - value: 1771431848
   promote:
-    -
-      value: true
+    - value: true
   sticky:
-    -
-      value: false
+    - value: false
   path:
-    -
-      alias: ''
+    - alias: ""
       langcode: en
   body:
-    -
-      value: '<p>AI makes ideation cheap, and that is a major advantage. Still, many teams struggle to connect campaign concepts to real business outcomes. The missing layer is often strategic framing, not more creative volume.</p><p>Effective campaigns begin with a clear business constraint: revenue target, segment focus, or sales-cycle friction. Once that context is explicit, creative work can remain bold while still serving commercial goals.</p><p>We recommend building each campaign as a hypothesis with defined success metrics and clear checkpoints. That structure helps teams make faster adjustments based on data, and it keeps creative choices grounded in <a href="#">pipeline reality</a>.</p><h2>What high-performing campaign teams do consistently</h2><p>They treat campaign design as an operating system, not a one-off launch.</p><ul><li>Align creative themes to one primary buyer problem.</li><li>Set leading indicators before channels go live.</li><li>Review qualitative and quantitative signals in the same meeting.</li></ul><h3>A simple concept-to-impact workflow</h3><p>This framework is lightweight enough for weekly execution.</p><ol><li>Generate multiple campaign concepts with model support.</li><li>Score concepts against strategic fit and audience relevance.</li><li>Pilot one concept in a constrained channel mix.</li><li>Scale only after early evidence supports expansion.</li></ol><blockquote><p>“Creative bravery and operational discipline are not opposites; they are how durable growth is built.”</p></blockquote><p>Teams that combine automation with decision discipline improve both speed, and quality over time. The strongest campaigns do not just look impressive, they drive <strong>observable business movement</strong> and remain relevant through iteration, even when market signals are <em>changing quickly</em>.</p>'
+    - value:
+        '<p>AI makes ideation cheap, and that is a major advantage. Still, many
+        teams struggle to connect campaign concepts to real business outcomes.
+        The missing layer is often strategic framing, not more creative
+        volume.</p><p>Effective campaigns begin with a clear business
+        constraint: revenue target, segment focus, or sales-cycle friction. Once
+        that context is explicit, creative work can remain bold while still
+        serving commercial goals.</p><p>We recommend building each campaign as a
+        hypothesis with defined success metrics and clear checkpoints. That
+        structure helps teams make faster adjustments based on data, and it
+        keeps creative choices grounded in <a href="#">pipeline
+        reality</a>.</p><h2>What high-performing campaign teams do
+        consistently</h2><p>They treat campaign design as an operating system,
+        not a one-off launch.</p><ul><li>Align creative themes to one primary
+        buyer problem.</li><li>Set leading indicators before channels go
+        live.</li><li>Review qualitative and quantitative signals in the same
+        meeting.</li></ul><h3>A simple concept-to-impact workflow</h3><p>This
+        framework is lightweight enough for weekly
+        execution.</p><ol><li>Generate multiple campaign concepts with model
+        support.</li><li>Score concepts against strategic fit and audience
+        relevance.</li><li>Pilot one concept in a constrained channel
+        mix.</li><li>Scale only after early evidence supports
+        expansion.</li></ol><blockquote><p>“Creative bravery and operational
+        discipline are not opposites; they are how durable growth is
+        built.”</p></blockquote><p>Teams that combine automation with decision
+        discipline improve both speed, and quality over time. The strongest
+        campaigns do not just look impressive, they drive <strong>observable
+        business movement</strong> and remain relevant through iteration, even
+        when market signals are <em>changing quickly</em>.</p>'
       format: basic_html
-      summary: ''
+      summary: ""
   comment:
-    -
-      status: 2
+    - status: 2
       cid: 0
       last_comment_timestamp: 1771431863
-      last_comment_name: ''
+      last_comment_name: ""
       last_comment_uid: 1
       comment_count: 0

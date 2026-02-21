@@ -1,27 +1,21 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: canvas_page
   uuid: bebf99c4-397b-4b0c-97dc-6f0d91fd0ccb
   default_langcode: en
 default:
   revision_user:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   status:
-    -
-      value: true
+    - value: true
   owner:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   title:
-    -
-      value: Services
+    - value: Services
   path:
-    -
-      alias: /services
+    - alias: /services
       langcode: en
   created:
-    -
-      value: 1771107281
+    - value: 1771107281

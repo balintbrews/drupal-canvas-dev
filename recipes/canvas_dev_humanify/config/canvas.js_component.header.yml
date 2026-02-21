@@ -31,8 +31,8 @@ slots:
     title: Navigation
 js:
   original: |
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
 
     const Header = ({ branding, navigation, darkVariant, backgroundColor }) => {
       const headerVariants = cva("", {
@@ -81,8 +81,8 @@ js:
     export default Header;
   compiled: |
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
     const Header = ({ branding, navigation, darkVariant, backgroundColor })=>{
         var _branding_props_value, _branding_props;
         const headerVariants = cva("", {

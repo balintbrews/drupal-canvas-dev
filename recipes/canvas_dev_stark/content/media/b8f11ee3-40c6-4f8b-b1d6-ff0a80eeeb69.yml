@@ -1,5 +1,5 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: media
   uuid: b8f11ee3-40c6-4f8b-b1d6-ff0a80eeeb69
   bundle: image
@@ -8,28 +8,22 @@ _meta:
     1d05fde8-d167-4406-acd3-00718c2c77f3: file
 default:
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   name:
-    -
-      value: thestandingdesk-Wi0eOXdoVwo-unsplash.jpg
+    - value: thestandingdesk-Wi0eOXdoVwo-unsplash.jpg
   created:
-    -
-      value: 1771105283
+    - value: 1771105283
   path:
-    -
-      alias: ''
+    - alias: ""
       langcode: en
   field_media_image:
-    -
-      entity: 1d05fde8-d167-4406-acd3-00718c2c77f3
-      alt: 'People working at standing desks'
-      title: ''
+    - entity: 1d05fde8-d167-4406-acd3-00718c2c77f3
+      alt: "People working at standing desks"
+      title: ""
       width: 2400
       height: 1600
-      srcset_candidate_uri_template: '/sites/default/files/styles/canvas_parametrized_width--{width}/public/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg.avif?itok=yz9xU7fc'
-      src_with_alternate_widths: '/sites/default/files/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg?alternateWidths=/sites/default/files/styles/canvas_parametrized_width--%7Bwidth%7D/public/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg.avif%3Fitok%3Dyz9xU7fc'
+      srcset_candidate_uri_template: "/sites/default/files/styles/canvas_parametrized_width--{width}/public/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg.avif?itok=yz9xU7fc"
+      src_with_alternate_widths: "/sites/default/files/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg?alternateWidths=/sites/default/files/styles/canvas_parametrized_width--%7Bwidth%7D/public/2026-02/thestandingdesk-Wi0eOXdoVwo-unsplash.jpg.avif%3Fitok%3Dyz9xU7fc"

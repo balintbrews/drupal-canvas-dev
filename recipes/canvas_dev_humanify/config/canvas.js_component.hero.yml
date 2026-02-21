@@ -66,9 +66,8 @@ props:
 slots: {}
 js:
   original: |
-    import FormattedText from "@/lib/FormattedText";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn, FormattedText } from "drupal-canvas";
 
     const Hero = ({
       title,
@@ -145,9 +144,8 @@ js:
     export default Hero;
   compiled: |
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import FormattedText from "@/lib/FormattedText";
-    import { cn } from "@/lib/utils";
     import { cva } from "class-variance-authority";
+    import { cn, FormattedText } from "drupal-canvas";
     const Hero = ({ title, description, buttonLabel, buttonLink, image, darkVariant, backgroundColor })=>{
         const heroVariants = cva("", {
             variants: {

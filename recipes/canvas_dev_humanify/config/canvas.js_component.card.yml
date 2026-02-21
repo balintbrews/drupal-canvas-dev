@@ -87,8 +87,8 @@ props:
 slots: {}
 js:
   original: |
-    import FormattedText from "@/lib/FormattedText";
     import { cva } from "class-variance-authority";
+    import { FormattedText } from "drupal-canvas";
 
     const Card = ({ title, description, iconNameFromLucide, iconColor }) => {
       const cardVariants = cva("size-8", {
@@ -145,8 +145,8 @@ js:
     export default Card;
   compiled: |
     import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import FormattedText from "@/lib/FormattedText";
     import { cva } from "class-variance-authority";
+    import { FormattedText } from "drupal-canvas";
     const Card = ({ title, description, iconNameFromLucide, iconColor })=>{
         const cardVariants = cva("size-8", {
             variants: {

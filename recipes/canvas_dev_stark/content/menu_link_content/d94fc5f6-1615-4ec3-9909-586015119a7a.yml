@@ -1,34 +1,26 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: menu_link_content
   uuid: d94fc5f6-1615-4ec3-9909-586015119a7a
   bundle: menu_link_content
   default_langcode: en
 default:
   enabled:
-    -
-      value: true
+    - value: true
   title:
-    -
-      value: Services
+    - value: Services
   menu_name:
-    -
-      value: main
+    - value: main
   link:
-    -
-      uri: 'internal:/services'
-      title: ''
-      options: {  }
+    - uri: "internal:/services"
+      title: ""
+      options: {}
       url: /services
   external:
-    -
-      value: false
+    - value: false
   rediscover:
-    -
-      value: true
+    - value: true
   weight:
-    -
-      value: 1
+    - value: 1
   expanded:
-    -
-      value: false
+    - value: false

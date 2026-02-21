@@ -1,47 +1,63 @@
 _meta:
-  version: '1.0'
+  version: "1.0"
   entity_type: node
   uuid: 32ed344b-2f04-451e-8ac9-46f6a3150cfd
   bundle: article
   default_langcode: en
 default:
   revision_uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   status:
-    -
-      value: true
+    - value: true
   uid:
-    -
-      target_id: 1
-      target_uuid: ''
+    - target_id: 1
+      target_uuid: ""
   title:
-    -
-      value: 'How to turn model output into product stories people remember'
+    - value: "How to turn model output into product stories people remember"
   created:
-    -
-      value: 1771431764
+    - value: 1771431764
   promote:
-    -
-      value: true
+    - value: true
   sticky:
-    -
-      value: false
+    - value: false
   path:
-    -
-      alias: ''
+    - alias: ""
       langcode: en
   body:
-    -
-      value: '<p>Product teams now have unlimited raw material: summaries, feature explanations, and launch copy generated in seconds. The challenge is not writing more; it is choosing the story people can actually repeat.</p><p>We usually begin with customer tension, not feature inventory. Start by naming what is frustrating today, then show how the product changes that moment in concrete terms.</p><p>If you need inspiration, collect a handful of support tickets and sales call quotes, and map them into one narrative arc. A strong narrative is easier to brief internally, easier to localize, and easier to adapt for <a href="#">release notes</a>.</p><h2>Build stories around outcomes</h2><p>Outcome-centered messaging keeps teams aligned when launch pressure increases.</p><ul><li>Describe the user problem in plain language.</li><li>State the product change that resolves the problem.</li><li>Explain the measurable result the user can expect.</li></ul><h3>Drafting checklist for launch teams</h3><p>Use this sequence when converting rough model output into launch-ready communication.</p><ol><li>Identify one audience and one primary job to be done.</li><li>Cut all claims that are not supported by product behavior.</li><li>Rewrite for voice consistency and scanning readability.</li><li>Validate copy with product, design, and support leads.</li></ol><blockquote><p>“Features explain what changed. Stories explain why anyone should care.”</p></blockquote><p>The fastest teams treat AI drafts as a starting point and apply <strong>editorial discipline</strong> before publishing. That final human pass creates the difference between content that is technically correct and messaging that feels <em>clear, credible, and memorable</em>.</p>'
+    - value:
+        '<p>Product teams now have unlimited raw material: summaries, feature
+        explanations, and launch copy generated in seconds. The challenge is not
+        writing more; it is choosing the story people can actually
+        repeat.</p><p>We usually begin with customer tension, not feature
+        inventory. Start by naming what is frustrating today, then show how the
+        product changes that moment in concrete terms.</p><p>If you need
+        inspiration, collect a handful of support tickets and sales call quotes,
+        and map them into one narrative arc. A strong narrative is easier to
+        brief internally, easier to localize, and easier to adapt for <a
+        href="#">release notes</a>.</p><h2>Build stories around
+        outcomes</h2><p>Outcome-centered messaging keeps teams aligned when
+        launch pressure increases.</p><ul><li>Describe the user problem in plain
+        language.</li><li>State the product change that resolves the
+        problem.</li><li>Explain the measurable result the user can
+        expect.</li></ul><h3>Drafting checklist for launch teams</h3><p>Use this
+        sequence when converting rough model output into launch-ready
+        communication.</p><ol><li>Identify one audience and one primary job to
+        be done.</li><li>Cut all claims that are not supported by product
+        behavior.</li><li>Rewrite for voice consistency and scanning
+        readability.</li><li>Validate copy with product, design, and support
+        leads.</li></ol><blockquote><p>“Features explain what changed. Stories
+        explain why anyone should care.”</p></blockquote><p>The fastest teams
+        treat AI drafts as a starting point and apply <strong>editorial
+        discipline</strong> before publishing. That final human pass creates the
+        difference between content that is technically correct and messaging
+        that feels <em>clear, credible, and memorable</em>.</p>'
       format: basic_html
-      summary: ''
+      summary: ""
   comment:
-    -
-      status: 2
+    - status: 2
       cid: 0
       last_comment_timestamp: 1771431786
-      last_comment_name: ''
+      last_comment_name: ""
       last_comment_uid: 1
       comment_count: 0
