@@ -3,8 +3,8 @@ name: canvas-test-selector
 description:
   Select and run the minimum safe verification commands for Drupal Canvas
   changes. Use when determining which test, analysis, or lint commands to run
-  based on changed files in UI, backend, Playwright tests, or related
-  package paths.
+  based on changed files in UI, backend, Playwright tests, or related package
+  paths.
 ---
 
 # Canvas test selector
@@ -36,8 +36,10 @@ validation.
 - Backend targeted PHPUnit: `ddev phpunit <relative-path-from-canvas-root>`
 - Backend static analysis: `ddev phpstan`
 - Backend coding standards: `ddev phpcs [optional-relative-path]`
-- Other non-UI package npm checks: run with host `npm` in the package
-  directory.
+- Other non-UI package npm checks: run with host `npm` in the package directory.
+- Type-checking for packages is typically package-local. Prefer
+  `npm run type-check` in each impacted package.
+- There is no default root-level type-check command that runs every package.
 
 ## Guardrails
 

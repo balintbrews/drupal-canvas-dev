@@ -3,5 +3,5 @@ interface:
   short_description: "Choose minimal safe Canvas verification commands."
   default_prompt:
     "Use this skill to map changed Drupal Canvas paths to the minimum safe set
-    of test and validation commands, using DDEV for UI and Drupal workflows,
-    and host npm for non-UI packages."
+    of test and validation commands, using DDEV for UI and Drupal workflows, and
+    host npm for non-UI packages."

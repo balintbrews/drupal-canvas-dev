@@ -9,11 +9,11 @@ Drupal Canvas includes:
 
 ## Environment and command policy
 
-- Use host machine commands by default for Node and npm workflows outside the
-  UI package.
-- Use DDEV-wrapped commands for Drupal environment workflows, and for UI
-  package workflows in `web/modules/contrib/canvas/ui` when browser-served
-  behavior is required.
+- Use host machine commands by default for Node and npm workflows outside the UI
+  package.
+- Use DDEV-wrapped commands for Drupal environment workflows, and for UI package
+  workflows in `web/modules/contrib/canvas/ui` when browser-served behavior is
+  required.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
 - Never compare, diff, or validate work against the `7.x-1.x` branch.
@@ -42,6 +42,21 @@ Drupal Canvas includes:
 When code changes are made, run targeted checks first, then broader checks where
 appropriate.
 
+After changes, run `npm run fix` from the repository root to apply ESLint and
+Prettier fixes, then fix any remaining issues and re-run it.
+
+### Packages (`packages/*`)
+
+- Run package npm commands directly on the host machine.
+- In this monorepo, type-checking is usually package-local via each workspace's
+  `type-check` script.
+- There is no single root type-check orchestrator for all packages, so run
+  `npm run type-check` in each impacted package.
+- If an impacted package defines a `test` script, run `npm run test` in that
+  package.
+- If no `test` script is defined, do not guess broad test commands; ask or use
+  only task-specific verified commands.
+
 ### UI (`ui`)
 
 - Run relevant Vitest files first: `ddev n run test -- <relative-test-path>`.
@@ -62,10 +77,3 @@ appropriate.
 - Run static analysis after backend changes: `ddev phpstan`.
 - Run coding standards checks and fixes after backend changes: `ddev phpcs`
   (optionally scoped to a relative path).
-
-### CLI package
-
-- Run CLI and other non-UI package npm commands directly on the host machine.
-- No standardized broad test workflow is documented yet.
-- Do not guess broad test commands; ask or use only task-specific verified
-  commands.
