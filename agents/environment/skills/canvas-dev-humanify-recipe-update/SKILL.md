@@ -79,6 +79,22 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
 - `npm run code:fix`
 - This runs Prettier.
 
+8. Clean up temporary export artifacts before finishing.
+
+- Remove temporary config export directories created during this workflow:
+  - `rm -rf <tmp_dir>`
+  - Example names used in this repo include:
+    - `asset_export_tmp`
+    - `canvas_export_temp`
+    - `canvas_export_new`
+    - `config_sync_temp`
+- Remove accidental recipe export output under `web/recipes` if present:
+  - `rm -rf web/recipes/canvas_dev_humanify`
+- Verify cleanup:
+  - No temporary directories remain in the repository root.
+  - No `content_new` directories remain under `web/recipes`.
+  - No `web/recipes/canvas_dev_humanify` directory remains.
+
 ## Validation
 
 Validate install flow:
@@ -107,5 +123,7 @@ If install fails:
 - If `recipe.yml` asset library values look stale after an update, re-export with
   `cex` and replace both `css` and `js` entries in the same edit from
   `canvas.asset_library.global.yml`.
+- If you see unexpected files under `web/recipes`, treat them as export
+  artifacts from a wrong path and clean them up before finalizing.
 - If `dcer` fails due exporter/type compatibility errors, stop and escalate to a
   separate backend/PHP task instead of patching module PHP in this workflow.
