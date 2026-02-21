@@ -58,7 +58,23 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
   - `recipes/canvas_dev_humanify/config/canvas.js_component*.yml`
 - Remove `_core` blocks (including `default_config_hash`) from the same files.
 
-6. Run formatting fixes from the project root.
+6. Refresh `canvas.asset_library.global` values in
+   `recipes/canvas_dev_humanify/recipe.yml`.
+
+- Source of truth:
+  - `ddev drush cex --destination=../<tmp_dir> -y`
+  - `../<tmp_dir>/canvas.asset_library.global.yml`
+- Do not use `ddev drush config:get ...` as the source for large payload updates
+  to recipe `setMultiple` values. Its output can be hard to apply reliably for
+  large `css`/`js` blocks.
+- Update `config.actions.canvas.asset_library.global.setMultiple` in one pass
+  using exported values:
+  - `property_name: css` -> `value` from exported `css`
+  - `property_name: js` -> `value` from exported `js`
+- Keep both keys (`css` and `js`) synchronized together to avoid partial/stale
+  recipe values.
+
+7. Run formatting fixes from the project root.
 
 - `npm run code:fix`
 - This runs Prettier.
@@ -88,5 +104,8 @@ If install fails:
   - `config:export` (`cex`)
   - `default-content:export-references` (`dcer`)
 - `ddev si` may show non-fatal schema warnings for `ai_agents_test` views.
+- If `recipe.yml` asset library values look stale after an update, re-export with
+  `cex` and replace both `css` and `js` entries in the same edit from
+  `canvas.asset_library.global.yml`.
 - If `dcer` fails due exporter/type compatibility errors, stop and escalate to a
   separate backend/PHP task instead of patching module PHP in this workflow.
