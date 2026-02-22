@@ -40,7 +40,8 @@ webimage_extra_packages:
   # Browser for Cypress to test against
   - chromium
   # Libraries for setting up noVNC to watch Cypress tests
-  - novnc
+  # novnc is installed via .ddev/web-build/Dockerfile to work around a Perl
+  # taint-mode failure in the package's postinst script.
   - x11vnc
   # Lightweight window manager for full-screen applications
   - fluxbox
