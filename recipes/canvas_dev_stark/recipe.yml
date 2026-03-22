@@ -3,6 +3,11 @@ install:
   - canvas
   - stark
 config:
+  strict:
+    # Canvas creates block-backed component entities during install, so these
+    # exported component configs are disabled with config actions instead.
+    - canvas.page_region.stark.footer
+    - canvas.page_region.stark.header
   actions:
     system.theme:
       simpleConfigUpdate:
@@ -10,3 +15,15 @@ config:
     system.site:
       simpleConfigUpdate:
         page.front: /home
+    canvas.component.block.system_menu_block.footer:
+      disable: []
+    canvas.component.block.system_menu_block.main:
+      disable: []
+    canvas.component.block.system_breadcrumb_block:
+      disable: []
+    canvas.component.block.system_messages_block:
+      disable: []
+    canvas.component.block.system_powered_by_block:
+      disable: []
+    canvas.component.block.system_branding_block:
+      disable: []
