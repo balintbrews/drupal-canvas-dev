@@ -26,6 +26,10 @@ default:
   scopes:
     - scope_id: canvas_asset_library
     - scope_id: canvas_js_component
+    - scope_id: canvas_page_create
+    - scope_id: canvas_page_delete
+    - scope_id: canvas_page_edit
+    - scope_id: canvas_page_read
   access_token_expiration:
     - value: 31556952
   refresh_token_expiration:
