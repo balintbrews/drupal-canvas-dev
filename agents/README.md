@@ -33,6 +33,7 @@ When you open one of those workspaces, the matching scope is used automatically.
 Environment skills:
 
 - `agents/environment/skills/canvas-dev-humanify-recipe-update/SKILL.md`
+- `agents/environment/skills/drupalorg-issue-writer/SKILL.md`
 
 Canvas skills:
 
