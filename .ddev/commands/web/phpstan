@@ -1,14 +1,38 @@
 #!/bin/bash
 
 ## Description: Drupal Canvas: Run PHPStan in the Canvas module's codebase.
-## Usage: phpstan
-## Example: "ddev phpstan"
+## Usage: phpstan [paths...]
+## Example: "ddev phpstan" or "ddev phpstan modules/contrib/canvas/src/Entity/BrandKit.php"
 ## ExecRaw: true
 
 cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
 
+CANVAS_ROOT="modules/contrib/canvas"
+TARGETS=()
+
+if [ "$#" -eq 0 ]; then
+  TARGETS=("$CANVAS_ROOT")
+else
+  for arg in "$@"; do
+    NORMALIZED_ARG="$arg"
+
+    if [[ "$NORMALIZED_ARG" == web/* ]]; then
+      NORMALIZED_ARG="${NORMALIZED_ARG#web/}"
+    fi
+
+    if [ -e "$NORMALIZED_ARG" ]; then
+      TARGETS+=("$NORMALIZED_ARG")
+    elif [ -e "$CANVAS_ROOT/$NORMALIZED_ARG" ]; then
+      TARGETS+=("$CANVAS_ROOT/$NORMALIZED_ARG")
+    else
+      TARGETS+=("$arg")
+    fi
+  done
+fi
+
 ../vendor/bin/phpstan \
   analyze \
-  --configuration=modules/contrib/canvas/phpstan.neon \
-  --memory-limit=256M \
-  modules/contrib/canvas
+  --configuration="$CANVAS_ROOT/phpstan.neon" \
+  --autoload-file="$CANVAS_ROOT/phpstan_rules/autoload.php" \
+  --memory-limit=512M \
+  "${TARGETS[@]}"
