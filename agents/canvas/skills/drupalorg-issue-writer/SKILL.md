@@ -1,9 +1,10 @@
 ---
 name: drupalorg-issue-writer
-description: Draft a Drupal.org issue title and description in copy-paste-ready
-Markdown. Use this skill when the user asks for a Drupal.org issue, issue
-summary, or issue description based on a bug, feature request, diff, commit, or
-discussion.
+description:
+  Draft a Drupal.org issue title and description in copy-paste-ready Markdown.
+  Use this skill when the user asks for a Drupal.org issue, issue summary, or
+  issue description based on a bug, feature request, diff, commit, or
+  discussion.
 ---
 
 # Drupal.org issue writer
