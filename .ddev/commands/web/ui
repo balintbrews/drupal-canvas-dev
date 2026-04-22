@@ -26,17 +26,20 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-cd "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" || exit
+CANVAS_ROOT="$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
+UI_ROOT="$CANVAS_ROOT/ui"
+
+cd "$UI_ROOT" || exit
 
 if [ "$INSTALL_FLAG" = true ]; then
     npm install \
-        --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" \
+        --prefix "$CANVAS_ROOT" \
         || exit 1
 fi
 
 if [ "$SKIP_BUILD_FLAG" = false ]; then
     npm run build \
-        --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" \
+        --prefix "$UI_ROOT" \
         || exit 1
 fi
 
@@ -44,6 +47,6 @@ fi
 drush pm:install canvas_vite -y 2>/dev/null
 
 npm run drupaldev \
-    --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui" \
-    -- --host
+    --prefix "$UI_ROOT" \
+    -- --host \
     || exit 1
