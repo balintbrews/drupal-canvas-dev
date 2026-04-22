@@ -4,6 +4,8 @@ install:
   - canvas_oauth
   - simple_oauth
   - consumers
+recipes:
+  - ./core/recipes/image_media_type
 config:
   import:
     canvas_oauth: "*"

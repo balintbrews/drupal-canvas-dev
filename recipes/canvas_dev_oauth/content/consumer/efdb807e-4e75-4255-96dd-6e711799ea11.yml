@@ -25,7 +25,10 @@ default:
     - value: true
   scopes:
     - scope_id: canvas_asset_library
+    - scope_id: canvas_brand_kit
     - scope_id: canvas_js_component
+    - scope_id: canvas_media_image_create
+    - scope_id: canvas_media_view
     - scope_id: canvas_page_create
     - scope_id: canvas_page_delete
     - scope_id: canvas_page_edit
