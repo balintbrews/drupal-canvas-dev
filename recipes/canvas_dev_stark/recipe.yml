@@ -12,9 +12,6 @@ config:
     system.theme:
       simpleConfigUpdate:
         default: stark
-    system.site:
-      simpleConfigUpdate:
-        page.front: /home
     canvas.component.block.system_menu_block.footer:
       disable: []
     canvas.component.block.system_menu_block.main:
