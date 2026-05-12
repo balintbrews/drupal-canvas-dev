@@ -1,15 +1,14 @@
 ---
 name: canvas-dev-humanify-recipe-update
-description: Update the
-`recipes/canvas_dev_humanify` recipe by exporting `js_component` config and
-default content, normalizing exported content/config files, and verifying
-install.
+description: Update the `recipes/canvas_dev_humanify` recipe by exporting
+`js_component` config, asset library config, managed asset files, and default
+content, then normalizing exports and verifying install.
 ---
 
 # Canvas Dev Humanify recipe update
 
-Use this skill only when updating `recipes/canvas_dev_humanify` after content or
-`js_component` changes.
+Use this skill only when updating `recipes/canvas_dev_humanify` after content,
+asset library, managed asset file, or `js_component` changes.
 
 ## Scope
 
@@ -33,23 +32,31 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
 - Copy `canvas.js_component.*.yml` from `<tmp_dir>` to
   `recipes/canvas_dev_humanify/config/`.
 
-3. Export default content with references for the `canvas_page` entity included
-   in `recipes/canvas_dev_humanify`.
+3. Export default content for every active `canvas_page` entity included in the
+   Humanify demo.
 
-- Get UUID from `recipes/canvas_dev_humanify/content/canvas_page/*.yml`.
-- Resolve entity ID:
+- Get UUIDs from active `canvas_page` entities or from
+  `recipes/canvas_dev_humanify/content/canvas_page/*.yml`.
+- Resolve each entity ID:
   - `ddev drush php:eval "\$e = \Drupal::service('entity.repository')->loadEntityByUuid('canvas_page', '<uuid>'); print \$e ? \$e->id() : '';"`
-- Export:
+- Export each page:
   - `ddev drush dcer canvas_page <id> --folder=../recipes/canvas_dev_humanify/content -y`
+- If new pages exist in the active site, add their exported files under:
+  - `recipes/canvas_dev_humanify/content/canvas_page/`
 
 4. Normalize exported `canvas_page` content to pass recipe import.
 
-- File:
-  - `recipes/canvas_dev_humanify/content/canvas_page/4fca895c-5da4-4fd5-86d1-c42788254bb6.yml`
 - Required cleanup:
   - Convert root `parent_uuid: ''` to `parent_uuid: null`
   - Convert root `slot: ''` to `slot: null`
   - Remove empty `label: ''` rows
+  - Ensure each `components.*.inputs` value is structured YAML data, not an
+    encoded JSON string.
+  - For media-backed image props, prefer default-content reference syntax:
+    - `target_uuid: <media_uuid>`
+    - Do not use local-only `target_id` values.
+- If a page depends on a media entity, add it to `_meta.depends`:
+  - `<media_uuid>: media`
 
 5. Remove unstable config metadata from `js_component` config entities in
    `recipes/canvas_dev_humanify`.
@@ -71,15 +78,47 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
   using exported values:
   - `property_name: css` -> `value` from exported `css`
   - `property_name: js` -> `value` from exported `js`
-- Keep both keys (`css` and `js`) synchronized together to avoid partial/stale
-  recipe values.
+  - `property_name: assets` -> `value` from exported `assets`
+- The `assets` property is the manifest-like list used by code component
+  imports, for example:
+  - `name: '@/lib/pricing-utils'`
+  - `uri: 'public://canvas/assets/pricing-utils-D9e5kp05.js'`
+- Keep all three keys (`css`, `js`, and `assets`) synchronized together to avoid
+  partial/stale recipe values.
 
-7. Run formatting fixes from the project root.
+7. Export managed file entities referenced by `canvas.asset_library.global`
+   assets.
+
+- List active managed asset files:
+  - `ddev drush php:eval "\$ids = \Drupal::entityQuery('file')->accessCheck(FALSE)->condition('uri', 'public://canvas/assets/%', 'LIKE')->execute(); foreach (\Drupal::entityTypeManager()->getStorage('file')->loadMultiple(\$ids) as \$file) { print \$file->id() . ' ' . \$file->uuid() . ' ' . \$file->getFileUri() . PHP_EOL; }"`
+- Export a default-content `file/<uuid>.yml` for each managed file under:
+  - `recipes/canvas_dev_humanify/content/file/`
+- Copy each binary from:
+  - `web/sites/default/files/canvas/assets/<filename>`
+- To:
+  - `recipes/canvas_dev_humanify/content/file/<filename>`
+- Ensure each exported file entity preserves:
+  - `uri.value: public://canvas/assets/<filename>`
+  - `uri.url: /sites/default/files/canvas/assets/<filename>`
+
+8. Export media/file content referenced by refreshed pages.
+
+- If a page component input references media by `target_uuid`, make sure the
+  corresponding media default-content file exists under:
+  - `recipes/canvas_dev_humanify/content/media/<media_uuid>.yml`
+- Make sure that media export depends on its file entity under:
+  - `_meta.depends.<file_uuid>: file`
+- Make sure the referenced file entity YAML and binary exist under:
+  - `recipes/canvas_dev_humanify/content/file/`
+
+9. Run formatting fixes from the project root.
 
 - `npm run code:fix`
 - This runs Prettier.
+- If broad formatting causes unrelated docs/config churn, revert only those
+  unrelated formatter side effects and keep Humanify recipe changes.
 
-8. Clean up temporary export artifacts before finishing.
+10. Clean up temporary export artifacts before finishing.
 
 - Remove temporary config export directories created during this workflow:
   - `rm -rf <tmp_dir>`
@@ -88,6 +127,8 @@ Use this skill only when updating `recipes/canvas_dev_humanify` after content or
     - `canvas_export_temp`
     - `canvas_export_new`
     - `config_sync_temp`
+    - `humanify_asset_export_tmp`
+    - `humanify_config_export_tmp`
 - Remove accidental recipe export output under `web/recipes` if present:
   - `rm -rf web/recipes/canvas_dev_humanify`
 - Verify cleanup:
@@ -101,6 +142,13 @@ Validate install flow:
 
 1. `ddev si`
 2. `ddev drush st`
+3. Verify imported Canvas asset library assets when assets changed:
+
+- `ddev drush php:eval "\$asset = \Drupal::entityTypeManager()->getStorage('asset_library')->load('global'); print json_encode(\$asset->get('assets'), JSON_UNESCAPED_SLASHES) . PHP_EOL;"`
+
+4. Verify imported managed asset file count when assets changed:
+
+- `ddev drush php:eval "\$ids = \Drupal::entityQuery('file')->accessCheck(FALSE)->condition('uri', 'public://canvas/assets/%', 'LIKE')->execute(); print count(\$ids);"`
 
 If install fails:
 
@@ -132,9 +180,20 @@ If install fails:
      the version listed as available in the install error.
   5. Re-run install validation (`ddev si`, `ddev drush st`).
 - If `recipe.yml` asset library values look stale after an update, re-export
-  with `cex` and replace both `css` and `js` entries in the same edit from
+  with `cex` and replace `css`, `js`, and `assets` entries in the same edit from
   `canvas.asset_library.global.yml`.
+- If asset imports fail after install, check that every URI listed in
+  `canvas.asset_library.global.assets` has both:
+  - A default-content file entity YAML under
+    `recipes/canvas_dev_humanify/content/file/`
+  - A copied binary under `recipes/canvas_dev_humanify/content/file/`
+- If page import fails with an image prop error, check that media-backed image
+  inputs use `target_uuid: <media_uuid>`, not `target_id` or a resolved image
+  object.
 - If you see unexpected files under `web/recipes`, treat them as export
   artifacts from a wrong path and clean them up before finalizing.
-- If `dcer` fails due exporter/type compatibility errors, stop and escalate to a
-  separate backend/PHP task instead of patching module PHP in this workflow.
+- If `dcer` fails due exporter/type compatibility errors involving
+  `Drupal\canvas\Plugin\DataType\MaybeUrl`, do not patch module PHP in this
+  workflow. Export the needed `canvas_page`, `media`, and `file` entities with a
+  focused `ddev drush php:eval` script using `Symfony\Component\Yaml\Yaml`, then
+  apply the normalization rules above and validate with `ddev si`.
