@@ -39,7 +39,7 @@ default:
       component_version: f1853c41e19ad882
       inputs:
         activeUrl:
-          uri: internal:/page/about
+          uri: internal:/about
           options: []
       label:
     - parent_uuid:

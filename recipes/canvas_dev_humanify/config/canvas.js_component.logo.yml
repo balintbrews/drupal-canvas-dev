@@ -74,7 +74,7 @@ js:
 
       if (linkToFrontPage) {
         return (
-          <a className={classes} href="/page/home">
+          <a className={classes} href="/home">
             {content}
           </a>
         );
@@ -136,7 +136,7 @@ js:
       const classes = cn("inline-flex h-10 items-center gap-3 md:h-12", className);
       const content = /* @__PURE__ */ jsx(LogoContent, { linkToFrontPage });
       if (linkToFrontPage) {
-        return /* @__PURE__ */ jsx("a", { className: classes, href: "/page/home", children: content });
+        return /* @__PURE__ */ jsx("a", { className: classes, href: "/home", children: content });
       }
       return /* @__PURE__ */ jsx("div", { className: classes, children: content });
     }

@@ -23,11 +23,11 @@ js:
     }
 
     const menu: MenuItem[] = [
-      { title: 'Home', url: '/page/home' },
-      { title: 'Services', url: '/page/services' },
-      { title: 'Blog', url: '/page/blog' },
-      { title: 'About', url: '/page/about' },
-      { title: 'Careers', url: '/page/careers' },
+      { title: 'Home', url: '/home' },
+      { title: 'Services', url: '/services' },
+      { title: 'Blog', url: '/blog' },
+      { title: 'About', url: '/about' },
+      { title: 'Careers', url: '/careers' },
     ];
 
     export interface NavigationProps extends HTMLAttributes<HTMLDivElement> {
@@ -35,7 +35,7 @@ js:
     }
 
     function Navigation({
-      activeUrl = '/page/home',
+      activeUrl = '/home',
       className,
       ...props
     }: NavigationProps) {
@@ -67,7 +67,7 @@ js:
           <div className="flex items-center gap-3">
             <div className="hidden lg:flex lg:items-center lg:gap-4 xl:gap-5">
               <a
-                href="/page/login"
+                href="/login"
                 className="inline-flex text-sm font-medium text-text transition-colors hover:text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green dark:hover:text-green"
               >
                 Login
@@ -75,7 +75,7 @@ js:
 
               <div className="flex">
                 <a
-                  href="/page/register"
+                  href="/register"
                   className="inline-flex min-h-12 items-center rounded-md bg-surface-1 px-5 text-sm font-bold text-text shadow-sm transition hover:bg-surface-1/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green xl:px-6"
                 >
                   Register
@@ -147,15 +147,15 @@ js:
     import { jsxs, jsx } from "react/jsx-runtime";
     import { cn } from "drupal-canvas";
     const menu = [
-      { title: "Home", url: "/page/home" },
-      { title: "Services", url: "/page/services" },
-      { title: "Blog", url: "/page/blog" },
-      { title: "About", url: "/page/about" },
-      { title: "Careers", url: "/page/careers" }
+      { title: "Home", url: "/home" },
+      { title: "Services", url: "/services" },
+      { title: "Blog", url: "/blog" },
+      { title: "About", url: "/about" },
+      { title: "Careers", url: "/careers" }
     ];
     function Navigation(_a) {
       var _b = _a, {
-        activeUrl = "/page/home",
+        activeUrl = "/home",
         className
       } = _b, props = __objRest(_b, [
         "activeUrl",
@@ -183,7 +183,7 @@ js:
                 /* @__PURE__ */ jsx(
                   "a",
                   {
-                    href: "/page/login",
+                    href: "/login",
                     className: "inline-flex text-sm font-medium text-text transition-colors hover:text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green dark:hover:text-green",
                     children: "Login"
                   }
@@ -191,7 +191,7 @@ js:
                 /* @__PURE__ */ jsx("div", { className: "flex", children: /* @__PURE__ */ jsx(
                   "a",
                   {
-                    href: "/page/register",
+                    href: "/register",
                     className: "inline-flex min-h-12 items-center rounded-md bg-surface-1 px-5 text-sm font-bold text-text shadow-sm transition hover:bg-surface-1/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green xl:px-6",
                     children: "Register"
                   }
