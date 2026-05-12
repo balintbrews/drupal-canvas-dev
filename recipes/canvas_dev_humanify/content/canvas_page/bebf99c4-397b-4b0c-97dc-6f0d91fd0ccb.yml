@@ -1,3 +1,4 @@
+---
 _meta:
   version: "1.0"
   entity_type: canvas_page
@@ -14,8 +15,103 @@ default:
       target_uuid: ""
   title:
     - value: Services
+  components:
+    - parent_uuid:
+      slot:
+      uuid: c7fbc076-f098-400c-8417-92922d919859
+      component_id: js.header
+      component_version: c2b7efd7cbdcad22
+      inputs:
+        backgroundColor: cream
+      label:
+    - parent_uuid: c7fbc076-f098-400c-8417-92922d919859
+      slot: branding
+      uuid: 1ca7ad60-823e-4ff8-a6c7-22b7d8fef8af
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: true
+      label:
+    - parent_uuid: c7fbc076-f098-400c-8417-92922d919859
+      slot: navigation
+      uuid: 19a26950-5050-44fa-941c-b69df81c2796
+      component_id: js.navigation
+      component_version: f1853c41e19ad882
+      inputs:
+        activeUrl:
+          uri: internal:/page/services
+          options: []
+      label:
+    - parent_uuid:
+      slot:
+      uuid: c1271c61-f2b1-4e80-906e-5e064f1317b5
+      component_id: js.section
+      component_version: 51968f48979d90b3
+      inputs:
+        backgroundColor: paper
+      label:
+    - parent_uuid: c1271c61-f2b1-4e80-906e-5e064f1317b5
+      slot: content
+      uuid: 316b8ad1-d57b-414c-b3c7-f4eb5d7f1328
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value: Services
+          format: canvas_html_block
+        variant: eyebrow
+      label:
+    - parent_uuid: c1271c61-f2b1-4e80-906e-5e064f1317b5
+      slot: content
+      uuid: 10c2737f-b8f4-4329-b179-d9643a88efbd
+      component_id: js.heading
+      component_version: 9df836114750c940
+      inputs:
+        text: Human specialists for AI-assisted work.
+      label:
+    - parent_uuid: c1271c61-f2b1-4e80-906e-5e064f1317b5
+      slot: content
+      uuid: 2595b05f-d076-4517-a945-11815ed0508c
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value:
+            "<p>Choose support across creative direction, product storytelling,
+            brand systems, campaign concepts, insight synthesis, and executive
+            communication.</p>"
+          format: canvas_html_block
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 93949ca6-2a67-45a8-966d-2a348be65fb7
+      component_id: js.footer
+      component_version: ba30f643e8b0bf7b
+      inputs:
+        backgroundColor: navy
+        copyrightNotice:
+          value: "&copy; 2025-2026 Humanify Example Ventures Inc."
+          format: canvas_html_block
+        linkedInUrl:
+          uri: https://www.linkedin.com
+          options: []
+        xUrl:
+          uri: https://x.com
+          options: []
+        emailUrl:
+          uri: mailto:hello@example.com
+          options: []
+      label:
+    - parent_uuid: 93949ca6-2a67-45a8-966d-2a348be65fb7
+      slot: branding
+      uuid: 9a7d404a-dd9b-4755-9755-97283f1d3388
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: false
+      label:
   path:
-    - alias: /services
+    - alias: "/services"
       langcode: en
   created:
     - value: 1771107281

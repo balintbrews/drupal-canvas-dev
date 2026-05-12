@@ -6,24 +6,21 @@ name: Header
 required:
   - backgroundColor
 props:
-  darkVariant:
-    title: "Dark variant"
-    type: boolean
-    examples:
-      - true
   backgroundColor:
-    title: "Background color"
     type: string
-    examples:
-      - crust
     enum:
-      - base
-      - mantle
-      - crust
+      - cream
+      - paper
+      - mist
+      - navy
     "meta:enum":
-      base: Base
-      mantle: Mantle
-      crust: Crust
+      cream: Cream
+      paper: Paper
+      mist: Mist
+      navy: Navy
+    title: "Background color"
+    examples:
+      - cream
 slots:
   branding:
     title: Branding
@@ -31,98 +28,166 @@ slots:
     title: Navigation
 js:
   original: |
-    import { cva } from "class-variance-authority";
-    import { cn } from "drupal-canvas";
+    import { hasEmptySlotPlaceholder } from '@/lib/types';
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
 
-    const Header = ({ branding, navigation, darkVariant, backgroundColor }) => {
-      const headerVariants = cva("", {
-        variants: {
-          colorScheme: {
-            light: "",
-            dark: "dark",
-          },
-          backgroundColor: {
-            base: "bg-base",
-            mantle: "bg-mantle",
-            crust: "bg-crust",
-          },
+    const headerVariants = cva('', {
+      variants: {
+        backgroundColor: {
+          cream: 'bg-cream',
+          paper: 'bg-paper',
+          mist: 'bg-mist',
+          navy: 'dark bg-navy',
         },
-        defaultVariants: {
-          colorScheme: "light",
-          backgroundColor: "base",
-        },
-      });
+      },
+      defaultVariants: {
+        backgroundColor: 'cream',
+      },
+    });
+
+    type HeaderBackgroundColor = NonNullable<
+      VariantProps<typeof headerVariants>['backgroundColor']
+    >;
+
+    export interface HeaderProps extends Omit<
+      ComponentPropsWithoutRef<'header'>,
+      'children'
+    > {
+      backgroundColor: HeaderBackgroundColor;
+      branding?: ReactNode;
+      navigation?: ReactNode;
+    }
+
+    function Header({
+      backgroundColor,
+      branding,
+      className,
+      navigation,
+      ...props
+    }: HeaderProps) {
       return (
         <header
-          className={headerVariants({
-            colorScheme: darkVariant ? "dark" : "light",
-            backgroundColor,
-          })}
+          className={cn(
+            headerVariants({
+              backgroundColor,
+            }),
+            className,
+          )}
+          {...props}
         >
-          <div className="mx-auto flex h-24 max-w-screen-xl min-w-sm items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16">
+          <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-x-8 px-5 py-4 sm:px-8 lg:px-16">
             <div
               className={cn(
-                "h-12 flex-shrink-0 items-center justify-start md:h-16",
-                branding?.props?.value?.includes(
-                  "canvas--slot-empty-placeholder",
-                ) && "min-w-32",
+                'h-10 shrink-0 items-center justify-start md:h-12',
+                hasEmptySlotPlaceholder(branding) && 'min-w-32',
               )}
             >
               {branding}
             </div>
-            <div className="flex h-12 flex-grow items-center justify-end md:h-16">
+            <div className="flex min-h-12 grow items-center justify-end">
               {navigation}
             </div>
           </div>
         </header>
       );
-    };
+    }
 
+    export { Header };
     export default Header;
   compiled: |
-    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { hasEmptySlotPlaceholder } from "@/lib/types";
     import { cva } from "class-variance-authority";
     import { cn } from "drupal-canvas";
-    const Header = ({ branding, navigation, darkVariant, backgroundColor })=>{
-        var _branding_props_value, _branding_props;
-        const headerVariants = cva("", {
-            variants: {
-                colorScheme: {
-                    light: "",
-                    dark: "dark"
-                },
-                backgroundColor: {
-                    base: "bg-base",
-                    mantle: "bg-mantle",
-                    crust: "bg-crust"
-                }
-            },
-            defaultVariants: {
-                colorScheme: "light",
-                backgroundColor: "base"
-            }
-        });
-        return /*#__PURE__*/ _jsx("header", {
-            className: headerVariants({
-                colorScheme: darkVariant ? "dark" : "light",
-                backgroundColor
+    const headerVariants = cva("", {
+      variants: {
+        backgroundColor: {
+          cream: "bg-cream",
+          paper: "bg-paper",
+          mist: "bg-mist",
+          navy: "dark bg-navy"
+        }
+      },
+      defaultVariants: {
+        backgroundColor: "cream"
+      }
+    });
+    function Header(_a) {
+      var _b = _a, {
+        backgroundColor,
+        branding,
+        className,
+        navigation
+      } = _b, props = __objRest(_b, [
+        "backgroundColor",
+        "branding",
+        "className",
+        "navigation"
+      ]);
+      return /* @__PURE__ */ jsx(
+        "header",
+        __spreadProps(__spreadValues({
+          className: cn(
+            headerVariants({
+              backgroundColor
             }),
-            children: /*#__PURE__*/ _jsxs("div", {
-                className: "mx-auto flex h-24 max-w-screen-xl min-w-sm items-center justify-between gap-x-12 px-4 sm:px-12 md:h-32 lg:gap-x-16 lg:px-16",
-                children: [
-                    /*#__PURE__*/ _jsx("div", {
-                        className: cn("h-12 flex-shrink-0 items-center justify-start md:h-16", (branding === null || branding === void 0 ? void 0 : (_branding_props = branding.props) === null || _branding_props === void 0 ? void 0 : (_branding_props_value = _branding_props.value) === null || _branding_props_value === void 0 ? void 0 : _branding_props_value.includes("canvas--slot-empty-placeholder")) && "min-w-32"),
-                        children: branding
-                    }),
-                    /*#__PURE__*/ _jsx("div", {
-                        className: "flex h-12 flex-grow items-center justify-end md:h-16",
-                        children: navigation
-                    })
-                ]
-            })
-        });
+            className
+          )
+        }, props), {
+          children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-x-8 px-5 py-4 sm:px-8 lg:px-16", children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: cn(
+                  "h-10 shrink-0 items-center justify-start md:h-12",
+                  hasEmptySlotPlaceholder(branding) && "min-w-32"
+                ),
+                children: branding
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "flex min-h-12 grow items-center justify-end", children: navigation })
+          ] })
+        })
+      );
+    }
+    export {
+      Header,
+      Header as default
     };
-    export default Header;
 css:
   original: ""
   compiled: ""

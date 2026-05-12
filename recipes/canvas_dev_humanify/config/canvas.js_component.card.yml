@@ -3,12 +3,11 @@ status: true
 dependencies: {}
 machineName: card
 name: Card
-required:
-  - iconColor
+required: {}
 props:
   iconNameFromLucide:
-    title: "Icon: Name from Lucide"
     type: string
+    title: "Icon: Name from Lucide"
     examples:
       - lightbulb
       - book-open
@@ -16,49 +15,9 @@ props:
       - megaphone
       - file-chart-column-increasing
       - presentation
-  iconColor:
-    title: "Icon: Color"
-    type: string
-    examples:
-      - sapphire
-      - rosewater
-      - mauve
-      - yellow
-      - green
-      - pink
-    enum:
-      - rosewater
-      - flamingo
-      - pink
-      - mauve
-      - red
-      - maroon
-      - peach
-      - yellow
-      - green
-      - teal
-      - sky
-      - sapphire
-      - blue
-      - lavender
-    "meta:enum":
-      rosewater: Rosewater
-      flamingo: Flamingo
-      pink: Pink
-      mauve: Mauve
-      red: Red
-      maroon: Maroon
-      peach: Peach
-      yellow: Yellow
-      green: Green
-      teal: Teal
-      sky: Sky
-      sapphire: Sapphire
-      blue: Blue
-      lavender: Lavender
   title:
-    title: Title
     type: string
+    title: Title
     examples:
       - "Creative direction"
       - "Product storytelling"
@@ -67,8 +26,10 @@ props:
       - "Insight synthesis"
       - "Executive communication"
   description:
-    title: Description
     type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Description
     examples:
       - "We shape raw ideas and AI-generated directions into clear creative
         choices your team can execute confidently."
@@ -82,127 +43,147 @@ props:
         insights that drive better decisions."
       - "We craft high-stakes updates, memos, and presentations with the right
         tone, structure, and strategic focus."
-    contentMediaType: text/html
-    x-formatting-context: block
 slots: {}
 js:
   original: |
-    import { cva } from "class-variance-authority";
-    import { FormattedText } from "drupal-canvas";
+    import { cn, FormattedText } from 'drupal-canvas';
+    import type { CSSProperties, HTMLAttributes } from 'react';
 
-    const Card = ({ title, description, iconNameFromLucide, iconColor }) => {
-      const cardVariants = cva("size-8", {
-        variants: {
-          iconColor: {
-            text: "bg-text",
-            rosewater: "bg-rosewater",
-            flamingo: "bg-flamingo",
-            pink: "bg-pink",
-            mauve: "bg-mauve",
-            red: "bg-red",
-            maroon: "bg-maroon",
-            peach: "bg-peach",
-            yellow: "bg-yellow",
-            green: "bg-green",
-            teal: "bg-teal",
-            sky: "bg-sky",
-            sapphire: "bg-sapphire",
-            blue: "bg-blue",
-            lavender: "bg-lavender",
-          },
-        },
-        defaultVariants: {
-          iconColor: "teal",
-        },
-      });
+    export interface CardProps extends HTMLAttributes<HTMLDivElement> {
+      description?: string;
+      iconNameFromLucide?: string;
+      title?: string;
+    }
+
+    function Card({
+      className,
+      description,
+      iconNameFromLucide,
+      title,
+      ...props
+    }: CardProps) {
+      const iconMaskStyle: CSSProperties | undefined = iconNameFromLucide
+        ? {
+            maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
+            maskPosition: 'center',
+            maskRepeat: 'no-repeat',
+            maskSize: 'contain',
+            WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
+            WebkitMaskPosition: 'center',
+            WebkitMaskRepeat: 'no-repeat',
+            WebkitMaskSize: 'contain',
+          }
+        : undefined;
+
       return (
-        <div className="flex flex-col gap-3 rounded-lg bg-surface-0 p-6">
+        <div
+          className={cn(
+            'flex gap-6 bg-transparent px-0 py-6 md:px-8 md:py-7',
+            className,
+          )}
+          {...props}
+        >
           {iconNameFromLucide && (
-            <div
-              className={cardVariants({ iconColor })}
-              style={{
-                maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
-                maskSize: "contain",
-                maskRepeat: "no-repeat",
-                maskPosition: "center",
-                WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
-                WebkitMaskSize: "contain",
-                WebkitMaskRepeat: "no-repeat",
-                WebkitMaskPosition: "center",
-              }}
-            />
+            <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-surface-0">
+              <div className="size-8 bg-green" style={iconMaskStyle} />
+            </div>
           )}
-          {title && <h3 className="text-lg font-semibold text-text">{title}</h3>}
-          {description && (
-            <FormattedText as="p" className="text-subtext-0">
-              {description}
-            </FormattedText>
-          )}
+          <div className="min-w-0">
+            {title && (
+              <h3 className="mb-2 text-base leading-5 font-bold text-text">
+                {title}
+              </h3>
+            )}
+            {description && (
+              <FormattedText as="div" className="text-sm leading-6 text-muted">
+                {description}
+              </FormattedText>
+            )}
+          </div>
         </div>
       );
-    };
+    }
 
+    export { Card };
     export default Card;
   compiled: |
-    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { cva } from "class-variance-authority";
-    import { FormattedText } from "drupal-canvas";
-    const Card = ({ title, description, iconNameFromLucide, iconColor })=>{
-        const cardVariants = cva("size-8", {
-            variants: {
-                iconColor: {
-                    text: "bg-text",
-                    rosewater: "bg-rosewater",
-                    flamingo: "bg-flamingo",
-                    pink: "bg-pink",
-                    mauve: "bg-mauve",
-                    red: "bg-red",
-                    maroon: "bg-maroon",
-                    peach: "bg-peach",
-                    yellow: "bg-yellow",
-                    green: "bg-green",
-                    teal: "bg-teal",
-                    sky: "bg-sky",
-                    sapphire: "bg-sapphire",
-                    blue: "bg-blue",
-                    lavender: "bg-lavender"
-                }
-            },
-            defaultVariants: {
-                iconColor: "teal"
-            }
-        });
-        return /*#__PURE__*/ _jsxs("div", {
-            className: "flex flex-col gap-3 rounded-lg bg-surface-0 p-6",
-            children: [
-                iconNameFromLucide && /*#__PURE__*/ _jsx("div", {
-                    className: cardVariants({
-                        iconColor
-                    }),
-                    style: {
-                        maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
-                        maskSize: "contain",
-                        maskRepeat: "no-repeat",
-                        maskPosition: "center",
-                        WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
-                        WebkitMaskSize: "contain",
-                        WebkitMaskRepeat: "no-repeat",
-                        WebkitMaskPosition: "center"
-                    }
-                }),
-                title && /*#__PURE__*/ _jsx("h3", {
-                    className: "text-lg font-semibold text-text",
-                    children: title
-                }),
-                description && /*#__PURE__*/ _jsx(FormattedText, {
-                    as: "p",
-                    className: "text-subtext-0",
-                    children: description
-                })
-            ]
-        });
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
     };
-    export default Card;
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { FormattedText, cn } from "drupal-canvas";
+    function Card(_a) {
+      var _b = _a, {
+        className,
+        description,
+        iconNameFromLucide,
+        title
+      } = _b, props = __objRest(_b, [
+        "className",
+        "description",
+        "iconNameFromLucide",
+        "title"
+      ]);
+      const iconMaskStyle = iconNameFromLucide ? {
+        maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
+        maskPosition: "center",
+        maskRepeat: "no-repeat",
+        maskSize: "contain",
+        WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconNameFromLucide}.svg)`,
+        WebkitMaskPosition: "center",
+        WebkitMaskRepeat: "no-repeat",
+        WebkitMaskSize: "contain"
+      } : void 0;
+      return /* @__PURE__ */ jsxs(
+        "div",
+        __spreadProps(__spreadValues({
+          className: cn(
+            "flex gap-6 bg-transparent px-0 py-6 md:px-8 md:py-7",
+            className
+          )
+        }, props), {
+          children: [
+            iconNameFromLucide && /* @__PURE__ */ jsx("div", { className: "flex size-16 shrink-0 items-center justify-center rounded-full bg-surface-0", children: /* @__PURE__ */ jsx("div", { className: "size-8 bg-green", style: iconMaskStyle }) }),
+            /* @__PURE__ */ jsxs("div", { className: "min-w-0", children: [
+              title && /* @__PURE__ */ jsx("h3", { className: "mb-2 text-base leading-5 font-bold text-text", children: title }),
+              description && /* @__PURE__ */ jsx(FormattedText, { as: "div", className: "text-sm leading-6 text-muted", children: description })
+            ] })
+          ]
+        })
+      );
+    }
+    export {
+      Card,
+      Card as default
+    };
 css:
   original: ""
   compiled: ""

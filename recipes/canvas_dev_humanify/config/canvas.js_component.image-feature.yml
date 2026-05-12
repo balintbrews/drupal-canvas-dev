@@ -1,0 +1,219 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.logo
+machineName: image-feature
+name: "Image feature"
+required:
+  - image
+  - title
+  - description
+props:
+  image:
+    type: object
+    $ref: "json-schema-definitions://canvas.module/image"
+    title: Image
+    examples:
+      - src: "https://placehold.co/1770x1180/png?text=Image+placeholder"
+        alt: "Image feature placeholder"
+        width: 1770
+        height: 1180
+  eyebrow:
+    type: string
+    title: Eyebrow
+    examples:
+      - "Human judgment, applied"
+  title:
+    type: string
+    title: Title
+    examples:
+      - "We bring human strengths to AI-first teams."
+  description:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Description
+    examples:
+      - "<p>We partner with AI-native teams to add what machines still struggle
+        to replicate: taste, narrative coherence, emotional resonance, and
+        domain-informed judgment.</p>"
+slots: {}
+js:
+  original: |
+    import { LogoMark } from '@/components/logo';
+    import { cn, FormattedText, Image } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef } from 'react';
+    import type { CanvasImage } from '@/lib/types';
+
+    export interface ImageFeatureProps extends Omit<
+      ComponentPropsWithoutRef<'div'>,
+      'children'
+    > {
+      description: string;
+      eyebrow?: string;
+      image: CanvasImage;
+      title: string;
+    }
+
+    function ImageFeature({
+      className,
+      description,
+      eyebrow,
+      image,
+      title,
+      ...props
+    }: ImageFeatureProps) {
+      return (
+        <div
+          className={cn(
+            'grid gap-8 py-8 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-12 lg:gap-16',
+            className,
+          )}
+          {...props}
+        >
+          <div className="relative min-h-72 overflow-hidden rounded-lg bg-surface-0 md:min-h-96">
+            <Image
+              alt={image.alt}
+              src={image.src}
+              width={image.width}
+              height={image.height}
+              sizes="(min-width: 768px) 42vw, 100vw"
+              className="absolute inset-0 h-full w-full object-cover object-center"
+            />
+            <div className="absolute inset-0 bg-navy/10" aria-hidden="true" />
+            <div
+              className="absolute right-5 bottom-5 flex h-14 w-24 items-center justify-center rounded-lg bg-paper/90 shadow-sm backdrop-blur"
+              aria-hidden="true"
+            >
+              <LogoMark className="h-10" primaryClassName="fill-navy" />
+            </div>
+          </div>
+
+          <div className="max-w-2xl py-2">
+            {eyebrow && (
+              <p className="mb-4 text-base leading-6 font-semibold text-green dark:text-green">
+                {eyebrow}
+              </p>
+            )}
+            <h2 className="max-w-2xl font-serif text-4xl font-normal text-balance text-text md:text-5xl">
+              {title}
+            </h2>
+            <FormattedText
+              as="div"
+              className="mt-5 max-w-2xl text-base leading-7 text-balance text-muted md:text-lg"
+            >
+              {description}
+            </FormattedText>
+          </div>
+        </div>
+      );
+    }
+
+    export { ImageFeature };
+    export default ImageFeature;
+  compiled: |
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { LogoMark } from "@/components/logo";
+    import { Image, FormattedText, cn } from "drupal-canvas";
+    function ImageFeature(_a) {
+      var _b = _a, {
+        className,
+        description,
+        eyebrow,
+        image,
+        title
+      } = _b, props = __objRest(_b, [
+        "className",
+        "description",
+        "eyebrow",
+        "image",
+        "title"
+      ]);
+      return /* @__PURE__ */ jsxs(
+        "div",
+        __spreadProps(__spreadValues({
+          className: cn(
+            "grid gap-8 py-8 md:grid-cols-[0.95fr_1.05fr] md:items-center md:gap-12 lg:gap-16",
+            className
+          )
+        }, props), {
+          children: [
+            /* @__PURE__ */ jsxs("div", { className: "relative min-h-72 overflow-hidden rounded-lg bg-surface-0 md:min-h-96", children: [
+              /* @__PURE__ */ jsx(
+                Image,
+                {
+                  alt: image.alt,
+                  src: image.src,
+                  width: image.width,
+                  height: image.height,
+                  sizes: "(min-width: 768px) 42vw, 100vw",
+                  className: "absolute inset-0 h-full w-full object-cover object-center"
+                }
+              ),
+              /* @__PURE__ */ jsx("div", { className: "absolute inset-0 bg-navy/10", "aria-hidden": "true" }),
+              /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: "absolute right-5 bottom-5 flex h-14 w-24 items-center justify-center rounded-lg bg-paper/90 shadow-sm backdrop-blur",
+                  "aria-hidden": "true",
+                  children: /* @__PURE__ */ jsx(LogoMark, { className: "h-10", primaryClassName: "fill-navy" })
+                }
+              )
+            ] }),
+            /* @__PURE__ */ jsxs("div", { className: "max-w-2xl py-2", children: [
+              eyebrow && /* @__PURE__ */ jsx("p", { className: "mb-4 text-base leading-6 font-semibold text-green dark:text-green", children: eyebrow }),
+              /* @__PURE__ */ jsx("h2", { className: "max-w-2xl font-serif text-4xl font-normal text-balance text-text md:text-5xl", children: title }),
+              /* @__PURE__ */ jsx(
+                FormattedText,
+                {
+                  as: "div",
+                  className: "mt-5 max-w-2xl text-base leading-7 text-balance text-muted md:text-lg",
+                  children: description
+                }
+              )
+            ] })
+          ]
+        })
+      );
+    }
+    export {
+      ImageFeature,
+      ImageFeature as default
+    };
+css:
+  original: ""
+  compiled: ""
+dataDependencies: {}

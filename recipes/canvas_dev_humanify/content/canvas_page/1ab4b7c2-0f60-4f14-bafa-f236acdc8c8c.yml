@@ -1,3 +1,4 @@
+---
 _meta:
   version: "1.0"
   entity_type: canvas_page
@@ -14,8 +15,102 @@ default:
       target_uuid: ""
   title:
     - value: Careers
+  components:
+    - parent_uuid:
+      slot:
+      uuid: 0cef7478-8d00-45aa-b77f-c052dd5ac372
+      component_id: js.header
+      component_version: c2b7efd7cbdcad22
+      inputs:
+        backgroundColor: cream
+      label:
+    - parent_uuid: 0cef7478-8d00-45aa-b77f-c052dd5ac372
+      slot: branding
+      uuid: 0440b9aa-dfa2-4da6-a308-fff48a98d0f4
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: true
+      label:
+    - parent_uuid: 0cef7478-8d00-45aa-b77f-c052dd5ac372
+      slot: navigation
+      uuid: d434ec4f-b990-4fdd-a167-16584bd7bd47
+      component_id: js.navigation
+      component_version: f1853c41e19ad882
+      inputs:
+        activeUrl:
+          uri: internal:/page/careers
+          options: []
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 289bb5e8-00d3-4802-97d2-08318fe5481b
+      component_id: js.section
+      component_version: 51968f48979d90b3
+      inputs:
+        backgroundColor: paper
+      label:
+    - parent_uuid: 289bb5e8-00d3-4802-97d2-08318fe5481b
+      slot: content
+      uuid: 1d7e831b-c582-4740-99ea-efd45958c594
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value: Careers
+          format: canvas_html_block
+        variant: eyebrow
+      label:
+    - parent_uuid: 289bb5e8-00d3-4802-97d2-08318fe5481b
+      slot: content
+      uuid: 2ffee4a7-20b1-49f0-a6b3-292e4b45fc08
+      component_id: js.heading
+      component_version: 9df836114750c940
+      inputs:
+        text: Help teams make AI-assisted work more human.
+      label:
+    - parent_uuid: 289bb5e8-00d3-4802-97d2-08318fe5481b
+      slot: content
+      uuid: 27909ffe-9529-4541-9abe-136d53f40e08
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value:
+            "<p>We look for editors, strategists, designers, and communicators
+            who can turn fast machine output into work people trust.</p>"
+          format: canvas_html_block
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 0b9fdc59-6853-4326-9827-f235101ac5f4
+      component_id: js.footer
+      component_version: ba30f643e8b0bf7b
+      inputs:
+        backgroundColor: navy
+        copyrightNotice:
+          value: "&copy; 2025-2026 Humanify Example Ventures Inc."
+          format: canvas_html_block
+        linkedInUrl:
+          uri: https://www.linkedin.com
+          options: []
+        xUrl:
+          uri: https://x.com
+          options: []
+        emailUrl:
+          uri: mailto:hello@example.com
+          options: []
+      label:
+    - parent_uuid: 0b9fdc59-6853-4326-9827-f235101ac5f4
+      slot: branding
+      uuid: c505ec95-be11-455b-a537-c1a381209432
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: false
+      label:
   path:
-    - alias: /careers
+    - alias: "/careers"
       langcode: en
   created:
     - value: 1771107360

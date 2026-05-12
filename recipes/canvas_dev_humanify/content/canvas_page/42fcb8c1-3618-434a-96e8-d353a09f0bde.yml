@@ -2,7 +2,7 @@
 _meta:
   version: "1.0"
   entity_type: canvas_page
-  uuid: 0daee966-6e33-47dc-a70b-4f09e3c458b0
+  uuid: 42fcb8c1-3618-434a-96e8-d353a09f0bde
   default_langcode: en
 default:
   revision_user:
@@ -14,76 +14,76 @@ default:
     - target_id: 1
       target_uuid: ""
   title:
-    - value: About
+    - value: Login
   components:
     - parent_uuid:
       slot:
-      uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+      uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
       component_id: js.header
       component_version: c2b7efd7cbdcad22
       inputs:
         backgroundColor: cream
       label:
-    - parent_uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+    - parent_uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
       slot: branding
-      uuid: 4ad85efb-edaa-4611-8ea7-3fcdc055ebb3
+      uuid: cfb31229-b7ec-4181-a906-269e76ed76b8
       component_id: js.logo
       component_version: 3e9baf3c7cc35f84
       inputs:
         linkToFrontPage: true
       label:
-    - parent_uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+    - parent_uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
       slot: navigation
-      uuid: 6a7987ff-23ec-43d1-8ffc-62dd7be7c2b3
+      uuid: 8f9653fc-41a4-4553-8343-aa101fbdedb1
       component_id: js.navigation
       component_version: f1853c41e19ad882
       inputs:
         activeUrl:
-          uri: internal:/page/about
+          uri: internal:/page/login
           options: []
       label:
     - parent_uuid:
       slot:
-      uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+      uuid: 527b66ec-d293-45f8-9211-c32aec314951
       component_id: js.section
       component_version: 51968f48979d90b3
       inputs:
         backgroundColor: paper
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
       slot: content
-      uuid: 11e2f7b9-4abb-4365-b1ea-a49648d37019
+      uuid: 98923163-73f2-4048-9a36-5926ac4618d1
       component_id: js.paragraph
       component_version: "078c5bf8476f16d9"
       inputs:
         text:
-          value: About
+          value: Login
           format: canvas_html_block
         variant: eyebrow
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
       slot: content
-      uuid: 5865c217-45f8-4a3f-8e0a-62bb912d5bbc
+      uuid: f60afe23-93d1-450d-8d33-3eb6b09205f8
       component_id: js.heading
       component_version: 9df836114750c940
       inputs:
-        text: We add the human layer AI agents need.
+        text: Welcome back to Humanify.
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
       slot: content
-      uuid: d9d15336-eff6-4002-a175-e5744a66e1ae
+      uuid: 59ba4e38-568a-4660-8c64-2384ec52203d
       component_id: js.paragraph
       component_version: "078c5bf8476f16d9"
       inputs:
         text:
           value:
-            "<p>Humanify partners with AI-native teams to bring taste, judgment,
-            narrative coherence, and domain context to automated workflows.</p>"
+            "<p>Use this page as the starting point for an account sign-in
+            workflow.</p>"
           format: canvas_html_block
       label:
     - parent_uuid:
       slot:
-      uuid: 77302af2-8bcf-4dd0-8ef8-7592c6c718d8
+      uuid: 14b84230-c70e-429a-980c-6e28743166eb
       component_id: js.footer
       component_version: ba30f643e8b0bf7b
       inputs:
@@ -101,16 +101,16 @@ default:
           uri: mailto:hello@example.com
           options: []
       label:
-    - parent_uuid: 77302af2-8bcf-4dd0-8ef8-7592c6c718d8
+    - parent_uuid: 14b84230-c70e-429a-980c-6e28743166eb
       slot: branding
-      uuid: 609cac55-5bf1-40c9-8e86-63612fd4708e
+      uuid: d875b13d-0e58-49a6-a39e-79772cee5ca6
       component_id: js.logo
       component_version: 3e9baf3c7cc35f84
       inputs:
         linkToFrontPage: false
       label:
   path:
-    - alias: "/about"
+    - alias: "/login"
       langcode: en
   created:
-    - value: 1771107348
+    - value: 1778619561

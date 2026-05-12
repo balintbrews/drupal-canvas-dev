@@ -7,8 +7,8 @@ required:
   - text
 props:
   text:
-    title: Text
     type: string
+    title: Text
     examples:
       - "We bring human strengths to AI-first teams."
       - "We make great AI outputs genuinely excellent."
@@ -16,24 +16,84 @@ props:
 slots: {}
 js:
   original: |
-    const Heading = ({ text }) => {
+    import { cn } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef } from 'react';
+
+    export interface HeadingProps extends Omit<
+      ComponentPropsWithoutRef<'h2'>,
+      'children'
+    > {
+      text: string;
+    }
+
+    function Heading({ className, text, ...props }: HeadingProps) {
       return (
-        <h2 className="mx-auto max-w-screen-lg text-center text-2xl font-extrabold text-balance text-text md:text-3xl">
+        <h2
+          className={cn(
+            'max-w-5xl font-serif text-3xl leading-tight font-normal text-balance text-text',
+            className,
+          )}
+          {...props}
+        >
           {text}
         </h2>
       );
-    };
+    }
 
+    export { Heading };
     export default Heading;
   compiled: |
-    import { jsx as _jsx } from "react/jsx-runtime";
-    const Heading = ({ text })=>{
-        return /*#__PURE__*/ _jsx("h2", {
-            className: "mx-auto max-w-screen-lg text-center text-2xl font-extrabold text-balance text-text md:text-3xl",
-            children: text
-        });
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
     };
-    export default Heading;
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsx } from "react/jsx-runtime";
+    import { cn } from "drupal-canvas";
+    function Heading(_a) {
+      var _b = _a, { className, text } = _b, props = __objRest(_b, ["className", "text"]);
+      return /* @__PURE__ */ jsx(
+        "h2",
+        __spreadProps(__spreadValues({
+          className: cn(
+            "max-w-5xl font-serif text-3xl leading-tight font-normal text-balance text-text",
+            className
+          )
+        }, props), {
+          children: text
+        })
+      );
+    }
+    export {
+      Heading,
+      Heading as default
+    };
 css:
   original: ""
   compiled: ""

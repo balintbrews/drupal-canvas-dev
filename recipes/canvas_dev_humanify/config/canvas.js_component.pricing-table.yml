@@ -6,14 +6,17 @@ name: "Pricing table"
 required:
   - entryTierName
   - entryTierDescription
+  - entryTierIconNameFromLucide
   - entryTierPriceMonthly
   - entryTierPriceAnnual
   - midTierName
   - midTierDescription
+  - midTierIconNameFromLucide
   - midTierPriceMonthly
   - midTierPriceAnnual
   - advancedTierName
   - advancedTierDescription
+  - advancedTierIconNameFromLucide
   - advancedTierPriceMonthly
   - advancedTierPriceAnnual
   - defaultTier
@@ -22,70 +25,82 @@ required:
   - buttonLink
 props:
   entryTierName:
-    title: "Entry tier: Name"
     type: string
+    title: "Entry tier: Name"
     examples:
       - Starter
   entryTierDescription:
-    title: "Entry tier: Description"
     type: string
+    title: "Entry tier: Description"
     examples:
       - "For pilots and focused projects"
+  entryTierIconNameFromLucide:
+    type: string
+    title: "Entry tier: Icon name from Lucide"
+    examples:
+      - send
   entryTierPriceMonthly:
-    title: "Entry tier: Price, monthly"
     type: number
+    title: "Entry tier: Price, monthly"
     examples:
       - 2500.0
   entryTierPriceAnnual:
-    title: "Entry tier: Price, annual"
     type: number
+    title: "Entry tier: Price, annual"
     examples:
       - 25000.0
   midTierName:
-    title: "Mid tier: Name"
     type: string
+    title: "Mid tier: Name"
     examples:
       - Growth
   midTierDescription:
-    title: "Mid tier: Description"
     type: string
+    title: "Mid tier: Description"
     examples:
       - "For teams scaling AI-assisted delivery"
+  midTierIconNameFromLucide:
+    type: string
+    title: "Mid tier: Icon name from Lucide"
+    examples:
+      - chart-no-axes-column-increasing
   midTierPriceMonthly:
-    title: "Mid tier: Price, monthly"
     type: number
+    title: "Mid tier: Price, monthly"
     examples:
       - 4500.0
   midTierPriceAnnual:
-    title: "Mid tier: Price, annual"
     type: number
+    title: "Mid tier: Price, annual"
     examples:
       - 45000.0
   advancedTierName:
-    title: "Advanced tier: Name"
     type: string
+    title: "Advanced tier: Name"
     examples:
       - Enterprise
   advancedTierDescription:
-    title: "Advanced tier: Description"
     type: string
+    title: "Advanced tier: Description"
     examples:
       - "For complex organizations and mission-critical work"
+  advancedTierIconNameFromLucide:
+    type: string
+    title: "Advanced tier: Icon name from Lucide"
+    examples:
+      - building-2
   advancedTierPriceMonthly:
-    title: "Advanced tier: Price, monthly"
     type: number
+    title: "Advanced tier: Price, monthly"
     examples:
       - 9500.0
   advancedTierPriceAnnual:
-    title: "Advanced tier: Price, annual"
     type: number
+    title: "Advanced tier: Price, annual"
     examples:
       - 95000.0
   defaultTier:
-    title: "Default tier"
     type: string
-    examples:
-      - entry
     enum:
       - entry
       - mid
@@ -94,44 +109,99 @@ props:
       entry: Entry
       mid: Mid
       advanced: Advanced
+    title: "Default tier"
+    examples:
+      - mid
   annualSelectedByDefault:
-    title: "Annual selected by default"
     type: boolean
+    title: "Annual selected by default"
     examples:
       - false
   annualBadgeText:
-    title: "Annual badge text"
     type: string
+    title: "Annual badge text"
     examples:
       - "Save 17%"
   buttonLabel:
-    title: "Button label"
     type: string
+    title: "Button label"
     examples:
       - "Choose {tier}"
   buttonLink:
-    title: "Button link"
     type: string
+    format: uri-reference
+    title: "Button link"
     examples:
       - /page/1
-    format: uri-reference
-slots: {}
+slots:
+  intro:
+    title: Intro
 js:
   original: |
-    import { useState } from "react";
-    import { cn } from "drupal-canvas";
+    import { useState } from 'react';
+    import {
+      buildTierDescriptions,
+      buildTierNames,
+      buildTierPrices,
+      getCurrentPrice,
+      TIER_NAMES,
+    } from '@/lib/pricing-utils';
+    import { cn } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from 'react';
+    import type { TierName } from '@/lib/pricing-utils';
 
-    const PricingTable = ({
+    export interface PricingTableProps extends Omit<
+      ComponentPropsWithoutRef<'div'>,
+      'children'
+    > {
+      advancedTierDescription: string;
+      advancedTierIconNameFromLucide: string;
+      advancedTierName: string;
+      advancedTierPriceAnnual: number;
+      advancedTierPriceMonthly: number;
+      annualBadgeText: string;
+      annualSelectedByDefault?: boolean;
+      buttonLabel: string;
+      buttonLink: string;
+      defaultTier: TierName;
+      entryTierDescription: string;
+      entryTierIconNameFromLucide: string;
+      entryTierName: string;
+      entryTierPriceAnnual: number;
+      entryTierPriceMonthly: number;
+      intro?: ReactNode;
+      midTierDescription: string;
+      midTierIconNameFromLucide: string;
+      midTierName: string;
+      midTierPriceAnnual: number;
+      midTierPriceMonthly: number;
+    }
+
+    const getIconMaskStyle = (iconName: string): CSSProperties => ({
+      maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconName}.svg)`,
+      maskPosition: 'center',
+      maskRepeat: 'no-repeat',
+      maskSize: 'contain',
+      WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconName}.svg)`,
+      WebkitMaskPosition: 'center',
+      WebkitMaskRepeat: 'no-repeat',
+      WebkitMaskSize: 'contain',
+    });
+
+    function PricingTable({
       entryTierName,
       entryTierDescription,
+      entryTierIconNameFromLucide,
       entryTierPriceMonthly,
       entryTierPriceAnnual,
       midTierName,
       midTierDescription,
+      midTierIconNameFromLucide,
       midTierPriceMonthly,
       midTierPriceAnnual,
       advancedTierName,
       advancedTierDescription,
+      advancedTierIconNameFromLucide,
       advancedTierPriceMonthly,
       advancedTierPriceAnnual,
       defaultTier,
@@ -139,270 +209,376 @@ js:
       annualBadgeText,
       buttonLabel,
       buttonLink,
-    }) => {
-      const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault);
-      const [tier, setTier] = useState(defaultTier);
+      intro,
+      className,
+      ...props
+    }: PricingTableProps) {
+      const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault ?? false);
+      const tier = defaultTier;
 
-      const tierNames = {
-        entry: entryTierName,
-        mid: midTierName,
-        advanced: advancedTierName,
+      const tierNames = buildTierNames({
+        entryTierName,
+        midTierName,
+        advancedTierName,
+      });
+      const tierDescriptions = buildTierDescriptions({
+        entryTierDescription,
+        midTierDescription,
+        advancedTierDescription,
+      });
+      const tierIcons: Record<TierName, string> = {
+        entry: entryTierIconNameFromLucide,
+        mid: midTierIconNameFromLucide,
+        advanced: advancedTierIconNameFromLucide,
       };
-      const tierDescriptions = {
-        entry: entryTierDescription,
-        mid: midTierDescription,
-        advanced: advancedTierDescription,
-      };
-      const tierPrices = {
-        entry: {
-          monthly: entryTierPriceMonthly,
-          annual: entryTierPriceAnnual,
-        },
-        mid: {
-          monthly: midTierPriceMonthly,
-          annual: midTierPriceAnnual,
-        },
-        advanced: {
-          monthly: advancedTierPriceMonthly,
-          annual: advancedTierPriceAnnual,
-        },
-      };
-
-      // Calculate current price based on selections.
-      const getCurrentPrice = (tierName) => {
-        return tierPrices[tierName][isAnnual ? "annual" : "monthly"];
-      };
+      const tierPrices = buildTierPrices({
+        entryTierPriceMonthly,
+        entryTierPriceAnnual,
+        midTierPriceMonthly,
+        midTierPriceAnnual,
+        advancedTierPriceMonthly,
+        advancedTierPriceAnnual,
+      });
 
       return (
-        <div className="max-w-2xl">
+        <div className={cn('w-full', className)} {...props}>
+          {intro && (
+            <div className="mx-auto mb-10 w-full max-w-6xl border-y border-line py-8 md:py-10">
+              <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center *:max-w-3xl">
+                {intro}
+              </div>
+            </div>
+          )}
+
           {/* Billing toggle */}
-          <div className="mb-8 flex items-center justify-center">
-            <div className="w-24 text-right">
+          <div className="mb-6 flex items-center justify-center">
+            <div className="w-24 text-right text-sm">
               <span
-                className={cn(
-                  "font-medium text-subtext-0/75",
-                  !isAnnual && "text-mauve",
-                )}
+                className={cn('font-medium text-muted', !isAnnual && 'text-text')}
               >
                 Monthly
               </span>
             </div>
 
             <button
+              type="button"
               onClick={() => setIsAnnual(!isAnnual)}
-              className="relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 bg-surface-1 p-0.5"
+              className="relative mx-4 h-8 w-16 cursor-pointer rounded-full border-0 bg-green p-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green"
+              aria-label="Toggle annual billing"
             >
               <div
                 className={cn(
-                  "absolute top-0.5 h-6 w-6 rounded-full border-2 border-flamingo bg-inverted-text transition-all duration-200",
-                  isAnnual ? "left-7" : "left-0.5",
+                  'absolute top-1 size-6 rounded-full border border-green bg-paper transition-all duration-200',
+                  isAnnual ? 'left-9' : 'left-1',
                 )}
               />
             </button>
-            <div className="flex w-36 items-center">
+            <div className="flex w-36 items-center text-sm">
               <span
-                className={cn(
-                  "font-medium text-subtext-0/75",
-                  isAnnual && "text-mauve",
-                )}
+                className={cn('font-medium text-muted', isAnnual && 'text-text')}
               >
                 Annual
               </span>
-              <span
-                className={cn(
-                  "ml-2 rounded-full bg-green px-2 py-1 text-xs leading-none font-medium whitespace-nowrap text-inverted-text transition-opacity duration-200",
-                  isAnnual ? "opacity-100" : "opacity-0",
-                )}
-              >
+              <span className="ml-3 rounded-full bg-surface-0 px-3 py-1 text-xs leading-none font-medium whitespace-nowrap text-green">
                 {annualBadgeText}
               </span>
             </div>
           </div>
 
           {/* Pricing tiers */}
-          <div className="mb-6 flex flex-col gap-4 sm:flex-row">
-            {["entry", "mid", "advanced"].map((planName) => {
+          <div className="grid gap-8 md:grid-cols-3">
+            {TIER_NAMES.map((planName) => {
               const isSelected = tier === planName;
-              const price = getCurrentPrice(planName);
+              const price = getCurrentPrice({
+                tierPrices,
+                tierName: planName,
+                isAnnual,
+              });
 
               return (
                 <div
                   key={planName}
-                  onClick={() => setTier(planName)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      setTier(planName);
-                    }
-                  }}
-                  data-state={isSelected ? "selected" : undefined}
-                  role="button"
-                  tabIndex={0}
+                  data-state={isSelected ? 'selected' : undefined}
                   className={cn(
-                    "group flex-1 cursor-pointer rounded-lg p-5 transition-all duration-200",
-                    "bg-surface-1",
-                    "data-[state=selected]:outline-2 data-[state=selected]:outline-offset-3 data-[state=selected]:outline-mauve",
-                    "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red",
+                    'relative flex flex-col rounded-xl border border-line bg-paper p-6 shadow-sm transition-colors',
+                    'data-[state=selected]:border-green',
                   )}
                 >
-                  <h3 className="mb-3 text-lg font-bold text-text">
-                    {tierNames[planName]}
-                  </h3>
+                  <div className="mb-5 flex min-h-6 justify-center">
+                    {planName === 'mid' && (
+                      <div className="inline-flex h-5 items-center rounded-full bg-surface-0 px-3 text-xs leading-none font-bold tracking-wide text-green uppercase">
+                        Most popular
+                      </div>
+                    )}
+                  </div>
 
-                  <div className="mb-4">
-                    <div className="mb-1 text-2xl font-bold text-text">
-                      ${price.toLocaleString()}
+                  <div className="mb-4 flex items-center gap-5">
+                    <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-surface-0">
+                      <span
+                        aria-hidden="true"
+                        className="size-9 bg-green"
+                        style={getIconMaskStyle(tierIcons[planName])}
+                      />
+                    </div>
+                    <div>
+                      <h3 className="text-xl leading-6 font-bold text-text">
+                        {tierNames[planName]}
+                      </h3>
+                      <div className="mt-4 font-serif text-4xl leading-none font-normal text-text">
+                        ${price.toLocaleString()}
+                      </div>
                     </div>
                   </div>
 
-                  <div className="text-sm leading-relaxed text-text">
+                  <div className="mb-5 min-h-12 text-sm leading-6 text-muted">
                     {tierDescriptions[planName]}
                   </div>
+
+                  <a
+                    href={buttonLink}
+                    className={cn(
+                      'mt-auto inline-flex min-h-11 items-center justify-center rounded-md border border-green px-5 text-center text-base font-medium text-green transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green',
+                      isSelected && 'bg-green text-inverted-text hover:bg-green/90',
+                      !isSelected && 'hover:bg-surface-0',
+                    )}
+                  >
+                    {buttonLabel.replace('{tier}', tierNames[planName])}
+                  </a>
+
+                  <span className="sr-only">
+                    {isSelected ? 'Selected plan: ' : 'Plan: '}
+                    {tierNames[planName]}
+                  </span>
                 </div>
               );
             })}
           </div>
-
-          {/* Button */}
-          <div>
-            <a
-              href={buttonLink}
-              className={cn(
-                "inline-block w-full rounded-sm bg-mauve px-12 py-3 text-center text-sm font-medium text-inverted-text transition hover:bg-mauve/75",
-                "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red",
-              )}
-            >
-              {buttonLabel.replace("{tier}", tierNames[tier])}
-            </a>
-          </div>
         </div>
       );
-    };
+    }
 
+    export { PricingTable };
     export default PricingTable;
   compiled: |
-    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
-    import { useState } from "react";
-    import { cn } from "drupal-canvas";
-    const PricingTable = ({ entryTierName, entryTierDescription, entryTierPriceMonthly, entryTierPriceAnnual, midTierName, midTierDescription, midTierPriceMonthly, midTierPriceAnnual, advancedTierName, advancedTierDescription, advancedTierPriceMonthly, advancedTierPriceAnnual, defaultTier, annualSelectedByDefault, annualBadgeText, buttonLabel, buttonLink })=>{
-        const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault);
-        const [tier, setTier] = useState(defaultTier);
-        const tierNames = {
-            entry: entryTierName,
-            mid: midTierName,
-            advanced: advancedTierName
-        };
-        const tierDescriptions = {
-            entry: entryTierDescription,
-            mid: midTierDescription,
-            advanced: advancedTierDescription
-        };
-        const tierPrices = {
-            entry: {
-                monthly: entryTierPriceMonthly,
-                annual: entryTierPriceAnnual
-            },
-            mid: {
-                monthly: midTierPriceMonthly,
-                annual: midTierPriceAnnual
-            },
-            advanced: {
-                monthly: advancedTierPriceMonthly,
-                annual: advancedTierPriceAnnual
-            }
-        };
-        // Calculate current price based on selections.
-        const getCurrentPrice = (tierName)=>{
-            return tierPrices[tierName][isAnnual ? "annual" : "monthly"];
-        };
-        return /*#__PURE__*/ _jsxs("div", {
-            className: "max-w-2xl",
-            children: [
-                /*#__PURE__*/ _jsxs("div", {
-                    className: "mb-8 flex items-center justify-center",
-                    children: [
-                        /*#__PURE__*/ _jsx("div", {
-                            className: "w-24 text-right",
-                            children: /*#__PURE__*/ _jsx("span", {
-                                className: cn("font-medium text-subtext-0/75", !isAnnual && "text-mauve"),
-                                children: "Monthly"
-                            })
-                        }),
-                        /*#__PURE__*/ _jsx("button", {
-                            onClick: ()=>setIsAnnual(!isAnnual),
-                            className: "relative mx-3 h-7 w-14 cursor-pointer rounded-full border-0 bg-surface-1 p-0.5",
-                            children: /*#__PURE__*/ _jsx("div", {
-                                className: cn("absolute top-0.5 h-6 w-6 rounded-full border-2 border-flamingo bg-inverted-text transition-all duration-200", isAnnual ? "left-7" : "left-0.5")
-                            })
-                        }),
-                        /*#__PURE__*/ _jsxs("div", {
-                            className: "flex w-36 items-center",
-                            children: [
-                                /*#__PURE__*/ _jsx("span", {
-                                    className: cn("font-medium text-subtext-0/75", isAnnual && "text-mauve"),
-                                    children: "Annual"
-                                }),
-                                /*#__PURE__*/ _jsx("span", {
-                                    className: cn("ml-2 rounded-full bg-green px-2 py-1 text-xs leading-none font-medium whitespace-nowrap text-inverted-text transition-opacity duration-200", isAnnual ? "opacity-100" : "opacity-0"),
-                                    children: annualBadgeText
-                                })
-                            ]
-                        })
-                    ]
-                }),
-                /*#__PURE__*/ _jsx("div", {
-                    className: "mb-6 flex flex-col gap-4 sm:flex-row",
-                    children: [
-                        "entry",
-                        "mid",
-                        "advanced"
-                    ].map((planName)=>{
-                        const isSelected = tier === planName;
-                        const price = getCurrentPrice(planName);
-                        return /*#__PURE__*/ _jsxs("div", {
-                            onClick: ()=>setTier(planName),
-                            onKeyDown: (e)=>{
-                                if (e.key === "Enter" || e.key === " ") {
-                                    setTier(planName);
-                                }
-                            },
-                            "data-state": isSelected ? "selected" : undefined,
-                            role: "button",
-                            tabIndex: 0,
-                            className: cn("group flex-1 cursor-pointer rounded-lg p-5 transition-all duration-200", "bg-surface-1", "data-[state=selected]:outline-2 data-[state=selected]:outline-offset-3 data-[state=selected]:outline-mauve", "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"),
-                            children: [
-                                /*#__PURE__*/ _jsx("h3", {
-                                    className: "mb-3 text-lg font-bold text-text",
-                                    children: tierNames[planName]
-                                }),
-                                /*#__PURE__*/ _jsx("div", {
-                                    className: "mb-4",
-                                    children: /*#__PURE__*/ _jsxs("div", {
-                                        className: "mb-1 text-2xl font-bold text-text",
-                                        children: [
-                                            "$",
-                                            price.toLocaleString()
-                                        ]
-                                    })
-                                }),
-                                /*#__PURE__*/ _jsx("div", {
-                                    className: "text-sm leading-relaxed text-text",
-                                    children: tierDescriptions[planName]
-                                })
-                            ]
-                        }, planName);
-                    })
-                }),
-                /*#__PURE__*/ _jsx("div", {
-                    children: /*#__PURE__*/ _jsx("a", {
-                        href: buttonLink,
-                        className: cn("inline-block w-full rounded-sm bg-mauve px-12 py-3 text-center text-sm font-medium text-inverted-text transition hover:bg-mauve/75", "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red"),
-                        children: buttonLabel.replace("{tier}", tierNames[tier])
-                    })
-                })
-            ]
-        });
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
     };
-    export default PricingTable;
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsxs, jsx } from "react/jsx-runtime";
+    import { useState } from "react";
+    import { buildTierNames, buildTierDescriptions, buildTierPrices, TIER_NAMES, getCurrentPrice } from "@/lib/pricing-utils";
+    import { cn } from "drupal-canvas";
+    const getIconMaskStyle = (iconName) => ({
+      maskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconName}.svg)`,
+      maskPosition: "center",
+      maskRepeat: "no-repeat",
+      maskSize: "contain",
+      WebkitMaskImage: `url(https://esm.sh/lucide-static@0.544.0/icons/${iconName}.svg)`,
+      WebkitMaskPosition: "center",
+      WebkitMaskRepeat: "no-repeat",
+      WebkitMaskSize: "contain"
+    });
+    function PricingTable(_a) {
+      var _b = _a, {
+        entryTierName,
+        entryTierDescription,
+        entryTierIconNameFromLucide,
+        entryTierPriceMonthly,
+        entryTierPriceAnnual,
+        midTierName,
+        midTierDescription,
+        midTierIconNameFromLucide,
+        midTierPriceMonthly,
+        midTierPriceAnnual,
+        advancedTierName,
+        advancedTierDescription,
+        advancedTierIconNameFromLucide,
+        advancedTierPriceMonthly,
+        advancedTierPriceAnnual,
+        defaultTier,
+        annualSelectedByDefault,
+        annualBadgeText,
+        buttonLabel,
+        buttonLink,
+        intro,
+        className
+      } = _b, props = __objRest(_b, [
+        "entryTierName",
+        "entryTierDescription",
+        "entryTierIconNameFromLucide",
+        "entryTierPriceMonthly",
+        "entryTierPriceAnnual",
+        "midTierName",
+        "midTierDescription",
+        "midTierIconNameFromLucide",
+        "midTierPriceMonthly",
+        "midTierPriceAnnual",
+        "advancedTierName",
+        "advancedTierDescription",
+        "advancedTierIconNameFromLucide",
+        "advancedTierPriceMonthly",
+        "advancedTierPriceAnnual",
+        "defaultTier",
+        "annualSelectedByDefault",
+        "annualBadgeText",
+        "buttonLabel",
+        "buttonLink",
+        "intro",
+        "className"
+      ]);
+      const [isAnnual, setIsAnnual] = useState(annualSelectedByDefault != null ? annualSelectedByDefault : false);
+      const tier = defaultTier;
+      const tierNames = buildTierNames({
+        entryTierName,
+        midTierName,
+        advancedTierName
+      });
+      const tierDescriptions = buildTierDescriptions({
+        entryTierDescription,
+        midTierDescription,
+        advancedTierDescription
+      });
+      const tierIcons = {
+        entry: entryTierIconNameFromLucide,
+        mid: midTierIconNameFromLucide,
+        advanced: advancedTierIconNameFromLucide
+      };
+      const tierPrices = buildTierPrices({
+        entryTierPriceMonthly,
+        entryTierPriceAnnual,
+        midTierPriceMonthly,
+        midTierPriceAnnual,
+        advancedTierPriceMonthly,
+        advancedTierPriceAnnual
+      });
+      return /* @__PURE__ */ jsxs("div", __spreadProps(__spreadValues({ className: cn("w-full", className) }, props), { children: [
+        intro && /* @__PURE__ */ jsx("div", { className: "mx-auto mb-10 w-full max-w-6xl border-y border-line py-8 md:py-10", children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-3xl flex-col items-center gap-3 text-center *:max-w-3xl", children: intro }) }),
+        /* @__PURE__ */ jsxs("div", { className: "mb-6 flex items-center justify-center", children: [
+          /* @__PURE__ */ jsx("div", { className: "w-24 text-right text-sm", children: /* @__PURE__ */ jsx(
+            "span",
+            {
+              className: cn("font-medium text-muted", !isAnnual && "text-text"),
+              children: "Monthly"
+            }
+          ) }),
+          /* @__PURE__ */ jsx(
+            "button",
+            {
+              type: "button",
+              onClick: () => setIsAnnual(!isAnnual),
+              className: "relative mx-4 h-8 w-16 cursor-pointer rounded-full border-0 bg-green p-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green",
+              "aria-label": "Toggle annual billing",
+              children: /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: cn(
+                    "absolute top-1 size-6 rounded-full border border-green bg-paper transition-all duration-200",
+                    isAnnual ? "left-9" : "left-1"
+                  )
+                }
+              )
+            }
+          ),
+          /* @__PURE__ */ jsxs("div", { className: "flex w-36 items-center text-sm", children: [
+            /* @__PURE__ */ jsx(
+              "span",
+              {
+                className: cn("font-medium text-muted", isAnnual && "text-text"),
+                children: "Annual"
+              }
+            ),
+            /* @__PURE__ */ jsx("span", { className: "ml-3 rounded-full bg-surface-0 px-3 py-1 text-xs leading-none font-medium whitespace-nowrap text-green", children: annualBadgeText })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsx("div", { className: "grid gap-8 md:grid-cols-3", children: TIER_NAMES.map((planName) => {
+          const isSelected = tier === planName;
+          const price = getCurrentPrice({
+            tierPrices,
+            tierName: planName,
+            isAnnual
+          });
+          return /* @__PURE__ */ jsxs(
+            "div",
+            {
+              "data-state": isSelected ? "selected" : void 0,
+              className: cn(
+                "relative flex flex-col rounded-xl border border-line bg-paper p-6 shadow-sm transition-colors",
+                "data-[state=selected]:border-green"
+              ),
+              children: [
+                /* @__PURE__ */ jsx("div", { className: "mb-5 flex min-h-6 justify-center", children: planName === "mid" && /* @__PURE__ */ jsx("div", { className: "inline-flex h-5 items-center rounded-full bg-surface-0 px-3 text-xs leading-none font-bold tracking-wide text-green uppercase", children: "Most popular" }) }),
+                /* @__PURE__ */ jsxs("div", { className: "mb-4 flex items-center gap-5", children: [
+                  /* @__PURE__ */ jsx("div", { className: "flex size-16 shrink-0 items-center justify-center rounded-full bg-surface-0", children: /* @__PURE__ */ jsx(
+                    "span",
+                    {
+                      "aria-hidden": "true",
+                      className: "size-9 bg-green",
+                      style: getIconMaskStyle(tierIcons[planName])
+                    }
+                  ) }),
+                  /* @__PURE__ */ jsxs("div", { children: [
+                    /* @__PURE__ */ jsx("h3", { className: "text-xl leading-6 font-bold text-text", children: tierNames[planName] }),
+                    /* @__PURE__ */ jsxs("div", { className: "mt-4 font-serif text-4xl leading-none font-normal text-text", children: [
+                      "$",
+                      price.toLocaleString()
+                    ] })
+                  ] })
+                ] }),
+                /* @__PURE__ */ jsx("div", { className: "mb-5 min-h-12 text-sm leading-6 text-muted", children: tierDescriptions[planName] }),
+                /* @__PURE__ */ jsx(
+                  "a",
+                  {
+                    href: buttonLink,
+                    className: cn(
+                      "mt-auto inline-flex min-h-11 items-center justify-center rounded-md border border-green px-5 text-center text-base font-medium text-green transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green",
+                      isSelected && "bg-green text-inverted-text hover:bg-green/90",
+                      !isSelected && "hover:bg-surface-0"
+                    ),
+                    children: buttonLabel.replace("{tier}", tierNames[planName])
+                  }
+                ),
+                /* @__PURE__ */ jsxs("span", { className: "sr-only", children: [
+                  isSelected ? "Selected plan: " : "Plan: ",
+                  tierNames[planName]
+                ] })
+              ]
+            },
+            planName
+          );
+        }) })
+      ] }));
+    }
+    export {
+      PricingTable,
+      PricingTable as default
+    };
 css:
   original: ""
   compiled: ""

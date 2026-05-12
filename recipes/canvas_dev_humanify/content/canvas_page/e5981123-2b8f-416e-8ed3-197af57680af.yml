@@ -1,3 +1,4 @@
+---
 _meta:
   version: "1.0"
   entity_type: canvas_page
@@ -14,8 +15,102 @@ default:
       target_uuid: ""
   title:
     - value: Blog
+  components:
+    - parent_uuid:
+      slot:
+      uuid: e22eb0d4-04e9-494b-b2ca-c0b893ea12f0
+      component_id: js.header
+      component_version: c2b7efd7cbdcad22
+      inputs:
+        backgroundColor: cream
+      label:
+    - parent_uuid: e22eb0d4-04e9-494b-b2ca-c0b893ea12f0
+      slot: branding
+      uuid: 52c74919-435b-46d6-a90b-5f75127cc885
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: true
+      label:
+    - parent_uuid: e22eb0d4-04e9-494b-b2ca-c0b893ea12f0
+      slot: navigation
+      uuid: 4aebcc5e-5367-44f2-9b5f-3699ea5f5f3e
+      component_id: js.navigation
+      component_version: f1853c41e19ad882
+      inputs:
+        activeUrl:
+          uri: internal:/page/blog
+          options: []
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 594b9f33-ef5b-4107-b75d-1c571e816e22
+      component_id: js.section
+      component_version: 51968f48979d90b3
+      inputs:
+        backgroundColor: paper
+      label:
+    - parent_uuid: 594b9f33-ef5b-4107-b75d-1c571e816e22
+      slot: content
+      uuid: 2cd198fb-6936-4673-8b46-0b87369de2c0
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value: Blog
+          format: canvas_html_block
+        variant: eyebrow
+      label:
+    - parent_uuid: 594b9f33-ef5b-4107-b75d-1c571e816e22
+      slot: content
+      uuid: 7b1d6617-8bd4-48cd-ac02-82792d42c810
+      component_id: js.heading
+      component_version: 9df836114750c940
+      inputs:
+        text: Ideas for better human and AI collaboration.
+      label:
+    - parent_uuid: 594b9f33-ef5b-4107-b75d-1c571e816e22
+      slot: content
+      uuid: ffc9f8cc-4e68-4118-8a85-3d3321a8b8dc
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value:
+            "<p>Read practical notes on shaping AI-generated work into clear,
+            trusted, and memorable communication.</p>"
+          format: canvas_html_block
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 96e67770-bbf2-49da-9a3d-67858123565d
+      component_id: js.footer
+      component_version: ba30f643e8b0bf7b
+      inputs:
+        backgroundColor: navy
+        copyrightNotice:
+          value: "&copy; 2025-2026 Humanify Example Ventures Inc."
+          format: canvas_html_block
+        linkedInUrl:
+          uri: https://www.linkedin.com
+          options: []
+        xUrl:
+          uri: https://x.com
+          options: []
+        emailUrl:
+          uri: mailto:hello@example.com
+          options: []
+      label:
+    - parent_uuid: 96e67770-bbf2-49da-9a3d-67858123565d
+      slot: branding
+      uuid: f7058c7a-1d57-44cb-84c5-11049736f09f
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: false
+      label:
   path:
-    - alias: /blog
+    - alias: "/blog"
       langcode: en
   created:
     - value: 1771107337

@@ -4,137 +4,339 @@ dependencies: {}
 machineName: footer
 name: Footer
 required:
-  - copyrightNotice
   - backgroundColor
+  - copyrightNotice
 props:
-  copyrightNotice:
-    title: "Copyright notice"
+  backgroundColor:
     type: string
+    enum:
+      - cream
+      - paper
+      - mist
+      - navy
+    "meta:enum":
+      cream: Cream
+      paper: Paper
+      mist: Mist
+      navy: Navy
+    title: "Background color"
     examples:
-      - "&copy; 2025-2026 Humanify Example Ventures Inc. All rights reserved."
+      - cream
+  copyrightNotice:
+    type: string
     contentMediaType: text/html
     x-formatting-context: block
-  darkVariant:
-    title: "Dark variant"
-    type: boolean
+    title: "Copyright notice"
     examples:
-      - true
-  backgroundColor:
-    title: "Background color"
+      - "&copy; 2025-2026 Humanify Example Ventures Inc."
+  linkedInUrl:
     type: string
+    format: uri-reference
+    title: "LinkedIn URL"
     examples:
-      - crust
-    enum:
-      - base
-      - mantle
-      - crust
-    "meta:enum":
-      base: Base
-      mantle: Mantle
-      crust: Crust
+      - "https://www.linkedin.com"
+  xUrl:
+    type: string
+    format: uri-reference
+    title: "X URL"
+    examples:
+      - "https://x.com"
+  emailUrl:
+    type: string
+    format: uri-reference
+    title: "Email URL"
+    examples:
+      - "mailto:hello@example.com"
 slots:
   branding:
     title: Branding
 js:
   original: |
-    import { cva } from "class-variance-authority";
-    import { cn, FormattedText } from "drupal-canvas";
+    import { hasEmptySlotPlaceholder } from '@/lib/types';
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
 
-    const Footer = ({
-      branding,
-      copyrightNotice,
-      darkVariant,
+    const footerVariants = cva('', {
+      variants: {
+        backgroundColor: {
+          cream: 'bg-cream',
+          paper: 'bg-paper',
+          mist: 'bg-mist',
+          navy: 'dark bg-navy',
+        },
+      },
+      defaultVariants: {
+        backgroundColor: 'cream',
+      },
+    });
+
+    type FooterBackgroundColor = NonNullable<
+      VariantProps<typeof footerVariants>['backgroundColor']
+    >;
+
+    function LinkedInLogoIcon() {
+      return (
+        <svg viewBox="0 0 32 32" className="h-4.5 fill-current" aria-hidden="true">
+          <path d="M28.778 1.004H3.191a2.185 2.185 0 0 0-2.186 2.159v25.672a2.186 2.186 0 0 0 2.186 2.161h25.612c1.2 0 2.175-.963 2.194-2.159V3.165a2.195 2.195 0 0 0-2.195-2.161h-.029.001zM9.9 26.562H5.446V12.251H9.9zM7.674 10.293a2.579 2.579 0 1 1 2.579-2.58v.004a2.577 2.577 0 0 1-2.577 2.577h-.003zm18.882 16.269h-4.441v-6.959c0-1.66-.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441V12.252h4.266v1.951h.058a4.686 4.686 0 0 1 4.22-2.312h-.009c4.5 0 5.332 2.962 5.332 6.817v7.855z" />
+        </svg>
+      );
+    }
+
+    function XLogoIcon() {
+      return (
+        <svg viewBox="0 0 24 24" className="h-4 fill-current" aria-hidden="true">
+          <path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" />
+        </svg>
+      );
+    }
+
+    function MailIcon() {
+      return (
+        <svg
+          viewBox="0 0 24 24"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          className="h-5 fill-none stroke-current"
+          aria-hidden="true"
+        >
+          <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" />
+          <rect width={20} height={16} x={2} y={4} rx={2} />
+        </svg>
+      );
+    }
+
+    interface SocialLinkProps {
+      children: ReactNode;
+      label: string;
+      url: string;
+    }
+
+    function SocialLink({ children, label, url }: SocialLinkProps) {
+      return (
+        <a
+          href={url}
+          className="inline-flex size-10 items-center justify-center rounded-full border border-text/30 text-text transition hover:border-green hover:text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green"
+          aria-label={label}
+        >
+          {children}
+        </a>
+      );
+    }
+
+    export interface FooterProps extends Omit<
+      ComponentPropsWithoutRef<'footer'>,
+      'children'
+    > {
+      backgroundColor: FooterBackgroundColor;
+      branding?: ReactNode;
+      copyrightNotice: string;
+      emailUrl?: string;
+      linkedInUrl?: string;
+      xUrl?: string;
+    }
+
+    function Footer({
       backgroundColor,
-    }) => {
-      const footerVariants = cva("", {
-        variants: {
-          colorScheme: {
-            light: "",
-            dark: "dark",
-          },
-          backgroundColor: {
-            base: "bg-base",
-            mantle: "bg-mantle",
-            crust: "bg-crust",
-          },
-        },
-        defaultVariants: {
-          colorScheme: "light",
-          backgroundColor: "base",
-        },
-      });
+      branding,
+      className,
+      copyrightNotice,
+      emailUrl,
+      linkedInUrl,
+      xUrl,
+      ...props
+    }: FooterProps) {
       return (
         <footer
-          className={footerVariants({
-            colorScheme: darkVariant ? "dark" : "light",
-            backgroundColor,
-          })}
+          className={cn(footerVariants({ backgroundColor }), className)}
+          {...props}
         >
-          <div className="mx-auto flex max-w-screen-md min-w-sm flex-col items-center gap-12 p-12 md:p-16">
-            <div
-              className={cn(
-                "h-12 flex-shrink-0 items-center justify-start",
-                branding?.props?.value?.includes(
-                  "canvas--slot-empty-placeholder",
-                ) && "min-w-32",
-              )}
-            >
-              {branding}
+          <div className="mx-auto grid max-w-7xl gap-8 px-5 py-8 sm:px-8 md:grid-cols-[1fr_auto] md:items-center lg:px-16">
+            <div className="flex flex-col gap-3">
+              <div
+                className={cn(
+                  'h-10 shrink-0 items-center justify-start',
+                  hasEmptySlotPlaceholder(branding) && 'min-w-32',
+                )}
+              >
+                {branding}
+              </div>
+              <FormattedText
+                as="div"
+                className="text-xs leading-5 text-muted md:text-sm"
+              >
+                {copyrightNotice}
+              </FormattedText>
             </div>
-            <FormattedText as="p" className="text-sm text-text">
-              {copyrightNotice}
-            </FormattedText>
+
+            {(linkedInUrl || xUrl || emailUrl) && (
+              <div className="flex gap-4 md:justify-end">
+                {linkedInUrl && (
+                  <SocialLink label="LinkedIn" url={linkedInUrl}>
+                    <LinkedInLogoIcon />
+                  </SocialLink>
+                )}
+                {xUrl && (
+                  <SocialLink label="X" url={xUrl}>
+                    <XLogoIcon />
+                  </SocialLink>
+                )}
+                {emailUrl && (
+                  <SocialLink label="Email" url={emailUrl}>
+                    <MailIcon />
+                  </SocialLink>
+                )}
+              </div>
+            )}
           </div>
         </footer>
       );
-    };
+    }
 
+    export { Footer };
     export default Footer;
   compiled: |
-    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { hasEmptySlotPlaceholder } from "@/lib/types";
     import { cva } from "class-variance-authority";
     import { cn, FormattedText } from "drupal-canvas";
-    const Footer = ({ branding, copyrightNotice, darkVariant, backgroundColor })=>{
-        var _branding_props_value, _branding_props;
-        const footerVariants = cva("", {
-            variants: {
-                colorScheme: {
-                    light: "",
-                    dark: "dark"
-                },
-                backgroundColor: {
-                    base: "bg-base",
-                    mantle: "bg-mantle",
-                    crust: "bg-crust"
+    const footerVariants = cva("", {
+      variants: {
+        backgroundColor: {
+          cream: "bg-cream",
+          paper: "bg-paper",
+          mist: "bg-mist",
+          navy: "dark bg-navy"
+        }
+      },
+      defaultVariants: {
+        backgroundColor: "cream"
+      }
+    });
+    function LinkedInLogoIcon() {
+      return /* @__PURE__ */ jsx("svg", { viewBox: "0 0 32 32", className: "h-4.5 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M28.778 1.004H3.191a2.185 2.185 0 0 0-2.186 2.159v25.672a2.186 2.186 0 0 0 2.186 2.161h25.612c1.2 0 2.175-.963 2.194-2.159V3.165a2.195 2.195 0 0 0-2.195-2.161h-.029.001zM9.9 26.562H5.446V12.251H9.9zM7.674 10.293a2.579 2.579 0 1 1 2.579-2.58v.004a2.577 2.577 0 0 1-2.577 2.577h-.003zm18.882 16.269h-4.441v-6.959c0-1.66-.034-3.795-2.314-3.795-2.316 0-2.669 1.806-2.669 3.673v7.082h-4.441V12.252h4.266v1.951h.058a4.686 4.686 0 0 1 4.22-2.312h-.009c4.5 0 5.332 2.962 5.332 6.817v7.855z" }) });
+    }
+    function XLogoIcon() {
+      return /* @__PURE__ */ jsx("svg", { viewBox: "0 0 24 24", className: "h-4 fill-current", "aria-hidden": "true", children: /* @__PURE__ */ jsx("path", { d: "M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.21-6.82-5.97 6.82H1.68l7.73-8.84L1.25 2.25h6.83l4.71 6.23 5.45-6.23Zm-1.16 17.52h1.83L7.08 4.13H5.12l11.96 15.64Z" }) });
+    }
+    function MailIcon() {
+      return /* @__PURE__ */ jsxs(
+        "svg",
+        {
+          viewBox: "0 0 24 24",
+          strokeLinecap: "round",
+          strokeLinejoin: "round",
+          strokeWidth: 2,
+          className: "h-5 fill-none stroke-current",
+          "aria-hidden": "true",
+          children: [
+            /* @__PURE__ */ jsx("path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" }),
+            /* @__PURE__ */ jsx("rect", { width: 20, height: 16, x: 2, y: 4, rx: 2 })
+          ]
+        }
+      );
+    }
+    function SocialLink({ children, label, url }) {
+      return /* @__PURE__ */ jsx(
+        "a",
+        {
+          href: url,
+          className: "inline-flex size-10 items-center justify-center rounded-full border border-text/30 text-text transition hover:border-green hover:text-green focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-green",
+          "aria-label": label,
+          children
+        }
+      );
+    }
+    function Footer(_a) {
+      var _b = _a, {
+        backgroundColor,
+        branding,
+        className,
+        copyrightNotice,
+        emailUrl,
+        linkedInUrl,
+        xUrl
+      } = _b, props = __objRest(_b, [
+        "backgroundColor",
+        "branding",
+        "className",
+        "copyrightNotice",
+        "emailUrl",
+        "linkedInUrl",
+        "xUrl"
+      ]);
+      return /* @__PURE__ */ jsx(
+        "footer",
+        __spreadProps(__spreadValues({
+          className: cn(footerVariants({ backgroundColor }), className)
+        }, props), {
+          children: /* @__PURE__ */ jsxs("div", { className: "mx-auto grid max-w-7xl gap-8 px-5 py-8 sm:px-8 md:grid-cols-[1fr_auto] md:items-center lg:px-16", children: [
+            /* @__PURE__ */ jsxs("div", { className: "flex flex-col gap-3", children: [
+              /* @__PURE__ */ jsx(
+                "div",
+                {
+                  className: cn(
+                    "h-10 shrink-0 items-center justify-start",
+                    hasEmptySlotPlaceholder(branding) && "min-w-32"
+                  ),
+                  children: branding
                 }
-            },
-            defaultVariants: {
-                colorScheme: "light",
-                backgroundColor: "base"
-            }
-        });
-        return /*#__PURE__*/ _jsx("footer", {
-            className: footerVariants({
-                colorScheme: darkVariant ? "dark" : "light",
-                backgroundColor
-            }),
-            children: /*#__PURE__*/ _jsxs("div", {
-                className: "mx-auto flex max-w-screen-md min-w-sm flex-col items-center gap-12 p-12 md:p-16",
-                children: [
-                    /*#__PURE__*/ _jsx("div", {
-                        className: cn("h-12 flex-shrink-0 items-center justify-start", (branding === null || branding === void 0 ? void 0 : (_branding_props = branding.props) === null || _branding_props === void 0 ? void 0 : (_branding_props_value = _branding_props.value) === null || _branding_props_value === void 0 ? void 0 : _branding_props_value.includes("canvas--slot-empty-placeholder")) && "min-w-32"),
-                        children: branding
-                    }),
-                    /*#__PURE__*/ _jsx(FormattedText, {
-                        as: "p",
-                        className: "text-sm text-text",
-                        children: copyrightNotice
-                    })
-                ]
-            })
-        });
+              ),
+              /* @__PURE__ */ jsx(
+                FormattedText,
+                {
+                  as: "div",
+                  className: "text-xs leading-5 text-muted md:text-sm",
+                  children: copyrightNotice
+                }
+              )
+            ] }),
+            (linkedInUrl || xUrl || emailUrl) && /* @__PURE__ */ jsxs("div", { className: "flex gap-4 md:justify-end", children: [
+              linkedInUrl && /* @__PURE__ */ jsx(SocialLink, { label: "LinkedIn", url: linkedInUrl, children: /* @__PURE__ */ jsx(LinkedInLogoIcon, {}) }),
+              xUrl && /* @__PURE__ */ jsx(SocialLink, { label: "X", url: xUrl, children: /* @__PURE__ */ jsx(XLogoIcon, {}) }),
+              emailUrl && /* @__PURE__ */ jsx(SocialLink, { label: "Email", url: emailUrl, children: /* @__PURE__ */ jsx(MailIcon, {}) })
+            ] })
+          ] })
+        })
+      );
+    }
+    export {
+      Footer,
+      Footer as default
     };
-    export default Footer;
 css:
   original: ""
   compiled: ""

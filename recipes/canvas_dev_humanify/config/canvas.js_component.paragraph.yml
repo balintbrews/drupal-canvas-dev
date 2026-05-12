@@ -7,8 +7,10 @@ required:
   - text
 props:
   text:
-    title: Text
     type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Text
     examples:
       - "We partner with AI-native teams to add what machines still struggle to
         replicate: taste, narrative coherence, emotional resonance, and
@@ -18,36 +20,89 @@ props:
       - "Choose the model that fits your stage, then scale across strategy,
         design, and communication with a team that knows how to collaborate with
         AI systems."
-    contentMediaType: text/html
-    x-formatting-context: block
+  variant:
+    type: string
+    enum:
+      - body
+      - eyebrow
+    "meta:enum":
+      body: Body
+      eyebrow: Eyebrow
+    title: Variant
+    examples:
+      - body
 slots: {}
 js:
   original: |
-    import { FormattedText } from "drupal-canvas";
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+    import type { HTMLAttributes } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
 
-    const Paragraph = ({ text }) => {
+    const paragraphVariants = cva('max-w-5xl text-balance', {
+      variants: {
+        variant: {
+          body: 'text-base leading-7 text-muted',
+          eyebrow: 'text-base leading-6 font-semibold text-green',
+        },
+      },
+      defaultVariants: {
+        variant: 'body',
+      },
+    });
+
+    type ParagraphVariant = NonNullable<
+      VariantProps<typeof paragraphVariants>['variant']
+    >;
+
+    export interface ParagraphProps {
+      className?: HTMLAttributes<HTMLDivElement>['className'];
+      text: string;
+      variant?: ParagraphVariant;
+    }
+
+    function Paragraph({ className, text, variant }: ParagraphProps) {
       return (
         <FormattedText
-          as="p"
-          className="mx-auto max-w-2xl text-center leading-relaxed text-balance text-text"
+          as="div"
+          className={cn(paragraphVariants({ variant }), className)}
         >
           {text}
         </FormattedText>
       );
-    };
+    }
 
+    export { Paragraph };
     export default Paragraph;
   compiled: |
-    import { jsx as _jsx } from "react/jsx-runtime";
-    import { FormattedText } from "drupal-canvas";
-    const Paragraph = ({ text })=>{
-        return /*#__PURE__*/ _jsx(FormattedText, {
-            as: "p",
-            className: "mx-auto max-w-2xl text-center leading-relaxed text-balance text-text",
-            children: text
-        });
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { FormattedText, cn } from "drupal-canvas";
+    const paragraphVariants = cva("max-w-5xl text-balance", {
+      variants: {
+        variant: {
+          body: "text-base leading-7 text-muted",
+          eyebrow: "text-base leading-6 font-semibold text-green"
+        }
+      },
+      defaultVariants: {
+        variant: "body"
+      }
+    });
+    function Paragraph({ className, text, variant }) {
+      return /* @__PURE__ */ jsx(
+        FormattedText,
+        {
+          as: "div",
+          className: cn(paragraphVariants({ variant }), className),
+          children: text
+        }
+      );
+    }
+    export {
+      Paragraph,
+      Paragraph as default
     };
-    export default Paragraph;
 css:
   original: ""
   compiled: ""

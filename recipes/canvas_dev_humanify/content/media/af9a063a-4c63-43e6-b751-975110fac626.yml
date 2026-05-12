@@ -1,0 +1,27 @@
+_meta:
+  version: "1.0"
+  entity_type: media
+  uuid: af9a063a-4c63-43e6-b751-975110fac626
+  bundle: image
+  default_langcode: en
+  depends:
+    282fbcbf-e695-4c14-8658-0a0e457dc86c: file
+default:
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  name:
+    - value: photo-1752650736024-d6aac18abc2d.jpg
+  created:
+    - value: 1778619553
+  path:
+    - alias: ""
+      langcode: en
+  field_media_image:
+    - entity: 282fbcbf-e695-4c14-8658-0a0e457dc86c
+      alt: "Two people looking at a book beside a laptop in a sunlit workspace"
+      title: photo-1752650736024-d6aac18abc2d.jpg
+      width: 1770
+      height: 996

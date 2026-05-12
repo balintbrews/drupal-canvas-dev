@@ -2,7 +2,7 @@
 _meta:
   version: "1.0"
   entity_type: canvas_page
-  uuid: 0daee966-6e33-47dc-a70b-4f09e3c458b0
+  uuid: 2f3dc842-dfa0-493d-a7ca-a1b5de5d4874
   default_langcode: en
 default:
   revision_user:
@@ -14,76 +14,76 @@ default:
     - target_id: 1
       target_uuid: ""
   title:
-    - value: About
+    - value: Register
   components:
     - parent_uuid:
       slot:
-      uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+      uuid: 8b98b978-dbf9-4d25-96b9-19a7cb88294c
       component_id: js.header
       component_version: c2b7efd7cbdcad22
       inputs:
         backgroundColor: cream
       label:
-    - parent_uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+    - parent_uuid: 8b98b978-dbf9-4d25-96b9-19a7cb88294c
       slot: branding
-      uuid: 4ad85efb-edaa-4611-8ea7-3fcdc055ebb3
+      uuid: 6a30ba25-e49d-4d55-956c-cdead70c958d
       component_id: js.logo
       component_version: 3e9baf3c7cc35f84
       inputs:
         linkToFrontPage: true
       label:
-    - parent_uuid: 2639f2db-f5e1-4414-9f62-a59e5ee33798
+    - parent_uuid: 8b98b978-dbf9-4d25-96b9-19a7cb88294c
       slot: navigation
-      uuid: 6a7987ff-23ec-43d1-8ffc-62dd7be7c2b3
+      uuid: 02abf122-b5c3-4654-a16b-e292c93dd845
       component_id: js.navigation
       component_version: f1853c41e19ad882
       inputs:
         activeUrl:
-          uri: internal:/page/about
+          uri: internal:/page/register
           options: []
       label:
     - parent_uuid:
       slot:
-      uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+      uuid: 80aa3a66-917c-4dec-9a98-419b52d3c60e
       component_id: js.section
       component_version: 51968f48979d90b3
       inputs:
         backgroundColor: paper
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 80aa3a66-917c-4dec-9a98-419b52d3c60e
       slot: content
-      uuid: 11e2f7b9-4abb-4365-b1ea-a49648d37019
+      uuid: 1e8e64f7-62ec-4c6f-ba0c-3692e569041a
       component_id: js.paragraph
       component_version: "078c5bf8476f16d9"
       inputs:
         text:
-          value: About
+          value: Register
           format: canvas_html_block
         variant: eyebrow
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 80aa3a66-917c-4dec-9a98-419b52d3c60e
       slot: content
-      uuid: 5865c217-45f8-4a3f-8e0a-62bb912d5bbc
+      uuid: f44410a0-5a4f-40c3-9032-6862a7e9f423
       component_id: js.heading
       component_version: 9df836114750c940
       inputs:
-        text: We add the human layer AI agents need.
+        text: Build your hybrid team.
       label:
-    - parent_uuid: 29d328d5-1617-4028-9081-9f40f09edb14
+    - parent_uuid: 80aa3a66-917c-4dec-9a98-419b52d3c60e
       slot: content
-      uuid: d9d15336-eff6-4002-a175-e5744a66e1ae
+      uuid: 80c5cf70-15d5-4529-8a35-daa5f4df3989
       component_id: js.paragraph
       component_version: "078c5bf8476f16d9"
       inputs:
         text:
           value:
-            "<p>Humanify partners with AI-native teams to bring taste, judgment,
-            narrative coherence, and domain context to automated workflows.</p>"
+            "<p>Use this page as the starting point for a new Humanify account
+            or team inquiry workflow.</p>"
           format: canvas_html_block
       label:
     - parent_uuid:
       slot:
-      uuid: 77302af2-8bcf-4dd0-8ef8-7592c6c718d8
+      uuid: a06a7067-592b-49a7-8ab0-7937244190b7
       component_id: js.footer
       component_version: ba30f643e8b0bf7b
       inputs:
@@ -101,16 +101,16 @@ default:
           uri: mailto:hello@example.com
           options: []
       label:
-    - parent_uuid: 77302af2-8bcf-4dd0-8ef8-7592c6c718d8
+    - parent_uuid: a06a7067-592b-49a7-8ab0-7937244190b7
       slot: branding
-      uuid: 609cac55-5bf1-40c9-8e86-63612fd4708e
+      uuid: 5e773db4-eee3-412e-896e-708031664164
       component_id: js.logo
       component_version: 3e9baf3c7cc35f84
       inputs:
         linkToFrontPage: false
       label:
   path:
-    - alias: "/about"
+    - alias: "/register"
       langcode: en
   created:
-    - value: 1771107348
+    - value: 1778619561

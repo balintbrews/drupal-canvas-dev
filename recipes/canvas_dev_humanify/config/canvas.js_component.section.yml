@@ -3,104 +3,157 @@ status: true
 dependencies: {}
 machineName: section
 name: Section
-required: {}
+required:
+  - backgroundColor
 props:
-  darkVariant:
-    title: "Dark variant"
-    type: boolean
-    examples:
-      - false
-      - false
   backgroundColor:
-    title: "Background color"
     type: string
-    examples:
-      - mantle
-      - crust
     enum:
-      - base
-      - mantle
-      - crust
+      - cream
+      - paper
+      - mist
     "meta:enum":
-      base: Base
-      mantle: Mantle
-      crust: Crust
+      cream: Cream
+      paper: Paper
+      mist: Mist
+    title: "Background color"
+    examples:
+      - cream
 slots:
   content:
     title: Content
 js:
   original: |
-    import { cva } from "class-variance-authority";
-    import { cn } from "drupal-canvas";
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
 
-    const Section = ({ content, darkVariant, backgroundColor }) => {
-      const sectionVariants = cva("", {
-        variants: {
-          colorScheme: {
-            light: "",
-            dark: "dark",
-          },
-          backgroundColor: {
-            base: "bg-base",
-            mantle: "bg-mantle",
-            crust: "bg-crust",
-          },
+    const sectionVariants = cva('', {
+      variants: {
+        backgroundColor: {
+          cream: 'bg-cream',
+          paper: 'bg-paper',
+          mist: 'bg-mist',
         },
-        defaultVariants: {
-          colorScheme: "light",
-        },
-      });
+      },
+      defaultVariants: {
+        backgroundColor: 'cream',
+      },
+    });
 
+    type SectionBackgroundColor = NonNullable<
+      VariantProps<typeof sectionVariants>['backgroundColor']
+    >;
+
+    export interface SectionProps extends Omit<
+      ComponentPropsWithoutRef<'section'>,
+      'children' | 'content'
+    > {
+      backgroundColor: SectionBackgroundColor;
+      content?: ReactNode;
+    }
+
+    function Section({
+      backgroundColor,
+      className,
+      content,
+      ...props
+    }: SectionProps) {
       return (
         <section
           className={cn(
             sectionVariants({
-              colorScheme: darkVariant ? "dark" : "light",
               backgroundColor,
             }),
+            className,
           )}
+          {...props}
         >
-          <div className="mx-auto flex max-w-screen-xl min-w-sm flex-col items-center gap-6 p-12 px-4 md:p-16 md:px-12 lg:gap-8 lg:px-16">
+          <div className="mx-auto flex max-w-7xl flex-col items-stretch gap-8 px-5 py-10 sm:px-8 md:py-12 lg:px-16">
             {content}
           </div>
         </section>
       );
-    };
+    }
 
+    export { Section };
     export default Section;
   compiled: |
-    import { jsx as _jsx } from "react/jsx-runtime";
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsx } from "react/jsx-runtime";
     import { cva } from "class-variance-authority";
     import { cn } from "drupal-canvas";
-    const Section = ({ content, darkVariant, backgroundColor })=>{
-        const sectionVariants = cva("", {
-            variants: {
-                colorScheme: {
-                    light: "",
-                    dark: "dark"
-                },
-                backgroundColor: {
-                    base: "bg-base",
-                    mantle: "bg-mantle",
-                    crust: "bg-crust"
-                }
-            },
-            defaultVariants: {
-                colorScheme: "light"
-            }
-        });
-        return /*#__PURE__*/ _jsx("section", {
-            className: cn(sectionVariants({
-                colorScheme: darkVariant ? "dark" : "light",
-                backgroundColor
-            })),
-            children: /*#__PURE__*/ _jsx("div", {
-                className: "mx-auto flex max-w-screen-xl min-w-sm flex-col items-center gap-6 p-12 px-4 md:p-16 md:px-12 lg:gap-8 lg:px-16",
-                children: content
-            })
-        });
+    const sectionVariants = cva("", {
+      variants: {
+        backgroundColor: {
+          cream: "bg-cream",
+          paper: "bg-paper",
+          mist: "bg-mist"
+        }
+      },
+      defaultVariants: {
+        backgroundColor: "cream"
+      }
+    });
+    function Section(_a) {
+      var _b = _a, {
+        backgroundColor,
+        className,
+        content
+      } = _b, props = __objRest(_b, [
+        "backgroundColor",
+        "className",
+        "content"
+      ]);
+      return /* @__PURE__ */ jsx(
+        "section",
+        __spreadProps(__spreadValues({
+          className: cn(
+            sectionVariants({
+              backgroundColor
+            }),
+            className
+          )
+        }, props), {
+          children: /* @__PURE__ */ jsx("div", { className: "mx-auto flex max-w-7xl flex-col items-stretch gap-8 px-5 py-10 sm:px-8 md:py-12 lg:px-16", children: content })
+        })
+      );
+    }
+    export {
+      Section,
+      Section as default
     };
-    export default Section;
 css:
   original: ""
   compiled: ""
