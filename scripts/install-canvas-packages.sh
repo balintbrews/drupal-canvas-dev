@@ -52,15 +52,38 @@ for package_dir in "${PACKAGE_DIRS[@]}"; do
   npm --prefix "$CANVAS_REPO/$package_dir" run build
 done
 
-echo
-echo "Linking packages into $TARGET_PROJECT"
-(
-  cd "$TARGET_PROJECT"
-  npm link "${PACKAGE_DIRS[@]/#/$CANVAS_REPO/}"
-)
+PACK_DIR="$(mktemp -d)"
+cleanup() {
+  rm -rf "$PACK_DIR"
+}
+trap cleanup EXIT
+
+PACKAGE_TARBALLS=()
 
 echo
-echo "Linked package targets:"
+echo "Packing local Canvas packages"
+for package_dir in "${PACKAGE_DIRS[@]}"; do
+  echo "  npm pack $package_dir"
+  pack_source="$CANVAS_REPO/$package_dir"
+
+  if ! node -e "process.exit(require(process.argv[1]).version ? 0 : 1)" "$pack_source/package.json"; then
+    pack_source="$PACK_DIR/$package_dir"
+    mkdir -p "$(dirname "$pack_source")"
+    cp -R "$CANVAS_REPO/$package_dir" "$pack_source"
+    npm --prefix "$pack_source" pkg set version="0.0.0" >/dev/null
+  fi
+
+  pack_output="$(npm pack "$pack_source" --pack-destination "$PACK_DIR" --ignore-scripts --json)"
+  tarball="$(node -e "const pack = JSON.parse(process.argv[1]); console.log(pack[0].filename);" "$pack_output")"
+  PACKAGE_TARBALLS+=("$PACK_DIR/$tarball")
+done
+
+echo
+echo "Installing local package tarballs into $TARGET_PROJECT"
+npm --prefix "$TARGET_PROJECT" install "${PACKAGE_TARBALLS[@]}"
+
+echo
+echo "Installed package targets:"
 node - "$TARGET_PROJECT" "${PACKAGE_NAMES[@]}" <<'NODE'
 const fs = require('node:fs');
 const path = require('node:path');
