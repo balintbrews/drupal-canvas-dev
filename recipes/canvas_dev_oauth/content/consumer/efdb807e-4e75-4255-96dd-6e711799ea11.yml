@@ -34,6 +34,7 @@ default:
     - scope_id: canvas_page_delete
     - scope_id: canvas_page_edit
     - scope_id: canvas_page_read
+    - scope_id: canvas_page_region
   access_token_expiration:
     - value: 31556952
   refresh_token_expiration:
