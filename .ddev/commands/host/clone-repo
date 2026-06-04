@@ -48,6 +48,17 @@ if ! grep -qxF ".agents/" "$EXCLUDE_FILE"; then
 fi
 
 ln -sfn "$ROOT_AGENTS_MD_REL" "$TARGET_DIR/AGENTS.md"
+
+# Canvas tracks AGENTS.md, but this environment uses a local symlink override.
+if git -C "$TARGET_DIR" ls-files --error-unmatch -- AGENTS.md >/dev/null 2>&1; then
+    if git -C "$TARGET_DIR" update-index --skip-worktree -- AGENTS.md; then
+        echo "Marked tracked AGENTS.md as skip-worktree so the local override stays hidden from Git status."
+    else
+        echo "Error: Failed to mark AGENTS.md as skip-worktree."
+        exit 1
+    fi
+fi
+
 mkdir -p "$TARGET_DIR/.agents"
 ln -sfn "$ROOT_SKILLS_REL" "$TARGET_DIR/.agents/skills"
 
