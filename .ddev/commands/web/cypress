@@ -77,11 +77,19 @@ if [ -n "$SPEC_FLAG" ]; then
 else
     echo "Starting Cypress…"
     echo
-    echo "╔═══════════ OPEN IN YOUR BROWSER: ════════════════╗"
-    echo "║                                                  ║"
-    echo "║     https://canvas.ddev.site:6081/vnc.html       ║"
-    echo "║                                                  ║"
-    echo "╚══════════════════════════════════════════════════╝"
+    VNC_LABEL="OPEN IN YOUR BROWSER:"
+    VNC_URL="https://${DDEV_HOSTNAME}:6081/vnc.html"
+    BOX_WIDTH=$(( ${#VNC_URL} + 8 ))
+    if (( BOX_WIDTH < ${#VNC_LABEL} + 2 )); then
+        BOX_WIDTH=$(( ${#VNC_LABEL} + 2 ))
+    fi
+    BORDER=$(printf '%*s' "$BOX_WIDTH" '' | tr ' ' '═')
+
+    echo "╔${BORDER}╗"
+    printf "║ %-*s ║\n" "$((BOX_WIDTH - 2))" "$VNC_LABEL"
+    printf "║ %-*s ║\n" "$((BOX_WIDTH - 2))" ""
+    printf "║    %-*s    ║\n" "$((BOX_WIDTH - 8))" "$VNC_URL"
+    echo "╚${BORDER}╝"
     
     if [ "$COMPONENT_TESTING_MODE_FLAG" = true ]; then
         npm run cy:open -- --browser chromium --component

@@ -22,6 +22,16 @@ development work, with workflows and tools I prefer.
      && ddev ui --install
    ```
 
+## DDEV project name
+
+The DDEV project name is derived from the checkout directory because
+`.ddev/config.yaml` does not set `name`. This keeps Git worktrees independent: a
+checkout in `canvas` uses `https://canvas.ddev.site`, and a worktree in
+`canvas-issue-123` uses `https://canvas-issue-123.ddev.site`.
+
+Use ignored local overrides in `.ddev/config.local.yaml` only when a checkout
+needs a specific project name.
+
 ## Agent setup
 
 This project uses two agent configuration scopes:
@@ -43,8 +53,8 @@ adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `n`                     | Run `npm` inside the UI directory.<br><br>`--canvas-dir=<directory>`: runs `npm` inside specified directory<br>(`root`, `ui`, `astro`, `cli`, or `docs`)                                                                                                                                                      |
 | `ui`                    | Build the UI code and start the dev server.<br><br>`--install` `-i`: runs `npm install` before<br>`--skip-build` `-s`: skips the build step                                                                                                                                                                   |
-| `playwright`            | Run Playwright in UI mode.<br>(Accessible via VNC at `https://canvas.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode                                                                                                                                                   |
-| `cy`,<br>`cypress`      | Run the Cypress UI in end-to-end testing mode<br>(Accessible via VNC at `https://canvas.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode<br>`--component` `-c`: use component testing mode                                                                              |
+| `playwright`            | Run Playwright in UI mode.<br>(Accessible via VNC at `https://<project-name>.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode                                                                                                                                           |
+| `cy`,<br>`cypress`      | Run the Cypress UI in end-to-end testing mode<br>(Accessible via VNC at `https://<project-name>.ddev.site:6081/vnc.html`)<br><br>`--spec <path-to-spec>`: runs a spec in headless mode<br>`--component` `-c`: use component testing mode                                                                      |
 | `phpunit [path]`        | Run PHPUnit tests in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                                                                                             |
 | `phpcs [path]`          | Run PHP Code Beautifier and Fixer in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                                                                             |
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                                                                                                          |
