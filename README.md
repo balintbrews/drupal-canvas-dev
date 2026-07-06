@@ -8,10 +8,7 @@ development work, with workflows and tools I prefer.
 ## Setup
 
 1. Clone the repository
-2. Copy `.ddev/.env.example` to `.ddev/.env`
-   1. Add your [OpenAI API key](https://platform.openai.com) to be used by the
-      Canvas AI module
-3. Run:
+2. Run:
    ```
    ddev start \
      && ddev clone-repo \
@@ -92,7 +89,7 @@ adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
 | `phpunit [path]`        | Run PHPUnit tests in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                                                                                             |
 | `phpcs [path]`          | Run PHP Code Beautifier and Fixer in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                                                                             |
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                                                                                                          |
-| `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas, Canvas AI, Canvas OAuth.<br><br>`--ui`: also installs Canvas Vite for UI development<br>`--mercury` `-m`: applies the Mercury recipe instead of the Stark and Humanify recipes<br>`--stark`: skips the Humanify recipe, and creates an empty page |
+| `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas and Canvas OAuth.<br><br>`--ui`: also installs Canvas Vite for UI development<br>`--mercury` `-m`: applies the Mercury recipe instead of the Stark and Humanify recipes<br>`--stark`: skips the Humanify recipe, and creates an empty page |
 | `clone-repo`            | Clone the Canvas module's repository, add local nested-repo excludes for `AGENTS.md` and `.agents/`, and set symlinks for `AGENTS.md` and `.agents/skills`. (Runs on the host.)                                                                                                                               |
 | `clone-repo-mercury`    | Clone the Mercury theme's repository. (Runs on the host.)                                                                                                                                                                                                                                                     |
 

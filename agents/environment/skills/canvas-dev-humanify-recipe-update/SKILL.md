@@ -167,7 +167,6 @@ If install fails:
 - `ddev drush` command names here are from this repo's current Drush setup:
   - `config:export` (`cex`)
   - `default-content:export-references` (`dcer`)
-- `ddev si` may show non-fatal schema warnings for `ai_agents_test` views.
 - If install fails with a component version error like:
   - `The requested version <old> is not available. Available versions: <new>`
     this means recipe content and component config are out of sync.

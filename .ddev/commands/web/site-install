@@ -52,7 +52,7 @@ fi
 
 # Enable modules.
 # @todo Convert enabling modules into recipes.
-MODULES="canvas canvas_dev_mode canvas_ai ai_provider_openai ai_agents_test config default_content jsonapi jsonapi_menu_items admin_toolbar"
+MODULES="canvas canvas_dev_mode config default_content jsonapi jsonapi_menu_items admin_toolbar"
 if [[ "$UI" == "true" ]]; then
     MODULES="$MODULES canvas_vite"
 fi
@@ -82,15 +82,6 @@ drush php-eval "
     \$entity->set('secret', 'secret');
     \$entity->save();
 "
-
-# Configure the OpenAI AI provider for Canvas AI.
-# @todo Convert this to a recipe.
-drush key-save openai_api_key --label="OpenAI API key" --key-type=authentication --key-provider=env --key-provider-settings='{"env_variable": "OPENAI_API_KEY"}'
-drush config:set --yes ai_provider_openai.settings api_key openai_api_key
-drush config:set --yes --input-format=yaml ai.settings default_providers.chat "{provider_id: openai, model_id: gpt-4o}"
-drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_complex_json "{provider_id: openai, model_id: gpt-4o}"
-drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_structured_response "{provider_id: openai, model_id: gpt-4.1}"
-drush config:set --yes --input-format=yaml ai.settings default_providers.chat_with_tools "{provider_id: openai, model_id: gpt-4.1}"
 
 # Build the UI when not using the Vite dev server.
 if [[ "$UI" == "false" ]]; then
