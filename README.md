@@ -22,12 +22,46 @@ development work, with workflows and tools I prefer.
      && ddev ui --install
    ```
 
+## Canvas worktree wrappers
+
+When a coding tool creates worktrees from `web/modules/contrib/canvas` as a
+standalone project, wrap the existing Canvas worktree with an environment
+worktree.
+
+Use this in the tool setup hook, replacing `SOURCE_TREE_PATH` and
+`WORKTREE_PATH` with the environment variables provided by the tool:
+
+```bash
+set -euo pipefail
+
+SOURCE_ENV="$(cd "$SOURCE_TREE_PATH/../../../.." && pwd)"
+
+"$SOURCE_ENV/scripts/wrap-canvas-worktree.sh" \
+  --source-env="$SOURCE_ENV" \
+  --canvas-worktree="$WORKTREE_PATH"
+```
+
+This creates an environment wrapper next to the Canvas worktree, writes a unique
+ignored DDEV project name, mounts the Canvas worktree into DDEV at
+`web/modules/contrib/canvas`, and creates `.ddev-env` inside the Canvas worktree
+as a symlink back to the environment wrapper.
+
+From the Canvas worktree, run DDEV commands through the wrapper:
+
+```bash
+cd .ddev-env
+ddev start
+ddev composer install
+ddev site-install
+ddev ui --install
+```
+
 ## DDEV project name
 
 The DDEV project name is derived from the checkout directory because
 `.ddev/config.yaml` does not set `name`. This keeps Git worktrees independent: a
-checkout in `canvas` uses `https://canvas.ddev.site`, and a worktree in
-`canvas-issue-123` uses `https://canvas-issue-123.ddev.site`.
+checkout in `canvas-env` uses `https://canvas-env.ddev.site`, and a worktree in
+`canvas-env-issue-123` uses `https://canvas-env-issue-123.ddev.site`.
 
 Use ignored local overrides in `.ddev/config.local.yaml` only when a checkout
 needs a specific project name.
@@ -64,6 +98,14 @@ adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
 
 See the [list of commands](https://docs.ddev.com/en/stable/users/usage/cli/)
 provided by DDEV out-of-the box.
+
+## Scripts
+
+| Script                               | Description                                                                               |
+| ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `scripts/wrap-canvas-worktree.sh`    | Wrap an existing Canvas worktree with a sibling environment worktree and DDEV bind mount. |
+| `scripts/wire-canvas-agents.sh`      | Wire local Canvas `AGENTS.md` and `.agents/skills` into a Canvas checkout or worktree.    |
+| `scripts/install-canvas-packages.sh` | Build and install local Canvas package tarballs into a target project.                    |
 
 ## Export with Default Content
 

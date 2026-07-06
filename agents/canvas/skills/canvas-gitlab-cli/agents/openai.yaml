@@ -1,0 +1,4 @@
+interface:
+  display_name: "Canvas GitLab CLI"
+  short_description: "Use glab with Drupal Canvas GitLab."
+  default_prompt: "Use $canvas-gitlab-cli to inspect Drupal Canvas issues, merge requests, and repository metadata with glab."

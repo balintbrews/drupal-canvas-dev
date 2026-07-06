@@ -7,6 +7,8 @@ Drupal Canvas includes:
 - Monorepo packages (CLI, workbench, Vite plugin, extensions, and others) in
   `packages/*`.
 
+Use the `canvas-gitlab-cli` skill for Drupal Canvas GitLab and `glab` work.
+
 ## Environment and command policy
 
 - Use host machine commands by default for Node and npm workflows outside the UI
@@ -14,6 +16,9 @@ Drupal Canvas includes:
 - Use DDEV-wrapped commands for Drupal environment workflows, and for UI package
   workflows in `web/modules/contrib/canvas/ui` when browser-served behavior is
   required.
+- If `.ddev-env` exists in the Canvas repository root, run DDEV commands from
+  that environment wrapper. Standalone Canvas worktrees do not contain the DDEV,
+  Composer, Drupal, or recipe files needed for those commands.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
 - Never compare, diff, or validate work against the `7.x-1.x` branch.

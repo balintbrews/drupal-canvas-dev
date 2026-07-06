@@ -5,64 +5,64 @@
 ## Example: "ddev clone-repo"
 ## ExecRaw: true
 
+set -euo pipefail
+
 REPO_URL="git@git.drupal.org:project/canvas.git"
+REPO_BRANCH="${CANVAS_BRANCH:-1.x}"
 CONTRIB_DIR="$DDEV_APPROOT/web/modules/contrib"
 TARGET_DIR="$DDEV_APPROOT/web/modules/contrib/canvas"
-EXCLUDE_FILE="$TARGET_DIR/.git/info/exclude"
-ROOT_AGENTS_MD_REL="../../../../agents/canvas/AGENTS.md"
-ROOT_SKILLS_REL="../../../../../agents/canvas/skills"
+WIRE_CANVAS_AGENTS="$DDEV_APPROOT/scripts/wire-canvas-agents.sh"
+
+wire_canvas_agents() {
+    "$WIRE_CANVAS_AGENTS" "$TARGET_DIR"
+}
+
+restore_tracked_agent_file() {
+    local tracked_file="$1"
+
+    if ! git -C "$TARGET_DIR" ls-files --error-unmatch -- "$tracked_file" >/dev/null 2>&1; then
+        return
+    fi
+
+    # Local instruction symlinks must be replaced before Git can update them.
+    if [ -L "$TARGET_DIR/$tracked_file" ] || git -C "$TARGET_DIR" ls-files -v -- "$tracked_file" | grep -q "^S "; then
+        git -C "$TARGET_DIR" update-index --no-skip-worktree -- "$tracked_file" 2>/dev/null || true
+        git -C "$TARGET_DIR" checkout -- "$tracked_file"
+    fi
+}
+
+restore_tracked_agent_files() {
+    restore_tracked_agent_file AGENTS.md
+    restore_tracked_agent_file CLAUDE.md
+}
 
 if [ ! -d "$TARGET_DIR" ] || [ -z "$(ls -A "$TARGET_DIR" 2>/dev/null)" ]; then
-    echo "Directory $TARGET_DIR doesn't exist or is empty, cloning repository…"
+    echo "Directory $TARGET_DIR doesn't exist or is empty, cloning $REPO_BRANCH from $REPO_URL."
     
     # Create contrib directory if it doesn't exist.
     mkdir -p "$CONTRIB_DIR"
     
-    git clone "$REPO_URL" "$TARGET_DIR"
-    
-    if [ $? -eq 0 ]; then
-        echo "Repository cloned successfully to $TARGET_DIR."
-    else
-        echo "Error: Failed to clone repository."
-        exit 1
-    fi
+    git clone --branch "$REPO_BRANCH" "$REPO_URL" "$TARGET_DIR"
+    echo "Repository cloned successfully to $TARGET_DIR."
 else
-    echo "Directory $TARGET_DIR already exists, skipping clone."
-fi
-
-if [ ! -d "$TARGET_DIR/.git" ]; then
-    echo "Error: $TARGET_DIR is not a Git repository."
-    exit 1
-fi
-
-if [ ! -f "$EXCLUDE_FILE" ]; then
-    touch "$EXCLUDE_FILE"
-fi
-
-if ! grep -qxF "AGENTS.md" "$EXCLUDE_FILE"; then
-    echo "AGENTS.md" >> "$EXCLUDE_FILE"
-fi
-
-if ! grep -qxF ".agents/" "$EXCLUDE_FILE"; then
-    echo ".agents/" >> "$EXCLUDE_FILE"
-fi
-
-ln -sfn "$ROOT_AGENTS_MD_REL" "$TARGET_DIR/AGENTS.md"
-
-# Canvas tracks AGENTS.md, but this environment uses a local symlink override.
-if git -C "$TARGET_DIR" ls-files --error-unmatch -- AGENTS.md >/dev/null 2>&1; then
-    if git -C "$TARGET_DIR" update-index --skip-worktree -- AGENTS.md; then
-        echo "Marked tracked AGENTS.md as skip-worktree so the local override stays hidden from Git status."
-    else
-        echo "Error: Failed to mark AGENTS.md as skip-worktree."
+    if ! git -C "$TARGET_DIR" rev-parse --git-dir >/dev/null 2>&1; then
+        echo "Error: $TARGET_DIR already exists but is not a Git repository."
         exit 1
     fi
+
+    echo "Directory $TARGET_DIR already exists, updating $REPO_BRANCH."
+
+    restore_tracked_agent_files
+    git -C "$TARGET_DIR" fetch origin
+
+    if git -C "$TARGET_DIR" show-ref --verify --quiet "refs/heads/$REPO_BRANCH"; then
+        git -C "$TARGET_DIR" checkout "$REPO_BRANCH"
+    else
+        git -C "$TARGET_DIR" checkout --track "origin/$REPO_BRANCH"
+    fi
+
+    git -C "$TARGET_DIR" merge --ff-only "origin/$REPO_BRANCH"
+    echo "Repository updated successfully to $REPO_BRANCH."
 fi
 
-mkdir -p "$TARGET_DIR/.agents"
-ln -sfn "$ROOT_SKILLS_REL" "$TARGET_DIR/.agents/skills"
-
-echo "Configured local excludes in $EXCLUDE_FILE: AGENTS.md, .agents/."
-echo "Configured symlinks:"
-echo "  $TARGET_DIR/AGENTS.md -> $ROOT_AGENTS_MD_REL"
-echo "  $TARGET_DIR/.agents/skills -> $ROOT_SKILLS_REL"
+wire_canvas_agents

@@ -8,8 +8,8 @@ hand.
 - `agents/environment`: root-level environment and tooling work.
 - `agents/canvas`: Canvas project code work.
 
-Each scope has its own `AGENTS.md`, its own `skills/` directory, and separate
-`SKILL.md` files inside each skill folder.
+Each scope has its own `AGENTS.md`, `CLAUDE.md`, `skills/` directory, and
+separate `SKILL.md` files inside each skill folder.
 
 ## Which workspace to open
 
@@ -18,15 +18,23 @@ Each scope has its own `AGENTS.md`, its own `skills/` directory, and separate
   infrastructure or agent setup files (for example, `agents/*`, `.ddev/*`, and
   repository-wide configuration).
 - Open `web/modules/contrib/canvas` for Canvas code changes.
+- When an external tool creates Canvas worktrees from
+  `web/modules/contrib/canvas` as a standalone project, use
+  `scripts/wrap-canvas-worktree.sh` from the tool setup hook. It creates a
+  sibling environment wrapper and adds `.ddev-env` inside the Canvas worktree.
 
 ## How instructions are selected
 
-`AGENTS.md` symlinks:
+Instruction symlinks:
 
 - `AGENTS.md -> agents/environment/AGENTS.md`
+- `CLAUDE.md -> agents/environment/CLAUDE.md`
 - `web/modules/contrib/canvas/AGENTS.md -> ../../../../agents/canvas/AGENTS.md`
+- `web/modules/contrib/canvas/CLAUDE.md -> ../../../../agents/canvas/CLAUDE.md`
 
 When you open one of those workspaces, the matching scope is used automatically.
+`CLAUDE.md` imports `AGENTS.md`, so Claude Code uses the same project
+instructions without duplicating content.
 
 ## Skills locations
 
@@ -44,7 +52,9 @@ Canvas skills:
 ## Skills symlinks
 
 - `.agents/skills -> ../agents/environment/skills`
+- `.claude/skills -> ../agents/environment/skills`
 - `web/modules/contrib/canvas/.agents/skills -> ../../../../../agents/canvas/skills`
+- `web/modules/contrib/canvas/.claude/skills -> ../../../../../agents/canvas/skills`
 
 ## Local nested-repo excludes
 
@@ -54,7 +64,13 @@ The Canvas module is a separate Git repository at `web/modules/contrib/canvas`.
 `web/modules/contrib/canvas/.git/info/exclude` for:
 
 - `AGENTS.md`
+- `CLAUDE.md`
 - `.agents/`
+- `.claude/`
 
 This keeps those agent setup paths untracked in the nested repository without
 editing the module repository's `.gitignore`.
+
+`scripts/wrap-canvas-worktree.sh` is the Canvas-first variant for externally
+created worktrees. It wires the local Canvas agent files into the Canvas
+worktree with absolute symlinks to the generated environment wrapper.

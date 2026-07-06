@@ -1,4 +1,5 @@
 .ddev/.env
+/.ddev/docker-compose.canvas-worktree.yaml
 
 /.editorconfig
 /.gitattributes
