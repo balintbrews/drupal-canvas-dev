@@ -27,8 +27,15 @@ for arg in "$@"; do
     fi
 done
 
-# Delete existing canvas files directory.
-rm -rf "$DDEV_COMPOSER_ROOT/web/sites/default/files/canvas"
+# Delete generated files that can leak container, route, or asset state between
+# repeated reinstalls.
+rm -rf \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/astro-island" \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/canvas" \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/css" \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/js" \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/php" \
+    "$DDEV_COMPOSER_ROOT/web/sites/default/files/styles"
 
 # Install Drupal.
 drush site-install \
@@ -36,6 +43,12 @@ drush site-install \
     --site-name="Canvas [$CANVAS_BRANCH]" \
     --account-pass=admin \
     --yes
+
+# Prevent automated cron from running while Drush recipe commands terminate when
+# the install profile enabled it.
+if drush pm:list --type=module --status=enabled --field=name | grep -qx automated_cron; then
+    drush config:set --yes automated_cron.settings interval 0
+fi
 
 # Enable modules.
 # @todo Convert enabling modules into recipes.
