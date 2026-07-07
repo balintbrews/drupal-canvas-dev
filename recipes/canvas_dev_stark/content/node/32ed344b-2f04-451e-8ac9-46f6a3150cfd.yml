@@ -54,10 +54,3 @@ default:
         that feels <em>clear, credible, and memorable</em>.</p>'
       format: basic_html
       summary: ""
-  comment:
-    - status: 2
-      cid: 0
-      last_comment_timestamp: 1771431786
-      last_comment_name: ""
-      last_comment_uid: 1
-      comment_count: 0

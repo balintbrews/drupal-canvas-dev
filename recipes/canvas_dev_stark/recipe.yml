@@ -2,6 +2,8 @@ name: "Canvas Dev Stark"
 install:
   - canvas
   - stark
+recipes:
+  - ./core/recipes/article_content_type
 config:
   strict:
     # Canvas creates block-backed component entities during install, so these

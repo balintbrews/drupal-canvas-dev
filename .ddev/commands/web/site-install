@@ -27,6 +27,10 @@ for arg in "$@"; do
     fi
 done
 
+apply_recipe() {
+    "$DDEV_COMPOSER_ROOT/vendor/bin/dr" recipe:apply --no-interaction "$1"
+}
+
 # Delete generated files that can leak container, route, or asset state between
 # repeated reinstalls.
 rm -rf \
@@ -44,8 +48,8 @@ drush site-install \
     --account-pass=admin \
     --yes
 
-# Prevent automated cron from running while Drush recipe commands terminate when
-# the install profile enabled it.
+# Prevent automated cron from running while recipe commands terminate when the
+# install profile enabled it.
 if drush pm:list --type=module --status=enabled --field=name | grep -qx automated_cron; then
     drush config:set --yes automated_cron.settings interval 0
 fi
@@ -60,17 +64,28 @@ fi
 drush pm:enable --yes $MODULES
 
 # Apply recipes.
-drush recipe ../recipes/canvas_dev_oauth
+apply_recipe ../recipes/canvas_dev_oauth
+# The OAuth recipe installs Simple OAuth in a separate PHP process. Rebuild the
+# container before the next recipe boots Drupal so new entity types and
+# procedural hooks are loaded.
+drush cache:rebuild
 
 if [[ "$MERCURY" == "false" ]]; then
     if [[ "$STARK" == "false" ]]; then
-        drush recipe ../recipes/canvas_dev_humanify
+        apply_recipe ../recipes/canvas_dev_humanify
     else
-        drush recipe ../recipes/canvas_dev_stark
+        apply_recipe ../recipes/canvas_dev_stark
     fi
 else
-    drush recipe ../recipes/canvas_dev_mercury
+    apply_recipe ../recipes/canvas_dev_mercury
 fi
+
+# The theme recipes install a theme and set it as the default in a separate
+# PHP process that leaves the persisted container stale. Since Drupal 11.4,
+# theme negotiation checks the `container.themes` container parameter, so
+# without a rebuild the new default theme is rejected and Canvas API requests
+# fail with a missing `content` region.
+drush cache:rebuild
 
 # Generate OAuth keys.
 drush simple-oauth:generate-keys /var/www/html/web/sites/default/files

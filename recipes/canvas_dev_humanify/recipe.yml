@@ -2,6 +2,8 @@ name: "Canvas Dev Humanify"
 install:
   - canvas
   - stark
+recipes:
+  - ./core/recipes/article_content_type
 config:
   actions:
     system.theme:
