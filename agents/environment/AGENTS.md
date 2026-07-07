@@ -22,8 +22,6 @@ This file is for environment-level work in this repository root.
   required.
 - Use `ddev composer` for Composer operations.
 - Use `ddev drush` for Drush operations.
-- Never run destructive Drush or site commands (for example, reinstall or
-  DB-destructive operations) without explicit user approval.
 
 ## Writing and style
 
