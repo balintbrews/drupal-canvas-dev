@@ -10,6 +10,7 @@ set -e
 
 cd "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
 CANVAS_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
+RECIPE_ROOT="$DDEV_COMPOSER_ROOT/recipes"
 
 # Parse command line arguments.
 UI=false
@@ -28,7 +29,13 @@ for arg in "$@"; do
 done
 
 apply_recipe() {
-    "$DDEV_COMPOSER_ROOT/vendor/bin/dr" recipe:apply --no-interaction "$1"
+    pushd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" > /dev/null
+    if [[ -x "$DDEV_COMPOSER_ROOT/vendor/bin/dr" ]]; then
+        "$DDEV_COMPOSER_ROOT/vendor/bin/dr" recipe:apply --no-interaction "$1"
+    else
+        php core/scripts/drupal recipe --no-interaction "$1"
+    fi
+    popd > /dev/null
 }
 
 # Delete generated files that can leak container, route, or asset state between
@@ -64,7 +71,7 @@ fi
 drush pm:enable --yes $MODULES
 
 # Apply recipes.
-apply_recipe ../recipes/canvas_dev_oauth
+apply_recipe "$RECIPE_ROOT/canvas_dev_oauth"
 # The OAuth recipe installs Simple OAuth in a separate PHP process. Rebuild the
 # container before the next recipe boots Drupal so new entity types and
 # procedural hooks are loaded.
@@ -72,12 +79,12 @@ drush cache:rebuild
 
 if [[ "$MERCURY" == "false" ]]; then
     if [[ "$STARK" == "false" ]]; then
-        apply_recipe ../recipes/canvas_dev_humanify
+        apply_recipe "$RECIPE_ROOT/canvas_dev_humanify"
     else
-        apply_recipe ../recipes/canvas_dev_stark
+        apply_recipe "$RECIPE_ROOT/canvas_dev_stark"
     fi
 else
-    apply_recipe ../recipes/canvas_dev_mercury
+    apply_recipe "$RECIPE_ROOT/canvas_dev_mercury"
 fi
 
 # The theme recipes install a theme and set it as the default in a separate
