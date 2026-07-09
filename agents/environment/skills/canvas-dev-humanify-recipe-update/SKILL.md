@@ -1,8 +1,6 @@
 ---
 name: canvas-dev-humanify-recipe-update
-description: Update the `recipes/canvas_dev_humanify` recipe by exporting
-`js_component` config, asset library config, managed asset files, and default
-content, then normalizing exports and verifying install.
+description: Update the `recipes/canvas_dev_humanify` recipe by exporting `js_component` config, asset library config, managed asset files, and default content, then normalizing exports and verifying install.
 ---
 
 # Canvas Dev Humanify recipe update
