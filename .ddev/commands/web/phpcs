@@ -1,14 +1,28 @@
 #!/bin/bash
 
-## Description: Drupal Canvas: Run PHP Code Beautifier and Fixer in the Canvas module's codebase.
-## Usage: phpcs [path]
-## Example: "ddev phpcs" or "ddev phpcs modules/canvas_oauth"
+## Description: Drupal Canvas: Run PHPCBF in the Canvas module's codebase.
+## Usage: phpcs [path ...]
+## Example: "ddev phpcs" or "ddev phpcs modules/canvas_headless"
 ## ExecRaw: true
 
-cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT" || exit 1
+cd "$DDEV_COMPOSER_ROOT/$DDEV_DOCROOT/modules/contrib/canvas" || exit 1
 
-../vendor/bin/phpcbf \
-  -s \
-  --standard=modules/contrib/canvas/phpcs.xml \
-  --basepath=modules/contrib/canvas \
-  modules/contrib/canvas/"$1"
+args=()
+for arg in "$@"; do
+  if [[ "$arg" == /* || "$arg" == -* ]]; then
+    args+=("$arg")
+  else
+    args+=("$(pwd)/$arg")
+  fi
+done
+
+if [[ "${#args[@]}" -eq 0 ]]; then
+  composer run phpcbf
+  exit
+fi
+
+mkdir -p .cache/phpcs
+composer --working-dir="$(composer run composer-root)" exec phpcbf -- \
+  --standard="$(pwd)/phpcs.xml" \
+  --colors \
+  "${args[@]}"

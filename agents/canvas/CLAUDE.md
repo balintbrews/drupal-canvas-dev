@@ -13,5 +13,7 @@ existing occurrence at the user's request.
 - `faithful`
 - `genuine`
 - `honest`
+- `lasting fix`
+- `load-bearing`
 - `machinery`
 - `polite`

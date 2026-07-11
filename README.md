@@ -19,38 +19,82 @@ development work, with workflows and tools I prefer.
      && ddev ui --install
    ```
 
-## Canvas worktree wrappers
+## Canvas worktree setup
 
-When a coding tool creates worktrees from `web/modules/contrib/canvas` as a
-standalone project, wrap the existing Canvas worktree with an environment
-worktree.
+Use `scripts/setup-canvas-worktree.sh` to set up Canvas worktrees from
+`web/modules/contrib/canvas` as standalone projects. With `--create`, the script
+also creates the Canvas worktree first.
 
-Use this in the tool setup hook, replacing `SOURCE_TREE_PATH` and
-`WORKTREE_PATH` with the environment variables provided by the tool:
+For a manual worktree:
+
+```bash
+ISSUE=3599999
+CANVAS_WORKTREE="../canvas-worktrees/canvas-$ISSUE/canvas"
+
+scripts/setup-canvas-worktree.sh \
+  --create \
+  --canvas-worktree="$CANVAS_WORKTREE" \
+  --canvas-branch="$ISSUE-my-branch"
+```
+
+The default Canvas starting point is `origin/1.x`. Pass
+`--base-ref=<ref>` to use another ref:
+
+```bash
+scripts/setup-canvas-worktree.sh \
+  --create \
+  --canvas-worktree="$CANVAS_WORKTREE" \
+  --canvas-branch="$ISSUE-my-branch" \
+  --base-ref="origin/7.x-1.x"
+```
+
+The base ref can be a remote branch, local branch, tag, or commit SHA.
+
+By default, the script also runs the DDEV setup:
+
+```bash
+ddev start
+ddev composer install
+ddev site-install
+ddev ui --install
+```
+
+The final `ddev ui --install` command starts the UI dev server and stays in the
+foreground until stopped. On reruns, the script skips `ddev site-install` when
+the environment wrapper already exists. Pass `--reinstall-site` to run it
+anyway.
+
+When a coding tool creates the Canvas worktree, use the same setup script
+without `--create` in the tool setup hook, replacing `SOURCE_TREE_PATH` and
+`WORKTREE_PATH` with the environment variables provided by the tool. Use
+`--skip-ui` when the hook needs to finish instead of staying attached to the UI
+dev server:
 
 ```bash
 set -euo pipefail
 
 SOURCE_ENV="$(cd "$SOURCE_TREE_PATH/../../../.." && pwd)"
 
-"$SOURCE_ENV/scripts/wrap-canvas-worktree.sh" \
+"$SOURCE_ENV/scripts/setup-canvas-worktree.sh" \
   --source-env="$SOURCE_ENV" \
-  --canvas-worktree="$WORKTREE_PATH"
+  --canvas-worktree="$WORKTREE_PATH" \
+  --skip-ui
 ```
 
-This creates an environment wrapper next to the Canvas worktree, writes a unique
-ignored DDEV project name, mounts the Canvas worktree into DDEV at
-`web/modules/contrib/canvas`, and creates `.ddev-env` inside the Canvas worktree
-as a symlink back to the environment wrapper.
+The setup script creates the Canvas worktree only when `--create` is provided.
+It then creates an environment wrapper next to the Canvas worktree, writes a
+unique ignored DDEV project name, mounts the Canvas worktree into DDEV at
+`web/modules/contrib/canvas`, and creates `.ddev-env` inside the Canvas
+worktree as a symlink back to the environment wrapper. It can also read
+`SOURCE_ENV`, `SOURCE_TREE_PATH`, and `WORKTREE_PATH` from the environment.
 
-From the Canvas worktree, run DDEV commands through the wrapper:
+To create and wrap the worktree without running DDEV setup, pass
+`--skip-ddev-setup`.
+
+After setup, the environment wrapper is available from the Canvas worktree:
 
 ```bash
 cd .ddev-env
-ddev start
-ddev composer install
-ddev site-install
-ddev ui --install
 ```
 
 ## DDEV project name
@@ -100,6 +144,7 @@ provided by DDEV out-of-the box.
 
 | Script                               | Description                                                                               |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- |
+| `scripts/setup-canvas-worktree.sh`   | Create or set up a Canvas worktree with an environment wrapper and DDEV bind mount.       |
 | `scripts/wrap-canvas-worktree.sh`    | Wrap an existing Canvas worktree with a sibling environment worktree and DDEV bind mount. |
 | `scripts/wire-canvas-agents.sh`      | Wire local Canvas `AGENTS.md` and `.agents/skills` into a Canvas checkout or worktree.    |
 | `scripts/install-canvas-packages.sh` | Build and install local Canvas package tarballs into a target project.                    |
