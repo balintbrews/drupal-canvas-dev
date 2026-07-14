@@ -40,6 +40,16 @@ use another ref. The base ref can be a remote branch, local branch, tag, or
 commit SHA. Pass `--worktrees-root=<path>` to change where derived worktrees
 are created. Run the script with `--help` for the full list of options.
 
+The script also accepts a Drupal.org merge request URL:
+
+```bash
+scripts/create-worktree.sh https://git.drupalcode.org/project/canvas/-/merge_requests/1353
+```
+
+This resolves the merge request to its issue-fork branch, adds the fork as a
+Git remote named `canvas-<issue-id>` when needed, and creates the branch
+tracking it. When the branch already exists locally, it is reused as is.
+
 By default, the script also runs the DDEV setup:
 
 ```bash

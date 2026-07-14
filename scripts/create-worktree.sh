@@ -6,12 +6,18 @@ usage() {
   cat <<'EOF'
 Usage:
   create-worktree.sh <branch> [options]
+  create-worktree.sh <merge-request-url> [options]
   create-worktree.sh --canvas-worktree=<path> [options]
 
 Work on a Canvas branch in its own worktree with one command. The script
 creates the Canvas worktree when needed, wraps it with a sibling DDEV
 environment worktree, then starts DDEV, installs Composer dependencies, and
 installs Drupal.
+
+A Drupal.org merge request URL resolves to the issue-fork branch: the fork is
+added as a Git remote named canvas-<issue-id> when needed, and the branch is
+created tracking it. When the branch already exists locally, it is reused as
+is. --base-ref does not apply to merge request URLs.
 
 Rerunning with the same branch reuses the existing worktree and environment,
 so the same command works for creating, resuming, and repairing a setup. Note
@@ -21,6 +27,9 @@ Examples:
   # Start work on a new branch from origin/1.x. The worktree is created at
   # ../canvas-worktrees/880922-my-branch/canvas.
   create-worktree.sh 880922-my-branch
+
+  # Work on a Drupal.org merge request in its issue-fork branch.
+  create-worktree.sh https://git.drupalcode.org/project/canvas/-/merge_requests/1353
 
   # Also build the UI as part of the site install.
   create-worktree.sh 880922-my-branch --ui
@@ -52,8 +61,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SOURCE_ENV_PATH="$(cd "$SCRIPT_DIR/.." && pwd)"
 SOURCE_CANVAS="$SOURCE_ENV_PATH/web/modules/contrib/canvas"
 
+MR_URL_PATTERN='^https://git\.drupalcode\.org/project/canvas/-/merge_requests/([0-9]+)/?$'
+API_BASE="https://git.drupalcode.org/api/v4"
+
 CANVAS_BRANCH=""
 CANVAS_WORKTREE=""
+MR_ID=""
+MR_REMOTE_NAME=""
+MR_REMOTE_URL=""
 BASE_REF="origin/1.x"
 WORKTREES_ROOT=""
 FETCH_CANVAS=true
@@ -109,18 +124,26 @@ while [ "$#" -gt 0 ]; do
       exit 1
       ;;
     *)
-      if [ -n "$CANVAS_BRANCH" ]; then
-        echo "Error: Unexpected argument: $1 (branch is already set to $CANVAS_BRANCH)."
+      if [ -n "$CANVAS_BRANCH" ] || [ -n "$MR_ID" ]; then
+        echo "Error: Unexpected argument: $1 (a branch or merge request is already set)."
         exit 1
       fi
-      CANVAS_BRANCH="$1"
+      if [[ "$1" =~ $MR_URL_PATTERN ]]; then
+        MR_ID="${BASH_REMATCH[1]}"
+      elif [[ "$1" == http://* || "$1" == https://* ]]; then
+        echo "Error: Unsupported URL: $1"
+        echo "Expected https://git.drupalcode.org/project/canvas/-/merge_requests/<id>"
+        exit 1
+      else
+        CANVAS_BRANCH="$1"
+      fi
       ;;
   esac
   shift
 done
 
-if [ -z "$CANVAS_BRANCH" ] && [ -z "$CANVAS_WORKTREE" ]; then
-  echo "Error: Pass a branch name, or --canvas-worktree for an existing worktree."
+if [ -z "$CANVAS_BRANCH" ] && [ -z "$CANVAS_WORKTREE" ] && [ -z "$MR_ID" ]; then
+  echo "Error: Pass a branch name, a merge request URL, or --canvas-worktree."
   echo "Run with --help for usage."
   exit 1
 fi
@@ -128,6 +151,50 @@ fi
 if ! git -C "$SOURCE_CANVAS" rev-parse --show-toplevel >/dev/null 2>&1; then
   echo "Error: Source Canvas repository is missing: $SOURCE_CANVAS"
   exit 1
+fi
+
+if [ -n "$MR_ID" ]; then
+  for tool in curl jq; do
+    if ! command -v "$tool" >/dev/null 2>&1; then
+      echo "Error: Resolving a merge request URL requires $tool."
+      exit 1
+    fi
+  done
+
+  MR_JSON="$(curl -sf "$API_BASE/projects/project%2Fcanvas/merge_requests/$MR_ID")" || {
+    echo "Error: Could not load merge request $MR_ID from git.drupalcode.org."
+    exit 1
+  }
+  CANVAS_BRANCH="$(printf "%s" "$MR_JSON" | jq -r ".source_branch")"
+  SOURCE_PROJECT_ID="$(printf "%s" "$MR_JSON" | jq -r ".source_project_id")"
+  if [ -z "$CANVAS_BRANCH" ] || [ "$CANVAS_BRANCH" = "null" ] || [ "$SOURCE_PROJECT_ID" = "null" ]; then
+    echo "Error: Could not read the source branch of merge request $MR_ID."
+    exit 1
+  fi
+
+  PROJECT_JSON="$(curl -sf "$API_BASE/projects/$SOURCE_PROJECT_ID")" || {
+    echo "Error: Could not load the source project of merge request $MR_ID."
+    exit 1
+  }
+  MR_SOURCE_PATH="$(printf "%s" "$PROJECT_JSON" | jq -r ".path_with_namespace")"
+  if [ "$MR_SOURCE_PATH" = "project/canvas" ]; then
+    # The merge request comes from a branch in the project itself.
+    MR_REMOTE_NAME="origin"
+  else
+    MR_REMOTE_NAME="$(printf "%s" "$PROJECT_JSON" | jq -r ".path")"
+    MR_REMOTE_URL="$(printf "%s" "$PROJECT_JSON" | jq -r ".ssh_url_to_repo")"
+  fi
+  echo "Merge request $MR_ID uses branch $CANVAS_BRANCH from $MR_SOURCE_PATH."
+
+  if [ "$MR_REMOTE_NAME" != "origin" ] \
+    && ! git -C "$SOURCE_CANVAS" remote get-url "$MR_REMOTE_NAME" >/dev/null 2>&1; then
+    echo "Adding Git remote $MR_REMOTE_NAME for the issue fork."
+    git -C "$SOURCE_CANVAS" remote add "$MR_REMOTE_NAME" "$MR_REMOTE_URL"
+  fi
+
+  if [ "$FETCH_CANVAS" = true ]; then
+    git -C "$SOURCE_CANVAS" fetch "$MR_REMOTE_NAME"
+  fi
 fi
 
 # Prints the existing worktree path for a branch, if any.
@@ -172,7 +239,8 @@ if [ ! -d "$CANVAS_WORKTREE" ]; then
 
   mkdir -p "$(dirname "$CANVAS_WORKTREE")"
 
-  if [ "$FETCH_CANVAS" = true ]; then
+  # In merge request mode, the fork remote was already fetched above.
+  if [ -z "$MR_ID" ] && [ "$FETCH_CANVAS" = true ]; then
     git -C "$SOURCE_CANVAS" fetch origin
   fi
 
@@ -180,6 +248,11 @@ if [ ! -d "$CANVAS_WORKTREE" ]; then
   if git -C "$SOURCE_CANVAS" show-ref --verify --quiet "refs/heads/$CANVAS_BRANCH"; then
     echo "Checking out existing Canvas branch $CANVAS_BRANCH."
     git -C "$SOURCE_CANVAS" worktree add "$CANVAS_WORKTREE" "$CANVAS_BRANCH"
+  elif [ -n "$MR_ID" ]; then
+    echo "Creating Canvas branch $CANVAS_BRANCH tracking $MR_REMOTE_NAME/$CANVAS_BRANCH."
+    git -C "$SOURCE_CANVAS" worktree add --track -b "$CANVAS_BRANCH" \
+      "$CANVAS_WORKTREE" "$MR_REMOTE_NAME/$CANVAS_BRANCH"
+    CREATED_CANVAS_BRANCH="$CANVAS_BRANCH"
   else
     echo "Creating Canvas branch $CANVAS_BRANCH from $BASE_REF."
     git -C "$SOURCE_CANVAS" worktree add -b "$CANVAS_BRANCH" "$CANVAS_WORKTREE" "$BASE_REF"
