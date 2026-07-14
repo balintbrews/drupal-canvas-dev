@@ -7,6 +7,7 @@ generated prose, including code comments, documentation, issue or PR text, and
 explanations. Preserve them only when quoting user-provided text or editing an
 existing occurrence at the user's request.
 
+- `armed`
 - `candidate anchor`
 - `crux`
 - `dressed`
@@ -17,3 +18,4 @@ existing occurrence at the user's request.
 - `load-bearing`
 - `machinery`
 - `polite`
+- `ride`
