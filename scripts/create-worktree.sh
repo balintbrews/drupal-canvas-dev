@@ -23,6 +23,10 @@ Rerunning with the same branch reuses the existing worktree and environment,
 so the same command works for creating, resuming, and repairing a setup. Note
 that the Drupal site is reinstalled on every run.
 
+Existing branches configured to push to a remote URL instead of a named
+remote are repaired when a remote with that URL exists, so that
+git push --force-with-lease keeps working.
+
 Examples:
   # Start work on a new branch from origin/1.x. The worktree is created at
   # ../canvas-worktrees/880922-my-branch/canvas.
@@ -197,6 +201,27 @@ if [ -n "$MR_ID" ]; then
   fi
 fi
 
+# Repairs branch configuration that points at a remote URL instead of a named
+# remote, which breaks --force-with-lease pushes. Covers both the remote and
+# pushRemote keys, and only applies when a configured remote with that URL
+# exists.
+repair_branch_remote() {
+  local branch key configured remote_name
+  branch="$1"
+  for key in remote pushRemote; do
+    configured="$(git -C "$SOURCE_CANVAS" config "branch.$branch.$key" 2>/dev/null || true)"
+    if [ -z "$configured" ] || git -C "$SOURCE_CANVAS" remote get-url "$configured" >/dev/null 2>&1; then
+      continue
+    fi
+    remote_name="$(git -C "$SOURCE_CANVAS" remote -v \
+      | awk -v url="$configured" '$2 == url && $3 == "(fetch)" { print $1; exit }')"
+    if [ -n "$remote_name" ]; then
+      echo "Repairing branch.$branch.$key to use remote $remote_name instead of its URL."
+      git -C "$SOURCE_CANVAS" config "branch.$branch.$key" "$remote_name"
+    fi
+  done
+}
+
 # Prints the existing worktree path for a branch, if any.
 find_worktree_for_branch() {
   git -C "$SOURCE_CANVAS" worktree list --porcelain | awk -v ref="refs/heads/$1" '
@@ -259,6 +284,11 @@ if [ ! -d "$CANVAS_WORKTREE" ]; then
     CREATED_CANVAS_BRANCH="$CANVAS_BRANCH"
   fi
   CREATED_CANVAS=true
+fi
+
+if [ -n "$CANVAS_BRANCH" ] \
+  && git -C "$SOURCE_CANVAS" show-ref --verify --quiet "refs/heads/$CANVAS_BRANCH"; then
+  repair_branch_remote "$CANVAS_BRANCH"
 fi
 
 CANVAS_WORKTREE="$(cd "$CANVAS_WORKTREE" && pwd)"
