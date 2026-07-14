@@ -21,34 +21,24 @@ development work, with workflows and tools I prefer.
 
 ## Canvas worktree setup
 
-Use `scripts/setup-canvas-worktree.sh` to set up Canvas worktrees from
-`web/modules/contrib/canvas` as standalone projects. With `--create`, the script
-also creates the Canvas worktree first.
-
-For a manual worktree:
+Use `scripts/create-worktree.sh` to work on a Canvas branch from
+`web/modules/contrib/canvas` as a standalone project. Pass a branch name, and
+the script derives everything else:
 
 ```bash
-ISSUE=3599999
-CANVAS_WORKTREE="../canvas-worktrees/canvas-$ISSUE/canvas"
-
-scripts/setup-canvas-worktree.sh \
-  --create \
-  --canvas-worktree="$CANVAS_WORKTREE" \
-  --canvas-branch="$ISSUE-my-branch"
+scripts/create-worktree.sh 880922-my-branch
 ```
 
-The default Canvas starting point is `origin/1.x`. Pass
-`--base-ref=<ref>` to use another ref:
+This creates the branch from `origin/1.x` and a worktree at
+`../canvas-worktrees/880922-my-branch/canvas` when they do not exist yet, and
+reuses them when they do. The same command works for creating, resuming, and
+repairing a setup. When the branch already exists locally or is checked out in
+another worktree, the script uses it as is.
 
-```bash
-scripts/setup-canvas-worktree.sh \
-  --create \
-  --canvas-worktree="$CANVAS_WORKTREE" \
-  --canvas-branch="$ISSUE-my-branch" \
-  --base-ref="origin/7.x-1.x"
-```
-
-The base ref can be a remote branch, local branch, tag, or commit SHA.
+The default Canvas starting point is `origin/1.x`. Pass `--base-ref=<ref>` to
+use another ref. The base ref can be a remote branch, local branch, tag, or
+commit SHA. Pass `--worktrees-root=<path>` to change where derived worktrees
+are created. Run the script with `--help` for the full list of options.
 
 By default, the script also runs the DDEV setup:
 
@@ -56,45 +46,47 @@ By default, the script also runs the DDEV setup:
 ddev start
 ddev composer install
 ddev site-install
-ddev ui --install
 ```
 
-The final `ddev ui --install` command starts the UI dev server and stays in the
-foreground until stopped. On reruns, the script skips `ddev site-install` when
-the environment wrapper already exists. Pass `--reinstall-site` to run it
-anyway.
+Pass `--ui` to run `ddev site-install --ui` instead, which also builds the UI.
+Note that `ddev site-install` reinstalls the Drupal site.
 
-When a coding tool creates the Canvas worktree, use the same setup script
-without `--create` in the tool setup hook, replacing `SOURCE_TREE_PATH` and
-`WORKTREE_PATH` with the environment variables provided by the tool. Use
-`--skip-ui` when the hook needs to finish instead of staying attached to the UI
-dev server:
+When a coding tool creates the Canvas worktree, use the same script with
+`--canvas-worktree` in the tool setup hook, replacing `SOURCE_TREE_PATH` and
+`WORKTREE_PATH` with the environment variables provided by the tool:
 
 ```bash
 set -euo pipefail
 
 SOURCE_ENV="$(cd "$SOURCE_TREE_PATH/../../../.." && pwd)"
 
-"$SOURCE_ENV/scripts/setup-canvas-worktree.sh" \
-  --source-env="$SOURCE_ENV" \
-  --canvas-worktree="$WORKTREE_PATH" \
-  --skip-ui
+"$SOURCE_ENV/scripts/create-worktree.sh" \
+  --canvas-worktree="$WORKTREE_PATH"
 ```
 
-The setup script creates the Canvas worktree only when `--create` is provided.
-It then creates an environment wrapper next to the Canvas worktree, writes a
-unique ignored DDEV project name, mounts the Canvas worktree into DDEV at
-`web/modules/contrib/canvas`, and creates `.ddev-env` inside the Canvas
-worktree as a symlink back to the environment wrapper. It can also read
-`SOURCE_ENV`, `SOURCE_TREE_PATH`, and `WORKTREE_PATH` from the environment.
+After the Canvas worktree exists, the script creates an environment
+wrapper next to it, writes a unique ignored DDEV project name, mounts the
+Canvas worktree into DDEV at `web/modules/contrib/canvas`, and creates
+`.ddev-env` inside the Canvas worktree as a symlink back to the environment
+wrapper.
 
 To create and wrap the worktree without running DDEV setup, pass
-`--skip-ddev-setup`.
+`--skip-ddev`.
 
 After setup, the environment wrapper is available from the Canvas worktree:
 
 ```bash
 cd .ddev-env
+```
+
+When done with a branch, use `scripts/destroy-worktree.sh` to tear the
+setup down. This deletes the DDEV project including its containers and
+database, then removes the environment wrapper, the Mercury worktree, and the
+Canvas worktree. The branch is kept by default; pass `--delete-branch` to
+delete it as well:
+
+```bash
+scripts/destroy-worktree.sh 880922-my-branch
 ```
 
 ## DDEV project name
@@ -144,7 +136,8 @@ provided by DDEV out-of-the box.
 
 | Script                               | Description                                                                               |
 | ------------------------------------ | ----------------------------------------------------------------------------------------- |
-| `scripts/setup-canvas-worktree.sh`   | Create or set up a Canvas worktree with an environment wrapper and DDEV bind mount.       |
+| `scripts/create-worktree.sh`   | Create or set up a Canvas worktree with an environment wrapper and DDEV bind mount.       |
+| `scripts/destroy-worktree.sh` | Tear down a Canvas worktree setup, including its DDEV project, containers, and database.  |
 | `scripts/wrap-canvas-worktree.sh`    | Wrap an existing Canvas worktree with a sibling environment worktree and DDEV bind mount. |
 | `scripts/wire-canvas-agents.sh`      | Wire local Canvas `AGENTS.md` and `.agents/skills` into a Canvas checkout or worktree.    |
 | `scripts/install-canvas-packages.sh` | Build and install local Canvas package tarballs into a target project.                    |

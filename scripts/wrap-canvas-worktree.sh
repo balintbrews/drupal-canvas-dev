@@ -75,10 +75,21 @@ if [ -z "$PROJECT_NAME" ]; then
   PROJECT_NAME="canvas-env-$parent_name"
 fi
 
+# DDEV derives container hostnames from the project name, and Docker rejects
+# hostnames longer than 64 characters, so cap the length.
 sanitize_project_name() {
-  printf "%s" "$1" \
+  local name
+  name="$(printf "%s" "$1" \
     | tr "[:upper:]" "[:lower:]" \
-    | sed -E "s/[^a-z0-9-]+/-/g; s/^-+//; s/-+$//; s/-+/-/g"
+    | sed -E "s/[^a-z0-9-]+/-/g; s/^-+//; s/-+$//; s/-+/-/g")"
+  if [ "${#name}" -gt 50 ]; then
+    name="${name:0:50}"
+    # Truncate at a hyphen so the name does not end mid-word.
+    case "$name" in
+      *-*) name="${name%-*}" ;;
+    esac
+  fi
+  printf "%s" "$name"
 }
 
 yaml_quote() {
@@ -176,6 +187,13 @@ if [ -f "$SOURCE_ENV/.ddev/.env" ] && [ ! -f "$ENV_WORKTREE/.ddev/.env" ]; then
   cp "$SOURCE_ENV/.ddev/.env" "$ENV_WORKTREE/.ddev/.env"
 fi
 
+# Git worktrees reference their source repository by absolute path, which does
+# not exist inside the web container. Mount each source .git directory at its
+# host path so git keeps working in the mounted worktrees.
+CANVAS_GIT_DIR="$(git -C "$CANVAS_WORKTREE" rev-parse --path-format=absolute --git-common-dir)"
+ENV_GIT_DIR="$(git -C "$ENV_WORKTREE" rev-parse --path-format=absolute --git-common-dir)"
+MERCURY_GIT_DIR="$(git -C "$TARGET_MERCURY" rev-parse --path-format=absolute --git-common-dir)"
+
 cat > "$ENV_WORKTREE/.ddev/docker-compose.canvas-worktree.yaml" <<EOF
 services:
   web:
@@ -183,6 +201,15 @@ services:
       - type: bind
         source: $(yaml_quote "$CANVAS_WORKTREE")
         target: /var/www/html/web/modules/contrib/canvas
+      - type: bind
+        source: $(yaml_quote "$CANVAS_GIT_DIR")
+        target: $(yaml_quote "$CANVAS_GIT_DIR")
+      - type: bind
+        source: $(yaml_quote "$ENV_GIT_DIR")
+        target: $(yaml_quote "$ENV_GIT_DIR")
+      - type: bind
+        source: $(yaml_quote "$MERCURY_GIT_DIR")
+        target: $(yaml_quote "$MERCURY_GIT_DIR")
 EOF
 
 "$SOURCE_ENV/scripts/wire-canvas-agents.sh" \
