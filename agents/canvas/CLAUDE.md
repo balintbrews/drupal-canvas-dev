@@ -12,6 +12,7 @@ existing occurrence at the user's request.
 - `crux`
 - `dressed`
 - `faithful`
+- `footgun`
 - `genuine`
 - `honest`
 - `lasting fix`
