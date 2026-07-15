@@ -22,3 +22,14 @@ SOURCE_ENV="$(dirname "$(git -C "$ENV_WORKTREE" \
 
 "$SOURCE_ENV/scripts/destroy-worktree.sh" \
   --canvas-worktree="$CANVAS_WORKTREE"'''
+
+[[actions]]
+name = "Open in Chrome"
+icon = "tool"
+command = '''
+set -euo pipefail
+
+ENV_WORKTREE="$(cd .ddev-env && pwd -P)"
+DDEV_URL="$(cd "$ENV_WORKTREE" && ddev describe -j | jq -er '.raw.primary_url')"
+
+open -a "Google Chrome" "$DDEV_URL"'''
