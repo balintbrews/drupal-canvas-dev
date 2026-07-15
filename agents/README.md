@@ -55,6 +55,7 @@ Canvas skills:
 - `.claude/skills -> ../agents/environment/skills`
 - `web/modules/contrib/canvas/.agents/skills -> ../../../../../agents/canvas/skills`
 - `web/modules/contrib/canvas/.claude/skills -> ../../../../../agents/canvas/skills`
+- `web/modules/contrib/canvas/.codex -> ../../../../codex`
 
 ## Local nested-repo excludes
 
@@ -67,6 +68,7 @@ The Canvas module is a separate Git repository at `web/modules/contrib/canvas`.
 - `CLAUDE.md`
 - `.agents/`
 - `.claude/`
+- `.codex`
 
 This keeps those agent setup paths untracked in the nested repository without
 editing the module repository's `.gitignore`.

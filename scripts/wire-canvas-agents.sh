@@ -58,14 +58,21 @@ if [ ! -d "$ENV_ROOT/agents/canvas/skills" ]; then
   exit 1
 fi
 
+if [ ! -d "$ENV_ROOT/codex" ]; then
+  echo "Error: Codex configuration not found in environment root: $ENV_ROOT"
+  exit 1
+fi
+
 if [ "$LINK_MODE" = "absolute" ]; then
   ROOT_AGENTS_MD="$ENV_ROOT/agents/canvas/AGENTS.md"
   ROOT_CLAUDE_MD="$ENV_ROOT/agents/canvas/CLAUDE.md"
   ROOT_SKILLS="$ENV_ROOT/agents/canvas/skills"
+  ROOT_CODEX="$ENV_ROOT/codex"
 else
   ROOT_AGENTS_MD="../../../../agents/canvas/AGENTS.md"
   ROOT_CLAUDE_MD="../../../../agents/canvas/CLAUDE.md"
   ROOT_SKILLS="../../../../../agents/canvas/skills"
+  ROOT_CODEX="../../../../codex"
 fi
 
 if [ ! -d "$TARGET_DIR" ]; then
@@ -98,6 +105,10 @@ if ! grep -qxF ".claude/" "$EXCLUDE_FILE"; then
   echo ".claude/" >> "$EXCLUDE_FILE"
 fi
 
+if ! grep -qxF ".codex" "$EXCLUDE_FILE"; then
+  echo ".codex" >> "$EXCLUDE_FILE"
+fi
+
 ln -sfn "$ROOT_AGENTS_MD" "$TARGET_DIR/AGENTS.md"
 ln -sfn "$ROOT_CLAUDE_MD" "$TARGET_DIR/CLAUDE.md"
 
@@ -119,10 +130,12 @@ mkdir -p "$TARGET_DIR/.agents"
 ln -sfn "$ROOT_SKILLS" "$TARGET_DIR/.agents/skills"
 mkdir -p "$TARGET_DIR/.claude"
 ln -sfn "$ROOT_SKILLS" "$TARGET_DIR/.claude/skills"
+ln -sfn "$ROOT_CODEX" "$TARGET_DIR/.codex"
 
-echo "Configured local excludes in $EXCLUDE_FILE: AGENTS.md, CLAUDE.md, .agents/, .claude/."
+echo "Configured local excludes in $EXCLUDE_FILE: AGENTS.md, CLAUDE.md, .agents/, .claude/, .codex."
 echo "Configured symlinks:"
 echo "  $TARGET_DIR/AGENTS.md -> $ROOT_AGENTS_MD"
 echo "  $TARGET_DIR/CLAUDE.md -> $ROOT_CLAUDE_MD"
 echo "  $TARGET_DIR/.agents/skills -> $ROOT_SKILLS"
 echo "  $TARGET_DIR/.claude/skills -> $ROOT_SKILLS"
+echo "  $TARGET_DIR/.codex -> $ROOT_CODEX"

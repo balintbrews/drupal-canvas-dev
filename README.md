@@ -120,9 +120,8 @@ For details on workspace entrypoints and skill locations, see
 `agents/README.md`.
 
 Running `ddev clone-repo` also wires the Canvas agent files in the nested
-repository by creating symlinks for `AGENTS.md` and `.agents/skills`, and by
-adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
-`.git/info/exclude`.
+repository by creating symlinks for `AGENTS.md`, `.agents/skills`, and `.codex`,
+and by adding matching local-only nested-repo excludes in `.git/info/exclude`.
 
 ## Commands
 
@@ -136,7 +135,7 @@ adding local-only nested-repo excludes for `AGENTS.md` and `.agents/` in
 | `phpcs [path]`          | Run PHP Code Beautifier and Fixer in the module's codebase<br><br>`[path]`: narrows to the path, relative to the module directory                                                                                                                                                                             |
 | `phpstan`               | Run PHPStan in the module's codebase                                                                                                                                                                                                                                                                          |
 | `si`,<br>`site-install` | Install Drupal site, install and configure modules: Canvas and Canvas OAuth.<br><br>`--ui`: also installs Canvas Vite for UI development<br>`--mercury` `-m`: applies the Mercury recipe instead of the Stark and Humanify recipes<br>`--stark`: skips the Humanify recipe, and creates an empty page |
-| `clone-repo`            | Clone the Canvas module's repository, add local nested-repo excludes for `AGENTS.md` and `.agents/`, and set symlinks for `AGENTS.md` and `.agents/skills`. (Runs on the host.)                                                                                                                               |
+| `clone-repo`            | Clone the Canvas module's repository, add local nested-repo excludes for the agent and Codex paths, and set their symlinks. (Runs on the host.)                                                                                                                                                              |
 | `clone-repo-mercury`    | Clone the Mercury theme's repository. (Runs on the host.)                                                                                                                                                                                                                                                     |
 
 See the [list of commands](https://docs.ddev.com/en/stable/users/usage/cli/)
@@ -149,7 +148,7 @@ provided by DDEV out-of-the box.
 | `scripts/create-worktree.sh`   | Create or set up a Canvas worktree with an environment wrapper and DDEV bind mount.       |
 | `scripts/destroy-worktree.sh` | Tear down a Canvas worktree setup, including its DDEV project, containers, and database.  |
 | `scripts/wrap-canvas-worktree.sh`    | Wrap an existing Canvas worktree with a sibling environment worktree and DDEV bind mount. |
-| `scripts/wire-canvas-agents.sh`      | Wire local Canvas `AGENTS.md` and `.agents/skills` into a Canvas checkout or worktree.    |
+| `scripts/wire-canvas-agents.sh`      | Wire local agent and Codex configuration into a Canvas checkout or worktree.              |
 | `scripts/install-canvas-packages.sh` | Build and install local Canvas package tarballs into a target project.                    |
 
 ## Export with Default Content
