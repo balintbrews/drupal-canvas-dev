@@ -10,3 +10,15 @@ SOURCE_ENV="$(cd "$CODEX_SOURCE_TREE_PATH/../../../.." && pwd)"
 
 "$SOURCE_ENV/scripts/create-worktree.sh" \
   --canvas-worktree="$CODEX_WORKTREE_PATH"'''
+
+[cleanup]
+script = '''
+set -euo pipefail
+
+CANVAS_WORKTREE="$(pwd -P)"
+ENV_WORKTREE="$(cd .ddev-env && pwd -P)"
+SOURCE_ENV="$(dirname "$(git -C "$ENV_WORKTREE" \
+  rev-parse --path-format=absolute --git-common-dir)")"
+
+"$SOURCE_ENV/scripts/destroy-worktree.sh" \
+  --canvas-worktree="$CANVAS_WORKTREE"'''
