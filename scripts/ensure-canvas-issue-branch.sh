@@ -9,7 +9,8 @@ Usage:
 
 Fetch only the source branch for a Canvas merge request or work item, then
 create a local branch that tracks the issue-fork branch without checking it
-out. The branch name is printed to stdout when setup succeeds.
+out. The branch name is printed to stdout when setup succeeds. When pbcopy is
+available, the branch name is also copied to the clipboard.
 
 Examples:
   ensure-canvas-issue-branch.sh \
@@ -184,6 +185,11 @@ if git -C "$SOURCE_CANVAS" show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; 
 else
   log "Creating local branch $BRANCH_NAME tracking $REMOTE_BRANCH."
   git -C "$SOURCE_CANVAS" branch --track "$BRANCH_NAME" "$REMOTE_BRANCH" >&2
+fi
+
+if command -v pbcopy >/dev/null 2>&1; then
+  printf '%s' "$BRANCH_NAME" | pbcopy
+  log "Copied branch name to the clipboard."
 fi
 
 printf '%s\n' "$BRANCH_NAME"
