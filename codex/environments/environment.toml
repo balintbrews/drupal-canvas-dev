@@ -26,10 +26,4 @@ SOURCE_ENV="$(dirname "$(git -C "$ENV_WORKTREE" \
 [[actions]]
 name = "Open in Chrome"
 icon = "tool"
-command = '''
-set -euo pipefail
-
-ENV_WORKTREE="$(cd .ddev-env && pwd -P)"
-DDEV_URL="$(cd "$ENV_WORKTREE" && ddev describe -j | jq -er '.raw.primary_url')"
-
-open -a "Google Chrome" "$DDEV_URL"'''
+command = '''ENV_WORKTREE="$(cd .ddev-env && pwd -P)" && SOURCE_ENV="$(dirname "$(git -C "$ENV_WORKTREE" rev-parse --path-format=absolute --git-common-dir)")" && /bin/bash "$SOURCE_ENV/scripts/open-in-chrome.sh" "$ENV_WORKTREE"'''
