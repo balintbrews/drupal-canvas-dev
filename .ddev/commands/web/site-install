@@ -63,7 +63,7 @@ fi
 
 # Enable modules.
 # @todo Convert enabling modules into recipes.
-MODULES="canvas canvas_dev_mode config default_content jsonapi jsonapi_menu_items admin_toolbar"
+MODULES="canvas canvas_headless canvas_dev_mode config default_content jsonapi jsonapi_menu_items admin_toolbar"
 if [[ "$UI" == "true" ]]; then
     MODULES="$MODULES canvas_vite"
 fi
