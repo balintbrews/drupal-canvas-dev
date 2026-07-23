@@ -108,5 +108,6 @@ drush php-eval "
 # Build the UI when not using the Vite dev server.
 if [[ "$UI" == "false" ]]; then
     npm install --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
+    npm run build --workspace=@drupal-canvas/headless --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas"
     npm run build --prefix "$DDEV_COMPOSER_ROOT/web/modules/contrib/canvas/ui"
 fi
