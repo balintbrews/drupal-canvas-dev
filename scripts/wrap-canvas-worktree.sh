@@ -181,6 +181,8 @@ fi
 
 cat > "$ENV_WORKTREE/.ddev/config.local.yaml" <<EOF
 name: $PROJECT_NAME
+web_environment:
+  - TURBO_CACHE_DIR=/mnt/ddev-global-cache/turbo/$PROJECT_NAME
 EOF
 
 if [ -f "$SOURCE_ENV/.ddev/.env" ] && [ ! -f "$ENV_WORKTREE/.ddev/.env" ]; then

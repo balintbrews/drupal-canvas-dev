@@ -75,10 +75,10 @@ SOURCE_ENV="$(cd "$SOURCE_TREE_PATH/../../../.." && pwd)"
 ```
 
 After the Canvas worktree exists, the script creates an environment
-wrapper next to it, writes a unique ignored DDEV project name, mounts the
-Canvas worktree into DDEV at `web/modules/contrib/canvas`, and creates
-`.ddev-env` inside the Canvas worktree as a symlink back to the environment
-wrapper.
+wrapper next to it, writes a unique ignored DDEV project configuration with an
+isolated Turbo cache, mounts the Canvas worktree into DDEV at
+`web/modules/contrib/canvas`, and creates `.ddev-env` inside the Canvas worktree
+as a symlink back to the environment wrapper.
 
 To create and wrap the worktree without running DDEV setup, pass
 `--skip-ddev`.
