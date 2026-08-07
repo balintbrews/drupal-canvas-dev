@@ -14,33 +14,33 @@ config:
     system.theme:
       simpleConfigUpdate:
         default: stark
-    block.block.stark_account_menu:
+    ?block.block.stark_account_menu:
       disable: []
-    block.block.stark_breadcrumbs:
+    ?block.block.stark_breadcrumbs:
       disable: []
-    block.block.stark_content:
+    ?block.block.stark_content:
       disable: []
-    block.block.stark_help:
+    ?block.block.stark_help:
       disable: []
-    block.block.stark_main_menu:
+    ?block.block.stark_main_menu:
       disable: []
-    block.block.stark_messages:
+    ?block.block.stark_messages:
       disable: []
-    block.block.stark_page_title:
+    ?block.block.stark_page_title:
       disable: []
-    block.block.stark_powered:
+    ?block.block.stark_powered:
       disable: []
-    block.block.stark_primary_admin_actions:
+    ?block.block.stark_primary_admin_actions:
       disable: []
-    block.block.stark_primary_local_tasks:
+    ?block.block.stark_primary_local_tasks:
       disable: []
-    block.block.stark_search_form_narrow:
+    ?block.block.stark_search_form_narrow:
       disable: []
-    block.block.stark_search_form_wide:
+    ?block.block.stark_search_form_wide:
       disable: []
-    block.block.stark_secondary_local_tasks:
+    ?block.block.stark_secondary_local_tasks:
       disable: []
-    block.block.stark_site_branding:
+    ?block.block.stark_site_branding:
       disable: []
     canvas.component.block.system_menu_block.footer:
       disable: []
