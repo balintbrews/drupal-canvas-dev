@@ -37,6 +37,18 @@ config:
       disable: []
     ?block.block.stark_site_branding:
       disable: []
+    canvas.component.block.system_menu_block.footer:
+      disable: []
+    canvas.component.block.system_menu_block.main:
+      disable: []
+    canvas.component.block.system_breadcrumb_block:
+      disable: []
+    canvas.component.block.system_messages_block:
+      disable: []
+    canvas.component.block.system_powered_by_block:
+      disable: []
+    canvas.component.block.system_branding_block:
+      disable: []
     system.site:
       simpleConfigUpdate:
         page.front: /home

@@ -38,6 +38,13 @@ apply_recipe() {
     popd > /dev/null
 }
 
+delete_canvas_folders() {
+    drush php:eval '
+        $storage = \Drupal::entityTypeManager()->getStorage("folder");
+        $storage->delete($storage->loadMultiple());
+    '
+}
+
 # Delete generated files that can leak container, route, or asset state between
 # repeated reinstalls.
 rm -rf \
@@ -83,6 +90,8 @@ if [[ "$MERCURY" == "false" ]]; then
     else
         apply_recipe "$RECIPE_ROOT/canvas_dev_stark"
     fi
+    # Keep recipe components ungrouped by removing generated category folders.
+    delete_canvas_folders
 else
     apply_recipe "$RECIPE_ROOT/canvas_dev_mercury"
 fi
