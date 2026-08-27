@@ -3,24 +3,34 @@
 set -euo pipefail
 
 WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+ENV_ROOT="${CANVAS_ENV_ROOT:-$WORKSPACE_ROOT/drupal}"
 CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+
+# Canvas's own `composer run phpcbf` locates the Drupal root by walking up
+# parent directories, which cannot work from the workspace checkout, so the
+# environment root's PHPCBF is invoked directly with Canvas's standard.
 cd "$CANVAS_ROOT"
+mkdir -p .cache/phpcs
 
-if (( $# == 0 )); then
-  exec composer run phpcbf
-fi
-
-ARGS=()
+TARGETS=()
 for arg in "$@"; do
   if [[ "$arg" == /* || "$arg" == -* ]]; then
-    ARGS+=("$arg")
+    TARGETS+=("$arg")
   else
-    ARGS+=("$CANVAS_ROOT/$arg")
+    TARGETS+=("$CANVAS_ROOT/$arg")
   fi
 done
+if (( ${#TARGETS[@]} == 0 )); then
+  TARGETS=("$CANVAS_ROOT")
+fi
 
-mkdir -p .cache/phpcs
-exec composer --working-dir="$(composer run --quiet composer-root)" exec phpcbf -- \
+# PHPCBF exits 1 when it fixed something, which is a success for this command.
+STATUS=0
+"$ENV_ROOT/vendor/bin/phpcbf" \
   --standard="$CANVAS_ROOT/phpcs.xml" \
   --colors \
-  "${ARGS[@]}"
+  "${TARGETS[@]}" || STATUS=$?
+if (( STATUS == 0 || STATUS == 1 )); then
+  exit 0
+fi
+exit "$STATUS"

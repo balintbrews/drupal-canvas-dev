@@ -4,8 +4,26 @@ set -euo pipefail
 
 WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
 ENV_ROOT="${CANVAS_ENV_ROOT:-$WORKSPACE_ROOT/drupal}"
+VNC_DISPLAY="${DISPLAY:-:0}"
 
 canvas-env-init
+
+# Run a virtual display with a VNC bridge so headed Cypress and Playwright
+# sessions can be watched at http://localhost:6080/vnc.html via noVNC.
+if ! pgrep -x Xvfb >/dev/null 2>&1; then
+  Xvfb "$VNC_DISPLAY" -screen 0 1920x1080x24 >/dev/null 2>&1 &
+  sleep 1
+fi
+if ! pgrep -x fluxbox >/dev/null 2>&1; then
+  fluxbox -display "$VNC_DISPLAY" >/dev/null 2>&1 &
+fi
+if ! pgrep -x x11vnc >/dev/null 2>&1; then
+  x11vnc -display "$VNC_DISPLAY" -forever -shared -nopw -quiet -bg >/dev/null 2>&1
+fi
+if ! pgrep -f novnc_proxy >/dev/null 2>&1; then
+  /usr/share/novnc/utils/novnc_proxy --web /usr/share/novnc \
+    --vnc localhost:5900 --listen 6080 >/dev/null 2>&1 &
+fi
 
 if (( $# > 0 )); then
   exec "$@"
@@ -16,6 +34,9 @@ if [[ ! -f "$ENV_ROOT/web/.ht.router.php" ]]; then
   exit 1
 fi
 
+# PHP's built-in server does not change its working directory, and some code
+# includes files relative to the docroot, so it must run from there.
+cd "$ENV_ROOT/web"
 exec php -S "0.0.0.0:${CANVAS_HTTP_PORT:-8080}" \
   -t "$ENV_ROOT/web" \
   "$ENV_ROOT/web/.ht.router.php"

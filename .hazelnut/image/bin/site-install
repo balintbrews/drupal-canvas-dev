@@ -49,11 +49,7 @@ drush() {
 }
 
 apply_recipe() {
-  if [[ -x "$ENV_ROOT/vendor/bin/dr" ]]; then
-    (cd "$DRUPAL_ROOT" && "$ENV_ROOT/vendor/bin/dr" recipe:apply --no-interaction "$1")
-  else
-    (cd "$DRUPAL_ROOT" && php core/scripts/drupal recipe --no-interaction "$1")
-  fi
+  (cd "$DRUPAL_ROOT" && php core/scripts/drupal recipe --no-interaction "$1")
 }
 
 delete_canvas_folders() {
@@ -110,7 +106,9 @@ drush php:eval '
   $entity->save();
 '
 
+# npm must run from inside the workspace root: `npm --prefix` through the
+# workspace symlink breaks npm's workspace resolution and prunes packages.
 if [[ "$UI" == false ]]; then
-  npm install --prefix "$CANVAS_ROOT"
-  npm run build --prefix "$CANVAS_ROOT/ui"
+  (cd "$CANVAS_ROOT" && npm install)
+  (cd "$CANVAS_ROOT/ui" && npm run build)
 fi

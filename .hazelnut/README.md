@@ -61,9 +61,16 @@ docker build --platform linux/amd64 -t canvas-env:local image
 ```
 
 The image stores the Drupal environment at `$HAZELNUT_WORKSPACE_DIR/drupal`. At
-runtime, `canvas-env-init` links the Canvas checkout from
+runtime, `canvas-env-init` moves the Canvas checkout Hazelnut cloned to
 `$HAZELNUT_WORKSPACE_DIR/$HAZELNUT_PROJECT_NAME` into Drupal's
-`web/modules/contrib/canvas` path.
+`web/modules/contrib/canvas` path and leaves a symlink at the workspace path.
+The checkout must physically live inside the Drupal tree because Canvas
+tooling locates Drupal by walking up parent directories. `canvas-env-start` also runs a virtual
+display with a VNC bridge; headed Cypress and Playwright sessions can be watched
+at `http://localhost:6080/vnc.html`. The Cypress binary and the Playwright
+Chromium browser are baked into the image; their versions are pinned as build
+arguments in the Dockerfile and must be kept in sync with what the Canvas
+repository resolves.
 
 To test with a local Canvas checkout:
 
@@ -73,8 +80,9 @@ docker run -d \
   --platform linux/amd64 \
   -p 8080:8080 \
   -p 5173:5173 \
+  -p 6080:6080 \
   -e HAZELNUT_PROJECT_NAME=canvas \
-  -v "/path/to/canvas:/home/hazelnut/workspace/canvas" \
+  -v "/path/to/canvas:/home/hazelnut/workspace/drupal/web/modules/contrib/canvas" \
   canvas-env:local \
   canvas-env-start sleep infinity
 
@@ -82,6 +90,9 @@ docker exec canvas-env-test composer install --no-interaction
 docker exec canvas-env-test site-install --stark
 docker exec -d canvas-env-test canvas-env-start
 ```
+
+Mount a clean clone rather than a working checkout: `node_modules` installed on
+the host contain platform-specific binaries that fail inside the container.
 
 Open `http://localhost:8080` and sign in with `admin` as both the username and
 password. Remove the container when finished:

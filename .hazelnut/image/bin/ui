@@ -26,11 +26,14 @@ while (( $# > 0 )); do
   shift
 done
 
-if [[ "$INSTALL" == true ]]; then
-  npm install --prefix "$CANVAS_ROOT"
+# npm must run from inside the workspace root: `npm --prefix` through the
+# workspace symlink breaks npm's workspace resolution and prunes packages.
+# site-install --ui skips npm entirely, so install dependencies when absent.
+if [[ "$INSTALL" == true || ! -d "$CANVAS_ROOT/node_modules" ]]; then
+  (cd "$CANVAS_ROOT" && npm install)
 fi
 if [[ "$SKIP_BUILD" == false ]]; then
-  npm run build --prefix "$UI_ROOT"
+  (cd "$UI_ROOT" && npm run build)
 fi
 
 "$ENV_ROOT/vendor/bin/drush" \
@@ -38,4 +41,5 @@ fi
   --uri="${DRUSH_OPTIONS_URI:-http://127.0.0.1:8080}" \
   pm:install canvas_vite --yes
 
-exec npm run drupaldev --prefix "$UI_ROOT" -- --host 0.0.0.0
+cd "$UI_ROOT"
+exec npm run drupaldev -- --host 0.0.0.0

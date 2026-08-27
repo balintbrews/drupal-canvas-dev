@@ -6,12 +6,17 @@ WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
 CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
 UI_ROOT="$CANVAS_ROOT/ui"
 COMPONENT=false
+OPEN=false
 SPEC=""
 
 while (( $# > 0 )); do
   case "$1" in
     --component|-c)
       COMPONENT=true
+      shift
+      ;;
+    --open|-o)
+      OPEN=true
       shift
       ;;
     --spec)
@@ -21,7 +26,7 @@ while (( $# > 0 )); do
       ;;
     *)
       echo "Unknown option: $1" >&2
-      echo "Usage: cypress [--component|-c] [--spec <spec>]" >&2
+      echo "Usage: cypress [--component|-c] [--open|-o] [--spec <spec>]" >&2
       exit 1
       ;;
   esac
@@ -29,12 +34,18 @@ done
 
 cd "$UI_ROOT"
 
-if [[ ! -x node_modules/.bin/cypress ]]; then
-  echo "Cypress is not installed. Run: n install" >&2
+# npm workspaces hoist dependencies to the repository root node_modules.
+if [[ ! -x "$CANVAS_ROOT/node_modules/.bin/cypress" ]]; then
+  echo "Node dependencies are not installed. Run: npm install --prefix $CANVAS_ROOT" >&2
   exit 1
 fi
-if ! npm run cy:verify >/dev/null 2>&1; then
-  npx cypress install
+
+# Dismiss the Cypress welcome message so open mode starts on the project.
+STATE_DIR="$HOME/.config/Cypress/cy/production/projects/__global__"
+if [[ ! -f "$STATE_DIR/state.json" ]]; then
+  mkdir -p "$STATE_DIR"
+  printf '{"majorVersionWelcomeDismissed": {"13": %s}}\n' "$(date +%s)" \
+    >"$STATE_DIR/state.json"
 fi
 
 ARGS=(--browser electron)
@@ -45,6 +56,11 @@ else
 fi
 if [[ -n "$SPEC" ]]; then
   ARGS+=(--spec "$SPEC")
+fi
+
+if [[ "$OPEN" == true ]]; then
+  echo "Watch the Cypress session at http://localhost:6080/vnc.html"
+  exec npm run cy:open -- "${ARGS[@]}"
 fi
 
 exec npm run cy:run -- "${ARGS[@]}"

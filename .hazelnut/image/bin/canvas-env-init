@@ -6,15 +6,40 @@ WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
 ENV_ROOT="${CANVAS_ENV_ROOT:-$WORKSPACE_ROOT/drupal}"
 CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
 FILES_DIR="$ENV_ROOT/web/sites/default/files"
-MODULE_LINK="$ENV_ROOT/web/modules/contrib/canvas"
+MODULE_DIR="$ENV_ROOT/web/modules/contrib/canvas"
 
-if [[ -L "$MODULE_LINK" ]]; then
-  ln -sfn "$CANVAS_ROOT" "$MODULE_LINK"
-elif [[ -e "$MODULE_LINK" ]]; then
-  echo "Cannot link Canvas because $MODULE_LINK already exists and is not a symlink." >&2
-  exit 1
+has_content() {
+  [[ -d "$1" ]] \
+    && [[ -n "$(find "$1/" -mindepth 1 -maxdepth 1 -print -quit 2>/dev/null)" ]]
+}
+
+# The checkout must physically live inside the Drupal tree: Canvas tooling
+# (its Composer scripts, cypress.config.js, @drupal-canvas/test-utils, and
+# @drupal/playwright) locates Drupal by walking up parent directories from
+# the physical path. The workspace path stays valid as a symlink.
+if [[ ! -L "$MODULE_DIR" ]] && has_content "$MODULE_DIR"; then
+  # The checkout is already in place, for example bind-mounted there.
+  if [[ -L "$CANVAS_ROOT" || ! -e "$CANVAS_ROOT" ]]; then
+    ln -sfn "$MODULE_DIR" "$CANVAS_ROOT"
+  fi
+elif [[ ! -L "$CANVAS_ROOT" ]] && has_content "$CANVAS_ROOT"; then
+  # Hazelnut cloned the checkout into the workspace. Move it into the
+  # Drupal tree and leave a symlink behind. A bind-mounted workspace
+  # checkout cannot be moved; fall back to linking it into the Drupal tree,
+  # which keeps the environment usable, although parent-walking test
+  # tooling then only works where an environment override exists.
+  rm -rf "$MODULE_DIR" 2>/dev/null || true
+  if mv "$CANVAS_ROOT" "$MODULE_DIR" 2>/dev/null; then
+    ln -s "$MODULE_DIR" "$CANVAS_ROOT"
+  else
+    echo "Warning: cannot move $CANVAS_ROOT into the Drupal tree (is it a mount?); linking instead." >&2
+    ln -sfn "$CANVAS_ROOT" "$MODULE_DIR"
+  fi
+elif [[ -L "$CANVAS_ROOT" || -L "$MODULE_DIR" ]]; then
+  : # Already initialized.
 else
-  ln -s "$CANVAS_ROOT" "$MODULE_LINK"
+  echo "Canvas is not available at $CANVAS_ROOT or $MODULE_DIR." >&2
+  exit 1
 fi
 
 if ! sudo mariadb-admin ping --silent >/dev/null 2>&1; then

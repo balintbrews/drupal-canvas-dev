@@ -3,6 +3,20 @@
 set -euo pipefail
 
 WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+ENV_ROOT="${CANVAS_ENV_ROOT:-$WORKSPACE_ROOT/drupal}"
 CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+
+# Canvas's own `composer run phpstan` locates the Drupal root by walking up
+# parent directories, which cannot work from the workspace checkout, so the
+# environment root's PHPStan is invoked directly with Canvas's configuration.
 cd "$CANVAS_ROOT"
-exec composer run phpstan
+
+TARGETS=("$@")
+if (( ${#TARGETS[@]} == 0 )); then
+  TARGETS=(.)
+fi
+
+exec "$ENV_ROOT/vendor/bin/phpstan" \
+  --configuration=phpstan.neon \
+  --autoload-file=phpstan_rules/autoload.php \
+  analyze "${TARGETS[@]}"
