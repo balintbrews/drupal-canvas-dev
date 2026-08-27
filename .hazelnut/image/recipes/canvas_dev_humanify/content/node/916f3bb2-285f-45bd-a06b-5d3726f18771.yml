@@ -1,0 +1,39 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: 916f3bb2-285f-45bd-a06b-5d3726f18771
+  bundle: humanify_service
+  default_langcode: en
+default:
+  revision_uid:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: "Summarizing emails"
+  created:
+    - value: 1759929709
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  path:
+    - alias: ""
+      langcode: en
+  field_description:
+    - value:
+        "We don't actually do this, but we needed six things for this grid to
+        look nice."
+      format: canvas_html_block
+  field_icon:
+    - value: mail-question-mark
+  field_icon_color:
+    - value: pink
+  field_position:
+    - value: 6

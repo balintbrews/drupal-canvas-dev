@@ -1,0 +1,40 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+SPEC=""
+
+while (( $# > 0 )); do
+  case "$1" in
+    --spec)
+      [[ $# -ge 2 ]] || { echo "--spec requires a value" >&2; exit 1; }
+      SPEC="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      echo "Usage: playwright [--spec <spec>]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+cd "$CANVAS_ROOT"
+
+if [[ ! -x node_modules/.bin/playwright ]]; then
+  echo "Playwright is not installed. Run: n --canvas-dir=root install" >&2
+  exit 1
+fi
+
+MARKER="$HOME/.playwright_deps_installed"
+if [[ ! -f "$MARKER" ]]; then
+  npx playwright install --with-deps
+  touch "$MARKER"
+fi
+
+if [[ -n "$SPEC" ]]; then
+  exec npx playwright test "$SPEC"
+fi
+exec npx playwright test

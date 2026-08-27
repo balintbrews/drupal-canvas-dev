@@ -1,0 +1,53 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    config:
+      - canvas.js_component.control_dots
+machineName: card_2
+name: "Card 2"
+required: {}
+props:
+  title:
+    title: Title
+    type: string
+    examples:
+      - "Card 2"
+slots: {}
+js:
+  original: |-
+    import FormattedText from "@/lib/FormattedText";
+    import { cn } from "@/lib/utils";
+
+    import ControlDots from '@/components/control_dots'
+
+    export default function({ title }) {
+      return (
+        <div className="bg-pink-600 text-white m-2 w-sm min-h-36 p-2 font-bold rounded-lg text-2xl gap-4 relative mx-auto flex w-full flex-col items-center justify-center">
+          <ControlDots className="top-4 left-4 stroke-white absolute" />
+          {title && <div>{title}</div>}
+        </div>
+      );
+    }
+  compiled: |
+    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    import FormattedText from "@/lib/FormattedText";
+    import { cn } from "@/lib/utils";
+    import ControlDots from '@/components/control_dots';
+    export default function({ title }) {
+        return /*#__PURE__*/ _jsxs("div", {
+            className: "bg-pink-600 text-white m-2 w-sm min-h-36 p-2 font-bold rounded-lg text-2xl gap-4 relative mx-auto flex w-full flex-col items-center justify-center",
+            children: [
+                /*#__PURE__*/ _jsx(ControlDots, {
+                    className: "top-4 left-4 stroke-white absolute"
+                }),
+                title && /*#__PURE__*/ _jsx("div", {
+                    children: title
+                })
+            ]
+        });
+    }
+css:
+  original: ""
+  compiled: ""
+dataDependencies: {}

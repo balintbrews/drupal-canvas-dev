@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_icon
+    - node.type.humanify_service
+id: node.humanify_service.field_icon
+field_name: field_icon
+entity_type: node
+bundle: humanify_service
+label: Icon
+description:
+  'Name of the icon from the <a href="https://lucide.dev" target="_black"
+  rel="noopener noreferrer">Lucide</a> icon library.'
+required: false
+translatable: false
+default_value:
+  - value: layout-panel-top
+default_value_callback: ""
+settings: {}
+field_type: string

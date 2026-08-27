@@ -1,0 +1,8 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+cd "$CANVAS_ROOT"
+exec composer run phpstan

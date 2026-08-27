@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_position
+    - node.type.humanify_service
+id: node.humanify_service.field_position
+field_name: field_position
+entity_type: node
+bundle: humanify_service
+label: Position
+description: "The position this service should take in listings."
+required: true
+translatable: false
+default_value: {}
+default_value_callback: ""
+settings:
+  min: 1
+  max: null
+  prefix: ""
+  suffix: ""
+field_type: integer

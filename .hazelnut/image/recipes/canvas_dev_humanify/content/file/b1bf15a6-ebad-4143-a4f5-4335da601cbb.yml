@@ -1,0 +1,22 @@
+_meta:
+  version: "1.0"
+  entity_type: file
+  uuid: b1bf15a6-ebad-4143-a4f5-4335da601cbb
+  default_langcode: en
+default:
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  filename:
+    - value: pricing-utils-D9e5kp05.js
+  uri:
+    - value: "public://canvas/assets/pricing-utils-D9e5kp05.js"
+      url: /sites/default/files/canvas/assets/pricing-utils-D9e5kp05.js
+  filemime:
+    - value: text/javascript
+  filesize:
+    - value: 645
+  status:
+    - value: true
+  created:
+    - value: 1778621211

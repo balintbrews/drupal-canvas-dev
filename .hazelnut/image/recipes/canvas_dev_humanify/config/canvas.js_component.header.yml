@@ -1,0 +1,194 @@
+langcode: en
+status: true
+dependencies: {}
+machineName: header
+name: Header
+required:
+  - backgroundColor
+props:
+  backgroundColor:
+    type: string
+    enum:
+      - cream
+      - paper
+      - mist
+      - navy
+    "meta:enum":
+      cream: Cream
+      paper: Paper
+      mist: Mist
+      navy: Navy
+    title: "Background color"
+    examples:
+      - cream
+slots:
+  branding:
+    title: Branding
+  navigation:
+    title: Navigation
+js:
+  original: |
+    import { hasEmptySlotPlaceholder } from '@/lib/types';
+    import { cva } from 'class-variance-authority';
+    import { cn } from 'drupal-canvas';
+    import type { ComponentPropsWithoutRef, ReactNode } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
+
+    const headerVariants = cva('', {
+      variants: {
+        backgroundColor: {
+          cream: 'bg-cream',
+          paper: 'bg-paper',
+          mist: 'bg-mist',
+          navy: 'dark bg-navy',
+        },
+      },
+      defaultVariants: {
+        backgroundColor: 'cream',
+      },
+    });
+
+    type HeaderBackgroundColor = NonNullable<
+      VariantProps<typeof headerVariants>['backgroundColor']
+    >;
+
+    export interface HeaderProps extends Omit<
+      ComponentPropsWithoutRef<'header'>,
+      'children'
+    > {
+      backgroundColor: HeaderBackgroundColor;
+      branding?: ReactNode;
+      navigation?: ReactNode;
+    }
+
+    function Header({
+      backgroundColor,
+      branding,
+      className,
+      navigation,
+      ...props
+    }: HeaderProps) {
+      return (
+        <header
+          className={cn(
+            headerVariants({
+              backgroundColor,
+            }),
+            className,
+          )}
+          {...props}
+        >
+          <div className="mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-x-8 px-5 py-4 sm:px-8 lg:px-16">
+            <div
+              className={cn(
+                'h-10 shrink-0 items-center justify-start md:h-12',
+                hasEmptySlotPlaceholder(branding) && 'min-w-32',
+              )}
+            >
+              {branding}
+            </div>
+            <div className="flex min-h-12 grow items-center justify-end">
+              {navigation}
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    export { Header };
+    export default Header;
+  compiled: |
+    var __defProp = Object.defineProperty;
+    var __defProps = Object.defineProperties;
+    var __getOwnPropDescs = Object.getOwnPropertyDescriptors;
+    var __getOwnPropSymbols = Object.getOwnPropertySymbols;
+    var __hasOwnProp = Object.prototype.hasOwnProperty;
+    var __propIsEnum = Object.prototype.propertyIsEnumerable;
+    var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
+    var __spreadValues = (a, b) => {
+      for (var prop in b || (b = {}))
+        if (__hasOwnProp.call(b, prop))
+          __defNormalProp(a, prop, b[prop]);
+      if (__getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(b)) {
+          if (__propIsEnum.call(b, prop))
+            __defNormalProp(a, prop, b[prop]);
+        }
+      return a;
+    };
+    var __spreadProps = (a, b) => __defProps(a, __getOwnPropDescs(b));
+    var __objRest = (source, exclude) => {
+      var target = {};
+      for (var prop in source)
+        if (__hasOwnProp.call(source, prop) && exclude.indexOf(prop) < 0)
+          target[prop] = source[prop];
+      if (source != null && __getOwnPropSymbols)
+        for (var prop of __getOwnPropSymbols(source)) {
+          if (exclude.indexOf(prop) < 0 && __propIsEnum.call(source, prop))
+            target[prop] = source[prop];
+        }
+      return target;
+    };
+    import { jsx, jsxs } from "react/jsx-runtime";
+    import { hasEmptySlotPlaceholder } from "@/lib/types";
+    import { cva } from "class-variance-authority";
+    import { cn } from "drupal-canvas";
+    const headerVariants = cva("", {
+      variants: {
+        backgroundColor: {
+          cream: "bg-cream",
+          paper: "bg-paper",
+          mist: "bg-mist",
+          navy: "dark bg-navy"
+        }
+      },
+      defaultVariants: {
+        backgroundColor: "cream"
+      }
+    });
+    function Header(_a) {
+      var _b = _a, {
+        backgroundColor,
+        branding,
+        className,
+        navigation
+      } = _b, props = __objRest(_b, [
+        "backgroundColor",
+        "branding",
+        "className",
+        "navigation"
+      ]);
+      return /* @__PURE__ */ jsx(
+        "header",
+        __spreadProps(__spreadValues({
+          className: cn(
+            headerVariants({
+              backgroundColor
+            }),
+            className
+          )
+        }, props), {
+          children: /* @__PURE__ */ jsxs("div", { className: "mx-auto flex min-h-20 max-w-7xl items-center justify-between gap-x-8 px-5 py-4 sm:px-8 lg:px-16", children: [
+            /* @__PURE__ */ jsx(
+              "div",
+              {
+                className: cn(
+                  "h-10 shrink-0 items-center justify-start md:h-12",
+                  hasEmptySlotPlaceholder(branding) && "min-w-32"
+                ),
+                children: branding
+              }
+            ),
+            /* @__PURE__ */ jsx("div", { className: "flex min-h-12 grow items-center justify-end", children: navigation })
+          ] })
+        })
+      );
+    }
+    export {
+      Header,
+      Header as default
+    };
+css:
+  original: ""
+  compiled: ""
+dataDependencies: {}

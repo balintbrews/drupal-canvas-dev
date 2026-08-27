@@ -1,0 +1,36 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+CANVAS_DIR=ui
+NPM_ARGS=()
+
+for arg in "$@"; do
+  case "$arg" in
+    --canvas-dir=*)
+      CANVAS_DIR="${arg#*=}"
+      ;;
+    *)
+      NPM_ARGS+=("$arg")
+      ;;
+  esac
+done
+
+case "$CANVAS_DIR" in
+  root) TARGET_DIR="$CANVAS_ROOT" ;;
+  ui) TARGET_DIR="$CANVAS_ROOT/ui" ;;
+  astro) TARGET_DIR="$CANVAS_ROOT/ui/lib/astro-hydration" ;;
+  cli) TARGET_DIR="$CANVAS_ROOT/cli" ;;
+  docs) TARGET_DIR="$CANVAS_ROOT/docs/user" ;;
+  *)
+    echo "Unknown Canvas directory: $CANVAS_DIR" >&2
+    echo "Available directories: root, ui, astro, cli, docs" >&2
+    exit 1
+    ;;
+esac
+
+printf 'Running npm in %s…\n' "$TARGET_DIR"
+cd "$TARGET_DIR"
+exec npm "${NPM_ARGS[@]}"

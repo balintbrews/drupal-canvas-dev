@@ -1,0 +1,22 @@
+_meta:
+  version: "1.0"
+  entity_type: file
+  uuid: 282fbcbf-e695-4c14-8658-0a0e457dc86c
+  default_langcode: en
+default:
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  filename:
+    - value: photo-1752650736024-d6aac18abc2d_7.jpg
+  uri:
+    - value: "public://2026-05/photo-1752650736024-d6aac18abc2d_7.jpg"
+      url: /sites/default/files/2026-05/photo-1752650736024-d6aac18abc2d_7.jpg
+  filemime:
+    - value: image/jpeg
+  filesize:
+    - value: 254927
+  status:
+    - value: true
+  created:
+    - value: 1778619553

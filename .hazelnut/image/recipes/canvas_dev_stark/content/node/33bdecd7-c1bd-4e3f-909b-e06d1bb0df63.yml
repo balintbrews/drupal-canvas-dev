@@ -1,0 +1,58 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: 33bdecd7-c1bd-4e3f-909b-e06d1bb0df63
+  bundle: article
+  default_langcode: en
+default:
+  revision_uid:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: "How to turn scattered research into decisions teams can act on"
+  created:
+    - value: 1771431906
+  promote:
+    - value: true
+  sticky:
+    - value: false
+  path:
+    - alias: ""
+      langcode: en
+  body:
+    - value:
+        '<p>Teams have more customer interviews, survey responses, market
+        reports, and product data than they can reasonably review. AI can help
+        process that volume, but a longer summary does not automatically lead to
+        a better decision.</p><p>Useful synthesis goes beyond collecting common
+        themes. It connects evidence to a specific question, explains where
+        signals agree or conflict, and gives teams a clear basis for choosing
+        what to do next.</p><p>Start by defining the decision before analyzing
+        the material. A focused brief helps models identify relevant patterns
+        without flattening important context, and it gives reviewers a standard
+        for checking every <a href="#">source and conclusion</a>.</p><h2>Turn
+        evidence into a point of view</h2><p>Strong synthesis makes the path
+        from raw input to recommendation visible.</p><ul><li>Group findings by
+        the decisions they could influence.</li><li>Separate repeated evidence
+        from isolated but important signals.</li><li>Document uncertainty,
+        contradictions, and gaps that require more research.</li></ul><h3>A
+        repeatable synthesis workflow</h3><p>Use a consistent process so teams
+        can move quickly without losing rigor.</p><ol><li>Frame one decision and
+        define the evidence needed to support it.</li><li>Use model assistance
+        to classify inputs and surface recurring patterns.</li><li>Review source
+        material behind every high-impact claim.</li><li>Translate findings into
+        options, tradeoffs, and a recommended next
+        step.</li></ol><blockquote><p>“Insight is not a compressed version of
+        the research. It is a clear explanation of what the evidence means for
+        the decision ahead.”</p></blockquote><p>AI can accelerate the work of
+        organizing information, while people remain responsible for
+        interpretation. Together, they turn fragmented inputs into
+        <strong>credible direction</strong> that teams can discuss, challenge,
+        and <em>put into action</em>.</p>'
+      format: basic_html
+      summary: ""

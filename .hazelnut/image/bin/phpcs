@@ -1,0 +1,26 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+cd "$CANVAS_ROOT"
+
+if (( $# == 0 )); then
+  exec composer run phpcbf
+fi
+
+ARGS=()
+for arg in "$@"; do
+  if [[ "$arg" == /* || "$arg" == -* ]]; then
+    ARGS+=("$arg")
+  else
+    ARGS+=("$CANVAS_ROOT/$arg")
+  fi
+done
+
+mkdir -p .cache/phpcs
+exec composer --working-dir="$(composer run --quiet composer-root)" exec phpcbf -- \
+  --standard="$CANVAS_ROOT/phpcs.xml" \
+  --colors \
+  "${ARGS[@]}"

@@ -1,0 +1,62 @@
+langcode: en
+status: false
+dependencies: {}
+machineName: control_dots
+name: "Control dots"
+required: {}
+props: {}
+slots: {}
+js:
+  original: |-
+    import { cn } from "@/lib/utils";
+
+    const ControlDots = ({ className }) => (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 31 9"
+        fill="none"
+        strokeWidth="2"
+        className={cn("w-12", className)}
+      >
+        <ellipse cx="4.13" cy="4.97" rx="3.13" ry="2.97" />
+        <ellipse cx="15.16" cy="4.97" rx="3.13" ry="2.97" />
+        <ellipse cx="26.19" cy="4.97" rx="3.13" ry="2.97" />
+      </svg>
+    );
+
+    export default ControlDots;
+  compiled: |
+    import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
+    import { cn } from "@/lib/utils";
+    const ControlDots = ({ className })=>/*#__PURE__*/ _jsxs("svg", {
+            xmlns: "http://www.w3.org/2000/svg",
+            viewBox: "0 0 31 9",
+            fill: "none",
+            strokeWidth: "2",
+            className: cn("w-12", className),
+            children: [
+                /*#__PURE__*/ _jsx("ellipse", {
+                    cx: "4.13",
+                    cy: "4.97",
+                    rx: "3.13",
+                    ry: "2.97"
+                }),
+                /*#__PURE__*/ _jsx("ellipse", {
+                    cx: "15.16",
+                    cy: "4.97",
+                    rx: "3.13",
+                    ry: "2.97"
+                }),
+                /*#__PURE__*/ _jsx("ellipse", {
+                    cx: "26.19",
+                    cy: "4.97",
+                    rx: "3.13",
+                    ry: "2.97"
+                })
+            ]
+        });
+    export default ControlDots;
+css:
+  original: ""
+  compiled: ""
+dataDependencies: {}

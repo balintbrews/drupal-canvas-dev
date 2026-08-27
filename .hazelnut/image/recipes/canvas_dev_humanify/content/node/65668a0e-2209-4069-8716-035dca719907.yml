@@ -1,0 +1,37 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: 65668a0e-2209-4069-8716-035dca719907
+  bundle: humanify_service
+  default_langcode: en
+default:
+  revision_uid:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: "Social media"
+  created:
+    - value: 1759929645
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  path:
+    - alias: ""
+      langcode: en
+  field_description:
+    - value: "We'll give you a discount if we only have to deal with Bluesky."
+      format: canvas_html_block
+  field_icon:
+    - value: radio-tower
+  field_icon_color:
+    - value: yellow
+  field_position:
+    - value: 4

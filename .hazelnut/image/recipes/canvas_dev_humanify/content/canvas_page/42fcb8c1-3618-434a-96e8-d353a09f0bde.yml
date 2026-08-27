@@ -1,0 +1,116 @@
+---
+_meta:
+  version: "1.0"
+  entity_type: canvas_page
+  uuid: 42fcb8c1-3618-434a-96e8-d353a09f0bde
+  default_langcode: en
+default:
+  revision_user:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  owner:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: Login
+  components:
+    - parent_uuid:
+      slot:
+      uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
+      component_id: js.header
+      component_version: c2b7efd7cbdcad22
+      inputs:
+        backgroundColor: cream
+      label:
+    - parent_uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
+      slot: branding
+      uuid: cfb31229-b7ec-4181-a906-269e76ed76b8
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: true
+      label:
+    - parent_uuid: 73c7fa27-6f66-4488-9586-8a2725e73fd0
+      slot: navigation
+      uuid: 8f9653fc-41a4-4553-8343-aa101fbdedb1
+      component_id: js.navigation
+      component_version: f1853c41e19ad882
+      inputs:
+        activeUrl:
+          uri: internal:/login
+          options: []
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 527b66ec-d293-45f8-9211-c32aec314951
+      component_id: js.section
+      component_version: 51968f48979d90b3
+      inputs:
+        backgroundColor: paper
+      label:
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
+      slot: content
+      uuid: 98923163-73f2-4048-9a36-5926ac4618d1
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value: Login
+          format: canvas_html_block
+        variant: eyebrow
+      label:
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
+      slot: content
+      uuid: f60afe23-93d1-450d-8d33-3eb6b09205f8
+      component_id: js.heading
+      component_version: 9df836114750c940
+      inputs:
+        text: Welcome back to Humanify.
+      label:
+    - parent_uuid: 527b66ec-d293-45f8-9211-c32aec314951
+      slot: content
+      uuid: 59ba4e38-568a-4660-8c64-2384ec52203d
+      component_id: js.paragraph
+      component_version: "078c5bf8476f16d9"
+      inputs:
+        text:
+          value:
+            "<p>Use this page as the starting point for an account sign-in
+            workflow.</p>"
+          format: canvas_html_block
+      label:
+    - parent_uuid:
+      slot:
+      uuid: 14b84230-c70e-429a-980c-6e28743166eb
+      component_id: js.footer
+      component_version: ba30f643e8b0bf7b
+      inputs:
+        backgroundColor: navy
+        copyrightNotice:
+          value: "&copy; 2025-2026 Humanify Example Ventures Inc."
+          format: canvas_html_block
+        linkedInUrl:
+          uri: https://www.linkedin.com
+          options: []
+        xUrl:
+          uri: https://x.com
+          options: []
+        emailUrl:
+          uri: mailto:hello@example.com
+          options: []
+      label:
+    - parent_uuid: 14b84230-c70e-429a-980c-6e28743166eb
+      slot: branding
+      uuid: d875b13d-0e58-49a6-a39e-79772cee5ca6
+      component_id: js.logo
+      component_version: 3e9baf3c7cc35f84
+      inputs:
+        linkToFrontPage: false
+      label:
+  path:
+    - alias: "/login"
+      langcode: en
+  created:
+    - value: 1778619561

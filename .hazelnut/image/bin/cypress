@@ -1,0 +1,50 @@
+#!/bin/bash
+
+set -euo pipefail
+
+WORKSPACE_ROOT="${HAZELNUT_WORKSPACE_DIR:-$HOME/workspace}"
+CANVAS_ROOT="${CANVAS_ROOT:-$WORKSPACE_ROOT/${HAZELNUT_PROJECT_NAME:?HAZELNUT_PROJECT_NAME must be set when CANVAS_ROOT is not set}}"
+UI_ROOT="$CANVAS_ROOT/ui"
+COMPONENT=false
+SPEC=""
+
+while (( $# > 0 )); do
+  case "$1" in
+    --component|-c)
+      COMPONENT=true
+      shift
+      ;;
+    --spec)
+      [[ $# -ge 2 ]] || { echo "--spec requires a value" >&2; exit 1; }
+      SPEC="$2"
+      shift 2
+      ;;
+    *)
+      echo "Unknown option: $1" >&2
+      echo "Usage: cypress [--component|-c] [--spec <spec>]" >&2
+      exit 1
+      ;;
+  esac
+done
+
+cd "$UI_ROOT"
+
+if [[ ! -x node_modules/.bin/cypress ]]; then
+  echo "Cypress is not installed. Run: n install" >&2
+  exit 1
+fi
+if ! npm run cy:verify >/dev/null 2>&1; then
+  npx cypress install
+fi
+
+ARGS=(--browser electron)
+if [[ "$COMPONENT" == true ]]; then
+  ARGS+=(--component)
+else
+  ARGS+=(--e2e)
+fi
+if [[ -n "$SPEC" ]]; then
+  ARGS+=(--spec "$SPEC")
+fi
+
+exec npm run cy:run -- "${ARGS[@]}"

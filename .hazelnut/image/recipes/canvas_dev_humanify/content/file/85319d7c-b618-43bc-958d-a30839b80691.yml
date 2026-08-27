@@ -1,0 +1,22 @@
+_meta:
+  version: "1.0"
+  entity_type: file
+  uuid: 85319d7c-b618-43bc-958d-a30839b80691
+  default_langcode: en
+default:
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  filename:
+    - value: types-BjfHlxnY.js
+  uri:
+    - value: "public://canvas/assets/types-BjfHlxnY.js"
+      url: /sites/default/files/canvas/assets/types-BjfHlxnY.js
+  filemime:
+    - value: text/javascript
+  filesize:
+    - value: 183
+  status:
+    - value: true
+  created:
+    - value: 1778621211

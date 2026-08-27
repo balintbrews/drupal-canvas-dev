@@ -1,0 +1,57 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.humanify_service.field_description
+    - field.field.node.humanify_service.field_icon
+    - field.field.node.humanify_service.field_icon_color
+    - field.field.node.humanify_service.field_position
+    - node.type.humanify_service
+  module:
+    - options
+    - text
+    - user
+_core:
+  default_config_hash: FtME4gSLkcl3VLdRT_vuSYsCrd4hN2nVAhtY5QhxavY
+id: node.humanify_service.default
+targetEntityType: node
+bundle: humanify_service
+mode: default
+content:
+  field_description:
+    type: text_default
+    label: above
+    settings: {}
+    third_party_settings: {}
+    weight: 101
+    region: content
+  field_icon:
+    type: string
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {}
+    weight: 102
+    region: content
+  field_icon_color:
+    type: list_default
+    label: above
+    settings: {}
+    third_party_settings: {}
+    weight: 103
+    region: content
+  field_position:
+    type: number_integer
+    label: above
+    settings:
+      thousand_separator: ""
+      prefix_suffix: true
+    third_party_settings: {}
+    weight: 104
+    region: content
+  links:
+    settings: {}
+    third_party_settings: {}
+    weight: 100
+    region: content
+hidden: {}

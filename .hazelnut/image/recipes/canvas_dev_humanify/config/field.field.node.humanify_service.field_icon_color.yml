@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_icon_color
+    - node.type.humanify_service
+  module:
+    - options
+id: node.humanify_service.field_icon_color
+field_name: field_icon_color
+entity_type: node
+bundle: humanify_service
+label: "Icon color"
+description:
+  "Color of the icon for this service. The color palette uses the Latte and
+  Frappé flavors of <a href='https://catppuccin.com/palette' target='_blank'
+  rel='noopener noreferrer'>Catppuccin</a>."
+required: true
+translatable: false
+default_value:
+  - value: sapphire
+default_value_callback: ""
+settings: {}
+field_type: list_string

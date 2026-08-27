@@ -1,0 +1,38 @@
+_meta:
+  version: "1.0"
+  entity_type: node
+  uuid: ed31d9cf-bffe-4a40-aa15-5794f17b091e
+  bundle: humanify_service
+  default_langcode: en
+default:
+  revision_uid:
+    - target_id: 1
+      target_uuid: ""
+  status:
+    - value: true
+  uid:
+    - target_id: 1
+      target_uuid: ""
+  title:
+    - value: "Marketing copy-writing"
+  created:
+    - value: 1759929598
+  promote:
+    - value: false
+  sticky:
+    - value: false
+  revision_translation_affected:
+    - value: true
+  path:
+    - alias: ""
+      langcode: en
+  field_description:
+    - value:
+        "Sometimes it's advised not to sound like everyone else on the internet."
+      format: canvas_html_block
+  field_icon:
+    - value: message-square-more
+  field_icon_color:
+    - value: mauve
+  field_position:
+    - value: 3

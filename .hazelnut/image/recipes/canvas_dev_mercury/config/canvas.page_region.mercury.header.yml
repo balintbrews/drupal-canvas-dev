@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies:
+  theme:
+    - mercury
+id: mercury.header
+region: header
+theme: mercury
+component_tree: {}

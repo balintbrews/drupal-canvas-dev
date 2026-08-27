@@ -1,0 +1,109 @@
+langcode: en
+status: true
+dependencies: {}
+machineName: paragraph
+name: Paragraph
+required:
+  - text
+props:
+  text:
+    type: string
+    contentMediaType: text/html
+    x-formatting-context: block
+    title: Text
+    examples:
+      - "We partner with AI-native teams to add what machines still struggle to
+        replicate: taste, narrative coherence, emotional resonance, and
+        domain-informed judgment."
+      - "Your agents generate options fast. Our specialists shape those options
+        into work people trust, remember, and act on."
+      - "Choose the model that fits your stage, then scale across strategy,
+        design, and communication with a team that knows how to collaborate with
+        AI systems."
+  variant:
+    type: string
+    enum:
+      - body
+      - eyebrow
+    "meta:enum":
+      body: Body
+      eyebrow: Eyebrow
+    title: Variant
+    examples:
+      - body
+slots: {}
+js:
+  original: |
+    import { cva } from 'class-variance-authority';
+    import { cn, FormattedText } from 'drupal-canvas';
+    import type { HTMLAttributes } from 'react';
+    import type { VariantProps } from 'class-variance-authority';
+
+    const paragraphVariants = cva('max-w-5xl text-balance', {
+      variants: {
+        variant: {
+          body: 'text-base leading-7 text-muted',
+          eyebrow: 'text-base leading-6 font-semibold text-green',
+        },
+      },
+      defaultVariants: {
+        variant: 'body',
+      },
+    });
+
+    type ParagraphVariant = NonNullable<
+      VariantProps<typeof paragraphVariants>['variant']
+    >;
+
+    export interface ParagraphProps {
+      className?: HTMLAttributes<HTMLDivElement>['className'];
+      text: string;
+      variant?: ParagraphVariant;
+    }
+
+    function Paragraph({ className, text, variant }: ParagraphProps) {
+      return (
+        <FormattedText
+          as="div"
+          className={cn(paragraphVariants({ variant }), className)}
+        >
+          {text}
+        </FormattedText>
+      );
+    }
+
+    export { Paragraph };
+    export default Paragraph;
+  compiled: |
+    import { jsx } from "react/jsx-runtime";
+    import { cva } from "class-variance-authority";
+    import { FormattedText, cn } from "drupal-canvas";
+    const paragraphVariants = cva("max-w-5xl text-balance", {
+      variants: {
+        variant: {
+          body: "text-base leading-7 text-muted",
+          eyebrow: "text-base leading-6 font-semibold text-green"
+        }
+      },
+      defaultVariants: {
+        variant: "body"
+      }
+    });
+    function Paragraph({ className, text, variant }) {
+      return /* @__PURE__ */ jsx(
+        FormattedText,
+        {
+          as: "div",
+          className: cn(paragraphVariants({ variant }), className),
+          children: text
+        }
+      );
+    }
+    export {
+      Paragraph,
+      Paragraph as default
+    };
+css:
+  original: ""
+  compiled: ""
+dataDependencies: {}
