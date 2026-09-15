@@ -1,9 +1,0 @@
-langcode: en
-status: true
-dependencies:
-  theme:
-    - stark
-id: stark.header
-region: header
-theme: stark
-component_tree: {}

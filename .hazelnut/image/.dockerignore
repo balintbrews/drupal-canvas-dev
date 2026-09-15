@@ -1,8 +1,0 @@
-.DS_Store
-.git
-.env
-.env.*
-secrets.env
-**/secrets.env
-node_modules
-**/node_modules
